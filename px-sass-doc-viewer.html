@@ -1,0 +1,186 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+
+<link rel="import" href="css/px-sass-doc-viewer-styles.html">
+<link rel="import" href="../px-clipboard/px-clipboard.html">
+
+<!--
+Element providing documentation for a requested Predix UI Sass component (design library).
+
+##### Usage
+
+      <px-sass-doc-viewer
+        library-name="px-toggle-design"
+        layer="objects" base-name="toggle"
+        inuit-flags="['$inuit-enable-toggle--small','$inuit-enable-toggle--large','$inuit-enable-toggle--huge']"
+        usage-html='["<input id=\"toggle1\" class=\"toggle__input\" type=\"checkbox\">","<label for=\"toggle1\" class=\"toggle__label\"></label>"]'
+        style-variables='["$inuit-toggle-color","$inuit-toggle-background","$inuit-toggle-border","$inuit-toggle-switch","$inuit-toggle-switch-border","$inuit-toggle-switch-shadow","$inuit-toggle-background--on","$inuit-toggle-border--on"]'
+        dependencies='["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'>
+      </px-sass-doc-viewer>
+
+@element px-sass-doc-viewer
+@blurb Element providing documentation for a requested Predix UI Sass component (design library).
+@homepage index.html
+@demo index.html
+-->
+
+<dom-module id="px-sass-doc-viewer">
+  <template>
+    <style include="px-sass-doc-viewer-styles"></style>
+
+      <div class="componentHeader">Installation</div>
+      <p>Install via command line:</p>
+      <px-clipboard copy-from="#install">
+        <figure class="code u-mr-">
+          <code id="install">
+            bower install --save https://github.com/PredixDev/{{libraryName}}.git
+          </code>
+        </figure>
+      </px-clipboard>
+
+      <div class="componentHeader">Enable & Import</div>
+          <p>The following flags are available and, if necessary, should be set to true prior to the import statement below.</p>
+          <px-clipboard copy-from="#enable">
+            <figure class="code u-mr-">
+              <code id="enable">
+                <template is="dom-repeat" items="{{inuitFlags}}">
+                  {{item}} : true;<br/>
+                </template>
+              </code>
+            </figure>
+          </px-clipboard>
+          <p>Include the optional flags above and the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
+          <px-clipboard copy-from="#import2">
+            <figure class="code u-mr-">
+              <code id="import2">
+                @import "{{libraryName}}/_{{layer}}.{{baseName}}.scss";
+              </code>
+            </figure>
+          </px-clipboard>
+
+          <div class="componentHeader">Usage</div>
+          <p>Include the following HTML in your main application to use the element:</p>
+          <px-clipboard copy-from="#usage2">
+            <figure class="code u-mr-">
+              <code id="usage2">
+                <template is="dom-repeat" items="{{usageHtml}}">
+                  {{item}} <br/>
+                </template>
+              </code>
+            </figure>
+          </px-clipboard>
+
+          <div class="componentHeader">Customization</div>
+          <p>The following variables are available to customize the style of this element:</p>
+          <px-clipboard copy-from="#customize">
+            <figure class="code u-mr-">
+              <code id="customize">
+                <template is="dom-repeat" items="{{styleVariables}}">
+                  {{item}} <br/>
+                </template>
+              </code>
+            </figure>
+          </px-clipboard>
+
+          <div class="componentHeader">Dependencies</div>
+          <p>This module depends on the following modules (automatically included with Bower install):
+            <ul>
+              <template is="dom-repeat" items="{{dependencies}}">
+                <li><a href="{{item}}" target="_blank">{{item}}</a></li>
+              </template>
+            </ul>
+          </p>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'px-sass-doc-viewer',
+
+    /**
+     * Properties block, expose attribute values to the DOM via 'notify'
+     *
+     * @property properties
+     * @type Object
+     */
+    properties: {
+      /**
+      * Name of the overall sass repository.
+      *
+      * @property libraryName
+      * @type String
+      **/
+      libraryName: {
+        type: String,
+        value: ''
+      },
+      /**
+      * Inuit flags that are used to enable features and functionality, represented as an array of strings, which will display with line breaks between each.
+      *
+      * @property inuitFlags
+      * @type Array
+      */
+      inuitFlags: {
+        type: Array,
+        value: function() { return []; }
+      },
+      /**
+      *  ITCSS layer that this component belongs in, e.g. generic, objects, trumps, etc.
+      *
+      * @property layer
+      * @type String
+      */
+      layer: {
+        type: String,
+        value: ''
+      },
+      /**
+      * Base name of the component in the file path, e.g. _objects.BASENAME.scss.
+      *
+      * @property baseName
+      * @type String
+      */
+      baseName: {
+        type: String,
+        value: ''
+      },
+      /**
+      * The HTML code snippet to actually use the component, represented as an array of strings, which will display with line breaks between each.
+      *
+      * @property usageHtml
+      * @type Array
+      */
+      usageHtml: {
+        type: Array,
+        value: function() { return []; }
+      },
+      /**
+      * The SASS variables available for customizing the appearance of the component, represented as an array of strings, which will display with line breaks between each.
+      *
+      * @property styleVariables
+      * @type Array
+      */
+      styleVariables: {
+        type: Array,
+        value: function() { return []; }
+      },
+      /**
+      * Any dependencies that exist for this component, represented as an array of strings, which will display in a list. Each string item should be the fully qualified URL of the repo.
+      *
+      * @property dependencies
+      * @type Array
+      */
+      dependencies: {
+        type: Array,
+        value: function() { return [];}
+      }
+
+    }
+  });
+</script>
