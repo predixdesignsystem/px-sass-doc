@@ -15,8 +15,9 @@ Element providing documentation for a requested Predix UI Sass component (design
 
       <px-sass-doc-viewer
         library-name="px-toggle-design"
-        layer="objects" base-name="toggle"
-        inuit-flags="['$inuit-enable-toggle--small','$inuit-enable-toggle--large','$inuit-enable-toggle--huge']"
+        layer="objects"
+        base-name="toggle"
+        inuit-flags='["$inuit-enable-toggle--small","$inuit-enable-toggle--large","$inuit-enable-toggle--huge"]'
         usage-html='["<input id=\"toggle1\" class=\"toggle__input\" type=\"checkbox\">","<label for=\"toggle1\" class=\"toggle__label\"></label>"]'
         style-variables='["$inuit-toggle-color","$inuit-toggle-background","$inuit-toggle-border","$inuit-toggle-switch","$inuit-toggle-switch-border","$inuit-toggle-switch-shadow","$inuit-toggle-background--on","$inuit-toggle-border--on"]'
         dependencies='["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'>
@@ -151,7 +152,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         value: ''
       },
       /**
-      * The HTML code snippet to actually use the component, represented as an array of strings, which will display with line breaks between each.
+      * The HTML code snippet to actually use the component, represented as an array of strings. A newline will appear between each string in the array. Include an empty string to result in an extra line break.
       *
       * @property usageHtml
       * @type Array
