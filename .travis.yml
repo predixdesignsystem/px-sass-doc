@@ -22,3 +22,14 @@ script:
 - xvfb-run wct --skip-plugin sauce
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
   local; fi
+env:
+  global:
+  - secure: pssgIhgBel1DVzEvtEd5dRWAGTjvsIUstfIY3v5bePUgSgYPz8tWfYJaIX/5VQMEwCzBAqndscBqERLw2KOIYQQCHwHXgfVYsy9Vq5y36JJetWSlwPcb85YoO7do455Tak1ubB7yTgCjTvxWDAVQKn+7NtO+ecD73Y/m4McT2fdIai1XtnGE59TKlEIBTtgSWH2WCwjR/MPSI34rqv09h6A3a8wqsGcDkuj+1lqn/yLDLnYL0FJomm3CXq4aAYPyyWjnlZsiBikvHWzF5vOll+wsn4VFfzo9m+dwe2F7KJkYO08yklwU6ajtradT/TO7sc4idjCBVz+fB+81pkEvey+nsfWDUf4c8lZnVD5FrTFXxY1NMg0nnFB05WbI9aGqenPZXkH2dtQgL0fiNJtYILk1pM+ZXgTjBlwjMBQ63f0nrmBq2gblQGVQx7lstOWu7cAf2iYyr/gy0cTtojAAR/oflJILDIjIGXBjZ8Sdl0KzfOtk9783Ald80oGvVSXUBYV46NAsTBWVeQFccPz243LqYu0XTqFKDOtCst6g67xza+E7PuzlaXr/ysiqC6DIzvGkBLPUNqE0BSVZZm9UqDgO8Mhgq9GA41Td5TGyalov59oTaiggVwLDqtV3VtnGYf9GdkhpEh1Ys54w4jnjty87vz80zwmAazYX8FWDugA=
+  - secure: q/R5Cv0Jwobcd7ItcvM1yLggkEvIOfefYuQcPBksBN1Ez0kkT4D4AfEK7M6IuVafVBqPbJ5Ui2cJeQiF/a5/CSJL+OLiC2YOa+fW98prq/ujGzduNdkv8lRA0Lk57Ove9nFzQRqcbThCWff7GB9vfggkoWkcC6fU+99fCCZ01NtjiXcM7xmNSZVZAMEhBtIOznC2DhxODBrGPTbgdzzDicnkNZG7gsvUTq7L/WxZJvWvn3RnC9hBBqPf9NhshePgA+PO5CJycCflceAOjUikIEForCtGH7T+zbBVjLLcgZU+Ex4CUQNj/NDEmemqfGfbvg3jLIMgXJAiWYP/nLSsVFXP4eUDAKtjgzi3XtyA/3JjdPGiZ+VzAwu80DrFN2JBOWJUXkBIq5q4sdJ5333pwpRGDi4Ys5CBiKr5tSw8IXOYx23yCNjjOLxb580Finhaa88N0RzRMhslOSuH2S+3dola7ctrUFIDVaU6+L/e/n/xau40Dm+H7QIuC8GhQnd8urIijS6GN6HEa5mjhZueWoTvUwyUZAK32YTF0pbXLyQeMUVvm58DyY9jdLmZ97tQHeEKXYt3aDjsQqR27W47w+CFdBUibVNJU2PIA9o3pL/2Y6TfGsC4IY8L03yVtqI3C/FCVrDR1ME5mAdxcyoH62G8ZLHDCfVP4ysEiwyQNRQ=
+before_install:
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -k "$password"
+  -in id_rsa.enc -out deploy_key -d; fi
+after_success:
+- cd $TRAVIS_BUILD_DIR/scripts
+- chmod 755 ghp.sh
+- ./ghp.sh

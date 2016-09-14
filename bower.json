@@ -1,6 +1,6 @@
 {
   "name": "px-sass-doc-viewer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": [
     "px-sass-doc-viewer.html"
   ],
