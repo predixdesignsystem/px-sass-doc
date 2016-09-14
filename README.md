@@ -1,9 +1,7 @@
-Px-Data-Table [![Build Status](https://travis-ci.org/PredixDev/px-sass-doc-viewer.svg?branch=master)](https://travis-ci.org/PredixDev/px-sass-doc-viewer)
+px-sass-doc-viewer [![Build Status](https://travis-ci.org/PredixDev/px-sass-doc-viewer.svg?branch=master)](https://travis-ci.org/PredixDev/px-sass-doc-viewer)
 -----------------------------------------------
 
 [![px-sass-doc-viewer demo](px-sass-doc-viewer.png?raw=true)](https://github.com/PredixDev/px-sass-doc-viewer)
-
-#px-sass-doc-viewer
 
 ## Overview
 
