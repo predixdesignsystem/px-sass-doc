@@ -1,8 +1,8 @@
-#Px-Sass-Doc-Viewer
+#px-sass-doc-viewer
 
 ## Overview
 
-Px-Sass-Doc-Viewer is a Predix UI component
+px-sass-doc-viewer is a Predix UI component for displaying the Sass documentation for one of our Px design repositories.
 
 ## Usage
 
@@ -19,19 +19,27 @@ Node, npm and bower are necessary to install the component and dependencies. web
 First, install the component via bower on the command line.
 
 ```
-bower install Px-Sass-Doc-Viewer --save
+bower install px-sass-doc-viewer --save
 ```
 
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/Px-Sass-Doc-Viewer/Px-Sass-Doc-Viewer.html"/>
+<link rel="import" href="/bower_components/px-sass-doc-viewer/px-sass-doc-viewer.html"/>
 ```
 
 Finally, use the component in your application:
 
 ```
-Insert Your demo code here.
+<px-sass-doc-viewer
+  library-name="px-toggle-design"
+  layer="objects"
+  base-name="toggle"
+  inuit-flags='["$inuit-enable-toggle--small","$inuit-enable-toggle--large","$inuit-enable-toggle--huge"]'
+  usage-html='["<input id=\"toggle1\" class=\"toggle__input\" type=\"checkbox\">","<label for=\"toggle1\" class=\"toggle__label\"></label>"]'
+  style-variables='["$inuit-toggle-color","$inuit-toggle-background","$inuit-toggle-border"]'
+  dependencies='["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'>
+</px-sass-doc-viewer>
 ```
 
 <br />
@@ -39,7 +47,7 @@ Insert Your demo code here.
 
 ## documentation
 
-Read the full API and view the demo [here](https://predixdev.github.io/Px-Sass-Doc-Viewer).
+Read the full API and view the demo [here](https://predixdev.github.io/px-sass-doc-viewer).
 
 The documentation in this repository is supplemental to the official Predix documentation, which is continuously updated and maintained by the Predix documentation team. Go to [http://predix.io](http://predix.io)  to see the official Predix documentation.
 
@@ -70,4 +78,4 @@ Navigate to the root of that server (e.g. http://localhost:8080/) in a browser t
 
 ## Known Issues
 
-Please use [Github Issues](https://github.com/PredixDev/Px-Sass-Doc-Viewer/issues) to submit any bugs you might find.
+Please use [Github Issues](https://github.com/PredixDev/px-sass-doc-viewer/issues) to submit any bugs you might find.
