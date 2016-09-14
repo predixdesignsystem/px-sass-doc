@@ -5,23 +5,18 @@ function runCustomTests() {
   // This is the placeholder suite to place custom tests in
   // Use testCase(options) for a more convenient setup of the test cases
   suite('Custom Automation Tests for px-sass-doc-viewer', function() {
-    test('Check initial value of counter', function(done){
-      var counterEl = Polymer.dom(document).querySelector('px-sass-doc-viewer'),
-          counterValueEl = Polymer.dom(counterEl.root).querySelector('span');
-      assert.equal(counterValueEl.textContent, '0');
+    test('Check install statement', function(done){
+      var sassEl = Polymer.dom(document).querySelector('px-sass-doc-viewer'),
+          installEl = Polymer.dom(sassEl.root).querySelector('#install');
+      assert.equal(installEl.textContent.trim(), 'bower install --save https://github.com/PredixDev/test.git');
+      done();
+    });
+    test('Check import statement', function(done){
+      var sassEl = Polymer.dom(document).querySelector('px-sass-doc-viewer'),
+          importEl = Polymer.dom(sassEl.root).querySelector('#import2');
+      assert.equal(importEl.textContent.trim(), '@import "test/_objects.test.scss";');
       done();
     });
 
-    test('Clicking px-sass-doc-viewer increments the counter', function(done){
-      var counterEl = Polymer.dom(document).querySelector('px-sass-doc-viewer'),
-          counterValueEl = Polymer.dom(counterEl.root).querySelector('span');
-      assert.equal(counterValueEl.textContent, '0');
-
-      counterEl.click();
-      flush(function(){
-        assert.equal(counterValueEl.textContent, '1');
-      });
-      done();
-    });
   });
 };
