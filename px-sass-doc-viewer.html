@@ -38,12 +38,13 @@ Element providing documentation for a requested Predix UI Sass component (design
       <px-clipboard copy-from="#install">
         <figure class="code u-mr-">
           <code id="install">
-            bower install --save https://github.com/PredixDev/{{libraryName}}.git
+            bower install --save {{libraryName}}
           </code>
         </figure>
       </px-clipboard>
 
-      <div class="componentHeader">Enable & Import</div>
+      <div class="componentHeader">Import</div>
+        <template is="dom-if" if="{{inuitFlags}}">
           <p>The following flags are available and, if necessary, should be set to true prior to the import statement below.</p>
           <px-clipboard copy-from="#enable">
             <figure class="code u-mr-">
@@ -54,7 +55,9 @@ Element providing documentation for a requested Predix UI Sass component (design
               </code>
             </figure>
           </px-clipboard>
-          <p>Include the optional flags above and the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
+        </template>
+
+          <p>Include the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
           <px-clipboard copy-from="#import2">
             <figure class="code u-mr-">
               <code id="import2">
@@ -75,26 +78,30 @@ Element providing documentation for a requested Predix UI Sass component (design
             </figure>
           </px-clipboard>
 
-          <div class="componentHeader">Customization</div>
-          <p>The following variables are available to customize the style of this element:</p>
-          <px-clipboard copy-from="#customize">
-            <figure class="code u-mr-">
-              <code id="customize">
-                <template is="dom-repeat" items="{{styleVariables}}">
-                  {{item}} <br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
+          <template is="dom-if" if="{{styleVariables}}">
+            <div class="componentHeader">Customization</div>
+            <p>The following variables are available to customize the style of this element:</p>
+            <px-clipboard copy-from="#customize">
+              <figure class="code u-mr-">
+                <code id="customize">
+                  <template is="dom-repeat" items="{{styleVariables}}">
+                    {{item}} <br/>
+                  </template>
+                </code>
+              </figure>
+            </px-clipboard>
+          </template>
 
-          <div class="componentHeader">Dependencies</div>
-          <p>This module depends on the following modules (automatically included with Bower install):
-            <ul>
-              <template is="dom-repeat" items="{{dependencies}}">
-                <li><a href="{{item}}" target="_blank">{{item}}</a></li>
-              </template>
-            </ul>
-          </p>
+          <template is="dom-if" if="{{dependencies}}">
+            <div class="componentHeader">Dependencies</div>
+            <p>This module depends on the following modules (automatically included with Bower install):
+              <ul>
+                <template is="dom-repeat" items="{{dependencies}}">
+                  <li><a href="{{item}}" target="_blank">{{item}}</a></li>
+                </template>
+              </ul>
+            </p>
+          </template>
 
   </template>
 </dom-module>

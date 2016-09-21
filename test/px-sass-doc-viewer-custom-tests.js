@@ -8,7 +8,7 @@ function runCustomTests() {
     test('Check install statement', function(done){
       var sassEl = Polymer.dom(document).querySelector('px-sass-doc-viewer'),
           installEl = Polymer.dom(sassEl.root).querySelector('#install');
-      assert.equal(installEl.textContent.trim(), 'bower install --save https://github.com/PredixDev/test.git');
+      assert.equal(installEl.textContent.trim(), 'bower install --save test');
       done();
     });
     test('Check import statement', function(done){

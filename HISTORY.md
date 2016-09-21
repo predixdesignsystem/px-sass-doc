@@ -1,3 +1,7 @@
+v0.0.3
+==================
+* Made some properties optional
+
 v0.0.2
 ==================
 * Added auto_ghp
