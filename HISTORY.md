@@ -1,3 +1,7 @@
+v0.0.4
+==================
+* Added functionality for mega demo
+
 v0.0.3
 ==================
 * Made some properties optional

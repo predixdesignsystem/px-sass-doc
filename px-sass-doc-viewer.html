@@ -7,6 +7,7 @@
 
 <link rel="import" href="css/px-sass-doc-viewer-styles.html">
 <link rel="import" href="../px-clipboard/px-clipboard.html">
+<link rel="import" href="./px-dropdown/px-dropdown.html"/>
 
 <!--
 Element providing documentation for a requested Predix UI Sass component (design library).
@@ -33,75 +34,130 @@ Element providing documentation for a requested Predix UI Sass component (design
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
 
-      <div class="componentHeader">Installation</div>
-      <p>Install via command line:</p>
-      <px-clipboard copy-from="#install">
-        <figure class="code u-mr-">
-          <code id="install">
-            bower install --save {{libraryName}}
-          </code>
-        </figure>
-      </px-clipboard>
-
-      <div class="componentHeader">Import</div>
-        <template is="dom-if" if="{{inuitFlags}}">
-          <p>The following flags are available and, if necessary, should be set to true prior to the import statement below.</p>
-          <px-clipboard copy-from="#enable">
-            <figure class="code u-mr-">
-              <code id="enable">
-                <template is="dom-repeat" items="{{inuitFlags}}">
-                  {{item}} : true;<br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
-        </template>
-
-          <p>Include the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
-          <px-clipboard copy-from="#import2">
-            <figure class="code u-mr-">
-              <code id="import2">
-                @import "{{libraryName}}/_{{layer}}.{{baseName}}.scss";
-              </code>
-            </figure>
-          </px-clipboard>
-
-          <div class="componentHeader">Usage</div>
-          <p>Include the following HTML in your main application to use the element:</p>
-          <px-clipboard copy-from="#usage2">
-            <figure class="code u-mr-">
-              <code id="usage2">
-                <template is="dom-repeat" items="{{usageHtml}}">
-                  {{item}} <br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
-
-          <template is="dom-if" if="{{styleVariables}}">
-            <div class="componentHeader">Customization</div>
-            <p>The following variables are available to customize the style of this element:</p>
-            <px-clipboard copy-from="#customize">
-              <figure class="code u-mr-">
-                <code id="customize">
-                  <template is="dom-repeat" items="{{styleVariables}}">
-                    {{item}} <br/>
+    <div style="position: relative;" class="u-pb++ flex flex--col">
+          <section>
+            <div class="mega-demo flex u-ph++ u-pb++">
+              <div class="properties u-ph+ u-pb+ u-mt+">
+              <p class="epsilon">Options</p>
+              <template is="dom-repeat" items="{{optionsArray}}">
+                <div class="u-mb-">{{item.label}}:
+                  <template is="dom-if" if="{{_isEqual(item.type,'dropdown')}}">
+                    <div style="width: 100%;">
+                      <px-dropdown id="{{item.id}}" display-value="{{item.displayValue}}" value="{{item.displayValue}}">
+                        <px-dropdown-content
+                          items="{{item.dropdownItems}}">
+                        </px-dropdown-content>
+                      </px-dropdown>
+                    </div>
                   </template>
-                </code>
-              </figure>
-            </px-clipboard>
-          </template>
+                </div>
+              </template>
+            </div>
 
-          <template is="dom-if" if="{{dependencies}}">
-            <div class="componentHeader">Dependencies</div>
-            <p>This module depends on the following modules (automatically included with Bower install):
-              <ul>
-                <template is="dom-repeat" items="{{dependencies}}">
-                  <li><a href="{{item}}" target="_blank">{{item}}</a></li>
+            <div class="demoContainer u-mt+">
+                <div class="flex flex--col">
+                  <div class="demo u-p+">
+                    <!-- <div class="u-mb">Toggle size is <strong>{{dropdown}}</strong></div> -->
+                    <div id="demoCode" class="flex u-mb-">
+                      <!-- <div class="u-ml-">Toggle 'checked' value is {{togglecheck}}</div> -->
+                    </div>
+                    <h4>Import:</h4>
+                    <px-clipboard copy-from="#import">
+                      <figure class="code u-mr-">
+                        <code id="import">
+                          {{_importCode}}
+                        </code>
+                      </figure>
+                    </px-clipboard>
+                    <h4>Usage:</h4>
+                    <px-clipboard copy-from="#usageDemo">
+                      <figure class="code u-mr-">
+                        <code id="usageDemo">
+                        </code>
+                      </figure>
+                    </px-clipboard>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="apiContainer">
+            <div class="flex flex--col api u-mt++">
+              <div class="componentHeader">Installation</div>
+              <p>Install via command line:</p>
+              <px-clipboard copy-from="#install">
+                <figure class="code u-mr-">
+                  <code id="install">
+                    bower install --save {{libraryName}}
+                  </code>
+                </figure>
+              </px-clipboard>
+
+              <div class="componentHeader">Import</div>
+                <template is="dom-if" if="{{inuitFlags}}">
+                  <p>The following flags are available and, if necessary, should be set to true prior to the import statement below.</p>
+                  <px-clipboard copy-from="#enable">
+                    <figure class="code u-mr-">
+                      <code id="enable">
+                        <template is="dom-repeat" items="{{inuitFlags}}">
+                          {{item}} : true;<br/>
+                        </template>
+                      </code>
+                    </figure>
+                  </px-clipboard>
                 </template>
-              </ul>
-            </p>
-          </template>
+
+                  <p>Include the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
+                  <px-clipboard copy-from="#import2">
+                    <figure class="code u-mr-">
+                      <code id="import2">
+                        {{_importCode}}
+                      </code>
+                    </figure>
+                  </px-clipboard>
+
+                  <div class="componentHeader">Usage</div>
+                  <p>Include the following HTML in your main application to use the element:</p>
+                  <px-clipboard copy-from="#usage2">
+                    <figure class="code u-mr-">
+                      <code id="usage2">
+                        <template is="dom-repeat" items="{{usageHtml}}">
+                          {{item}} <br/>
+                        </template>
+                      </code>
+                    </figure>
+                  </px-clipboard>
+
+                  <template is="dom-if" if="{{styleVariables}}">
+                    <div class="componentHeader">Customization</div>
+                    <p>The following variables are available to customize the style of this element:</p>
+                    <px-clipboard copy-from="#customize">
+                      <figure class="code u-mr-">
+                        <code id="customize">
+                          <template is="dom-repeat" items="{{styleVariables}}">
+                            {{item}} <br/>
+                          </template>
+                        </code>
+                      </figure>
+                    </px-clipboard>
+                  </template>
+
+                  <template is="dom-if" if="{{dependencies}}">
+                    <div class="componentHeader">Dependencies</div>
+                    <p>This module depends on the following modules (automatically included with Bower install):
+                      <ul>
+                        <template is="dom-repeat" items="{{dependencies}}">
+                          <li><a href="{{item}}" target="_blank">{{item}}</a></li>
+                        </template>
+                      </ul>
+                    </p>
+                  </template>
+
+            </div>
+          </div>
+        </section>
+      </div>
+
+
 
   </template>
 </dom-module>
@@ -187,8 +243,101 @@ Element providing documentation for a requested Predix UI Sass component (design
       dependencies: {
         type: Array,
         value: function() { return [];}
+      },
+      /**
+      * Array of objects describing the HTML structure of the component.
+      *
+      * @property demoConfig
+      * @type Array
+      */
+      demoConfig: {
+        type: Array,
+        value: function() { return [];}
+      },
+      /**
+      * Array of options to populate the left side of the mega demo from.
+      *
+      * @property optionsArray
+      * @type Array
+      */
+      optionsArray: {
+        type: Array,
+        value: function() { return []; }
+      },
+      /**
+      * Composed string that represents the import statement of the sass component.
+      *
+      * @property _importCode
+      * @type String
+      */
+      _importCode: {
+        type: String,
+        computed: '_calculateImportCode(libraryName,layer,baseName)'
       }
+    },
+    /**
+    * Method that composes the import statement from the constituent parts.
+    *
+    * @method _calculateImportCode
+    * @param library
+    * @param layer
+    * @param base
+    */
+    _calculateImportCode: function(library,layer,base) {
+      return '@import "' + library + '/_' + layer + '.' + base + '.scss";';
+    },
+    /**
+    * Compares strings for dom-if logic.
+    *
+    * @method _isEqual
+    * @param a
+    * @param b
+    */
+    _isEqual: function(a, b) {
+      return a === b ? true : false;
+    },
+    /**
+    * TODO
+    *
+    * @method attached
+    */
+    attached: function() {
+      var that = this;
 
+      setTimeout(function() {
+        var optionsArray = that.optionsArray;
+        for(i=0; i<optionsArray.length; i++) {
+          var id = optionsArray[i].id,
+              element = document.querySelector('#'+id);
+          if(optionsArray[i].type === 'dropdown') {
+            element.addEventListener('dropdown_content_value_changed', function(evt) {
+              var classArray = evt.detail.key;
+              for(i=0; i<classArray.length; i++) {
+                that.demoConfig[i].class = classArray[i];
+              }
+              that._updateCode();
+            });
+          }
+        }
+      }, 500);
+
+      this._updateCode();
+    },
+    _updateCode: function() {
+      var demoConfig = this.demoConfig,
+          htmlCode = '',
+          demoCode = document.querySelector('#demoCode'),
+          usageDemo = document.querySelector('#usageDemo');
+
+      demoCode.innerHTML = "";
+      usageDemo.innerHTML = "";
+
+      for(i=0; i<demoConfig.length; i++) {
+        htmlCode = '<' + demoConfig[i].elem + ' id="' + demoConfig[i].id + '" class="' + demoConfig[i].class + '" ' + demoConfig[i].extra + '></' + demoConfig[i].elem + '>';
+        demoCode.innerHTML += htmlCode;
+        usageDemo.innerHTML += htmlCode.split("<").join("&lt;").split(">").join("&gt;") + '<br/>';
+      }
     }
+
   });
 </script>

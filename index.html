@@ -43,68 +43,38 @@
     </div>
     <br />
 
-    <!-- mega demo -->
-    <div style="position: relative;" class="u-pb++ flex flex--col" id="defaultTab">
-      <div class="tabContainer u-pt++ u-pl++">
-        <px-tab-set selected="{{selected}}" bare no-bottom-border>
-          <template is="dom-repeat" items="{{optionsArray}}">
-            <px-tab>Option {{indexPlusOne(index)}}</px-tab>
-          </template>
-        </px-tab-set>
-      </div>
-      <px-tab-pages selected="{{selected}}">
-        <template is="dom-repeat" items="{{optionsArray}}">
-          <section class="tab-page">
-            <div class="mega-demo flex u-ph++ u-pb++">
-              <!-- Properties -->
-              <div class="properties u-ph+ u-pb+ u-mt+">
-                <p class="epsilon">Properties</p>
-                <div class="u-mb-">libraryName: <input class="text-input" type="text" placeholder="{{item.libraryName}}" value="{{item.libraryName::input}}" disabled/></div>
-                <div class="u-mb-">layer: <input class="text-input" type="text" placeholder="{{item.layer}}" value="{{item.layer::input}}" disabled/></div>
-                <div class="u-mb-">baseName: <input class="text-input" type="text" placeholder="{{item.baseName}}" value="{{item.baseName::input}}" disabled/></div>
-                <div class="u-mb-">inuitFlags: <input class="text-input" type="text" placeholder="{{item.inuitFlags}}" value="{{item.inuitFlags::input}}" disabled/></div>
-                <div class="u-mb-">usageHtml: <input class="text-input" type="text" placeholder="{{item.usageHtml}}" value="{{item.usageHtml::input}}" disabled/></div>
-                <div class="u-mb-">styleVariables: <input class="text-input" type="text" placeholder="{{item.styleVariables}}" value="{{item.styleVariables::input}}" disabled/></div>
-                <div class="u-mb-">dependencies: <input class="text-input" type="text" placeholder="{{item.dependencies}}" value="{{item.dependencies::input}}" disabled/></div>
+    <px-sass-doc-viewer
+      id = "px-sass-doc"
+      library-name = "px-toggle-design"
+      layer = "objects"
+      base-name = "toggle"
+      inuit-flags = '["$inuit-enable-toggle--small",
+                     "$inuit-enable-toggle--large",
+                     "$inuit-enable-toggle--huge"]'
+      usage-html = "{{usageHtml}}"
+      style-variables = '["$inuit-toggle-color",
+              "$inuit-toggle-background",
+              "$inuit-toggle-border",
+              "$inuit-toggle-switch",
+              "$inuit-toggle-switch-border",
+              "$inuit-toggle-switch-shadow",
+              "$inuit-toggle-background--on",
+              "$inuit-toggle-border--on"]'
+      dependencies = '["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'
+      demo-config = '[{
+          "elem": "input",
+          "id": "toggleInput",
+          "class": "toggle__input",
+          "extra": "type=\"checkbox\" checked=\"true\""
+        },{
+          "elem": "label",
+          "id": "toggleLabel",
+          "class": "toggle__label",
+          "extra": "for=\"toggleInput\""
+        }]'
+      options-array = "{{optionsArray}}">
+    </px-sass-doc-viewer>
 
-              </div>
-
-              <div class="demoContainer u-mt+">
-                <!-- demo -->
-                <div class="flex flex--col">
-                  <div class="flex__item demo u-ph+ u-pb+">
-                    <div class="u-mt+">
-                      <px-sass-doc-viewer
-                      library-name = "{{item.libraryName}}"
-                      layer = "{{item.layer}}"
-                      base-name = "{{item.baseName}}"
-                      inuit-flags = "{{item.inuitFlags}}"
-                      usage-html = "{{item.usageHtml}}"
-                      style-variables = "{{item.styleVariables}}"
-                      dependencies = "{{item.dependencies}}">
-                      </px-sass-doc-viewer>
-                    </div>
-                  </div>
-                  <div class="flex__item">
-                    <px-demo-snippet
-                      element-properties={{item}}
-                      element-name="px-sass-doc-viewer">
-                    </px-demo-snippet>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="apiContainer">
-              <div class="flex flex--col api u-mt++" >
-                <div>
-                  <px-api-viewer source="px-sass-doc-viewer"></px-api-viewer>
-                </div>
-              </div>
-            </div>
-          </section>
-        </template>
-      </px-tab-pages>
-    </div>
     <footer class="footer flex flex--center">
       <div class="footer__container u-pv++">
         <div>
@@ -128,42 +98,41 @@
   </template>
   <script>
     window.addEventListener('WebComponentsReady', function() {
-
       var template = document.querySelector('template[is=dom-bind]'),
-          optionsArray = [
-            {
-              "libraryName" : "px-toggle-design",
-              "layer": "objects",
-              "baseName": "toggle",
-              "inuitFlags": ['$inuit-enable-toggle--small',
-                             '$inuit-enable-toggle--large',
-                             '$inuit-enable-toggle--huge'],
-              "usageHtml": ['<input id="toggle1" class="toggle__input" type="checkbox">',
-                      '<label for="toggle1" class="toggle__label"></label>',,
-                      '<input id="toggle1" class="toggle__input toggle__input--small" type="checkbox">',
-                      '<label for="toggle1" class="toggle__label toggle__label--small"></label>',,
-                      '<input id="toggle1" class="toggle__input toggle__input--large" type="checkbox">',
-                      '<label for="toggle1" class="toggle__label toggle__label--large"></label>',,
-                      '<input id="toggle1" class="toggle__input toggle__input--huge" type="checkbox">',
-                      '<label for="toggle1" class="toggle__label toggle__label--huge"></label>'],
-              "styleVariables": ['$inuit-toggle-color',
-                      '$inuit-toggle-background',
-                      '$inuit-toggle-border',
-                      '$inuit-toggle-switch',
-                      '$inuit-toggle-switch-border',
-                      '$inuit-toggle-switch-shadow',
-                      '$inuit-toggle-background--on',
-                      '$inuit-toggle-border--on'],
-              "dependencies": ["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]
-            }
-          ],
-          indexPlusOne = function(num) {
-            return num + 1;
-          };
-
-          template.selected = "0";
-          template.optionsArray = optionsArray;
-          template.indexPlusOne = indexPlusOne;
+          usageHtml = ["<input id=toggle1 class=toggle__input type=checkbox>",
+                  "<label for=toggle1 class=toggle__label></label>",
+                  "",
+                  "<input id=toggle1 class=\"toggle__input toggle__input--small\" type=checkbox>",
+                  "<label for=toggle1 class=\"toggle__label toggle__label--small\"></label>",
+                  "",
+                  "<input id=toggle1 class=\"toggle__input toggle__input--large\" type=checkbox>",
+                  "<label for=toggle1 class=\"toggle__label toggle__label--large\"></label>",
+                  "",
+                  "<input id=toggle1 class=\"toggle__input toggle__input--huge\" type=checkbox>",
+                  "<label for=toggle1 class=\"toggle__label toggle__label--huge\"></label>"],
+          dropdownItems = [{
+            "key":["toggle__input toggle__input--small","toggle__label toggle__label--small"],
+            "val": "small"
+          },{
+            "key":["toggle__input","toggle__label"],
+            "val": "regular"
+          },{
+            "key":["toggle__input toggle__input--large","toggle__label toggle__label--large"],
+            "val": "large"
+          },{
+            "key":["toggle__input toggle__input--huge","toggle__label toggle__label--huge"],
+            "val": "huge"
+          }]
+          optionsArray = [{
+            "label": "Size",
+            "type": "dropdown",
+            "id": "sizeDropdown",
+            "dropdownItems": dropdownItems,
+            "displayValue": "regular"
+          }];
+      template.selected = "0";
+      template.optionsArray = optionsArray;
+      template.usageHtml = usageHtml;
     });
   </script>
 </body>

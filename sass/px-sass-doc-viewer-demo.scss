@@ -42,6 +42,8 @@ $actionable : true;
 @import "px-actionable-text-icons-design/_objects.actionable.scss";
 
 $inuit-enable-toggle--small : true;
+$inuit-enable-toggle--large : true;
+$inuit-enable-toggle--huge : true;
 @import "px-toggle-design/_objects.toggle.scss";
 
 $inuit-enable-inline-fields : true;
@@ -52,7 +54,7 @@ $inuit-enable-list-inline--delimited : true;
 @import "px-list-inline-design/_objects.list-inline.scss";
 
 // Component
-// 
+//
 .mega-demo{
   background: $gray1;
   width: 100%;
