@@ -40,17 +40,24 @@ Element providing documentation for a requested Predix UI Sass component (design
               <div class="properties u-ph+ u-pb+ u-mt+">
               <p class="epsilon">Options</p>
               <template is="dom-repeat" items="{{optionsArray}}">
-                <div class="u-mb-">{{item.label}}:
                   <template is="dom-if" if="{{_isEqual(item.type,'dropdown')}}">
-                    <div style="width: 100%;">
-                      <px-dropdown id="{{item.id}}" display-value="{{item.displayValue}}" value="{{item.displayValue}}">
-                        <px-dropdown-content
-                          items="{{item.dropdownItems}}">
-                        </px-dropdown-content>
-                      </px-dropdown>
+                    <div class="u-mb-">{{item.label}}:
+                      <div style="width: 100%;">
+                        <px-dropdown id="{{item.id}}" display-value="{{item.displayValue}}" value="{{item.displayValue}}">
+                          <px-dropdown-content
+                            items="{{item.dropdownItems}}">
+                          </px-dropdown-content>
+                        </px-dropdown>
+                      </div>
                     </div>
                   </template>
-                </div>
+                  <template is="dom-if" if="{{_isEqual(item.type,'boolean')}}">
+                    <div class="flex u-mb-">
+                    <input id="{{item.id}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.value::change}}">
+                    <label for$="{{item.id}}" class="toggle__label toggle__label--small"></label>
+                    <div class="u-ml-">{{item.label}}</div>
+                    </div>
+                  </template>
               </template>
             </div>
 
@@ -246,6 +253,11 @@ Element providing documentation for a requested Predix UI Sass component (design
       },
       /**
       * Array of objects describing the HTML structure of the component.
+      * Each object should contain:
+      * - elem (the HTML tag for the element)
+      * - id (for the element)
+      * - class (one or more classes)
+      * - extra (any additional HTML to include in the element, e.g. "checked")
       *
       * @property demoConfig
       * @type Array
@@ -255,7 +267,13 @@ Element providing documentation for a requested Predix UI Sass component (design
         value: function() { return [];}
       },
       /**
-      * Array of options to populate the left side of the mega demo from.
+      * Array of objects representing the options to populate on the left side of the mega demo.
+      * Each object should contain:
+      * - label (to place above or next to the option)
+      * - type ("dropdown" or "boolean")
+      * - id (for the selector)
+      * - dropdownItems (only applies for type dropdown)
+      * - displayValue (only applies for type dropdown)
       *
       * @property optionsArray
       * @type Array
@@ -316,6 +334,18 @@ Element providing documentation for a requested Predix UI Sass component (design
                 that.demoConfig[i].class = classArray[i];
               }
               that._updateCode();
+            });
+          }
+          else if(optionsArray[i].type === 'boolean') {
+            element.addEventListener('change', function(evt) {
+              var attribute = evt.target.id,
+                  value = evt.target.checked;
+              if(value === true) {
+                // add attribute to demoConfig[0].extra
+              }
+              else {
+                // look for attribute in demoConfig[0].extra and remove it if found
+              }
             });
           }
         }
