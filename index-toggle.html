@@ -41,47 +41,34 @@
 
     <px-sass-doc-viewer
       id = "px-sass-doc"
-      library-name = "px-buttons-design"
+      library-name = "px-toggle-design"
       layer = "objects"
-      base-name = "buttons"
-      inuit-flags = '["$inuit-enable-btn--small",
-                     "$inuit-enable-btn--large",
-                     "$inuit-enable-btn--huge",
-                     "$inuit-enable-btn--full",
-                     "$inuit-enable-btn--primary",
-                     "$inuit-enable-btn--tertiary",
-                     "$inuit-enable-btn--disabled",
-                     "$inuit-enable-btn--bare",
-                     "$inuit-enable-btn--icon"]'
+      base-name = "toggle"
+      inuit-flags = '["$inuit-enable-toggle--small",
+                     "$inuit-enable-toggle--large",
+                     "$inuit-enable-toggle--huge"]'
       usage-html = "{{usageHtml}}"
-      style-variables = '["$inuit-btn-color",
-                          "$inuit-btn-background",
-                          "$inuit-btn-background--hover",
-                          "$inuit-btn-background--pressed",
-                          "$inuit-btn-border-color",
-                          "$inuit-btn-border-color--hover",
-                          "$inuit-btn-border-color--pressed",
-                          "$inuit-btn-shadow",
-                          "$inuit-btn-shadow--light",
-                          "$inuit-btn-primary-color",
-                          "$inuit-btn-primary-background",
-                          "$inuit-btn-primary-background--hover",
-                          "$inuit-btn-primary-background--pressed",
-                          "$inuit-btn-primary-border-color",
-                          "$inuit-btn-tertiary-color",
-                          "$inuit-btn-tertiary-background",
-                          "$inuit-btn-tertiary-background--hover",
-                          "$inuit-btn-tertiary-background--pressed",
-                          "$inuit-btn-disabled-color",
-                          "$inuit-btn-disabled-background",
-                          "$inuit-btn-disabled-border-color"]'
+      style-variables = '["$inuit-toggle-color",
+              "$inuit-toggle-background",
+              "$inuit-toggle-border",
+              "$inuit-toggle-switch",
+              "$inuit-toggle-switch-border",
+              "$inuit-toggle-switch-shadow",
+              "$inuit-toggle-background--on",
+              "$inuit-toggle-border--on"]'
       dependencies = '["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'
       demo-config = '[{
-          "elem": "button",
-          "class": "btn",
-          "elemContent":"text"
+          "elem": "input",
+          "id": "toggleInput",
+          "class": "toggle__input",
+          "extra": "type=\"checkbox\""
+        },{
+          "elem": "label",
+          "id": "toggleLabel",
+          "class": "toggle__label",
+          "extra": "for=\"toggleInput\""
         }]'
-      style-options-array = "{{styleOptionsArray}}">
+      options-array = "{{optionsArray}}">
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">
@@ -108,54 +95,39 @@
   <script>
     window.addEventListener('WebComponentsReady', function() {
       var template = document.querySelector('template[is=dom-bind]'),
-          usageHtml = ["<button class=\"btn\">...</button>",
-                       "<button class=\"btn btn--primary\">...</button>",
-                       "<button class=\"btn btn--tertiary\">...</button>",
-                       "<button class=\"btn btn--small\">...</button>",
-                       "<button class=\"btn btn--large\">...</button>",
-                       "<button class=\"btn btn--huge\">...</button>",
-                       "<button class=\"btn btn--disabled\">...</button>",
-                       "<button class=\"btn btn--icon\">...</button>",
-                       "<button class=\"btn btn--bare\">...</button>"],
-          dropdownItemsSize = [{
-            "key":["btn--small"],
+          usageHtml = ["<input id=toggle1 class=toggle__input type=checkbox>",
+                  "<label for=toggle1 class=toggle__label></label>",
+                  "",
+                  "<input id=toggle1 class=\"toggle__input toggle__input--small\" type=checkbox>",
+                  "<label for=toggle1 class=\"toggle__label toggle__label--small\"></label>",
+                  "",
+                  "<input id=toggle1 class=\"toggle__input toggle__input--large\" type=checkbox>",
+                  "<label for=toggle1 class=\"toggle__label toggle__label--large\"></label>",
+                  "",
+                  "<input id=toggle1 class=\"toggle__input toggle__input--huge\" type=checkbox>",
+                  "<label for=toggle1 class=\"toggle__label toggle__label--huge\"></label>"],
+          dropdownItems = [{
+            "key":["toggle__input toggle__input--small","toggle__label toggle__label--small"],
             "val": "small"
           },{
-            "key":[""],
+            "key":["toggle__input","toggle__label"],
             "val": "regular"
           },{
-            "key":["btn--large"],
+            "key":["toggle__input toggle__input--large","toggle__label toggle__label--large"],
             "val": "large"
           },{
-            "key":["btn--huge"],
+            "key":["toggle__input toggle__input--huge","toggle__label toggle__label--huge"],
             "val": "huge"
-          }],
-          dropdownItemsType = [{
-            "key":["btn--primary"],
-            "val": "primary"
-          },{
-            "key":[""],
-            "val": "secondary"
-          },{
-            "key":["btn--tertiary"],
-            "val": "tertiary"
           }]
-          styleOptionsArray = [{
+          optionsArray = [{
             "label": "Size",
             "type": "dropdown",
             "id": "sizeDropdown",
-            "dropdownItems": dropdownItemsSize,
+            "dropdownItems": dropdownItems,
             "displayValue": "regular"
-          },
-          {
-            "label": "Type",
-            "type": "dropdown",
-            "id": "typeDropdown",
-            "dropdownItems": dropdownItemsType,
-            "displayValue": "secondary"
           }];
       template.selected = "0";
-      template.styleOptionsArray = styleOptionsArray;
+      template.optionsArray = optionsArray;
       template.usageHtml = usageHtml;
     });
   </script>

@@ -53,6 +53,17 @@ $inuit-enable-input--regular : true;
 $inuit-enable-list-inline--delimited : true;
 @import "px-list-inline-design/_objects.list-inline.scss";
 
+$inuit-enable-btn--small : true;
+$inuit-enable-btn--large : true;
+$inuit-enable-btn--huge : true;
+$inuit-enable-btn--full : true;
+$inuit-enable-btn--primary : true;
+$inuit-enable-btn--tertiary : true;
+$inuit-enable-btn--disabled : true;
+$inuit-enable-btn--bare : true;
+$inuit-enable-btn--icon : true;
+@import "px-buttons-design/_objects.buttons.scss";
+
 // Component
 //
 .mega-demo{
