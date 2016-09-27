@@ -44,7 +44,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                   <template is="dom-if" if="{{_isEqual(item.type,'dropdown')}}">
                     <div class="u-mb-">{{item.label}}:
                       <div style="width: 100%;">
-                        <px-dropdown id="{{item.id}}" display-value="{{item.displayValue}}" value="{{item.displayValue}}">
+                        <px-dropdown id="{{item.id}}" display-value="{{_selectedOptions[item.id]}}" value="{{_selectedOptions[item.id]}}">
                           <px-dropdown-content
                             items="{{item.dropdownItems}}">
                           </px-dropdown-content>
@@ -68,7 +68,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <!-- <div class="u-mb">Toggle size is <strong>{{dropdown}}</strong></div> -->
                     <div id="demoCode" class="flex u-mb-">
                       <!-- <div class="u-ml-">Toggle 'checked' value is {{togglecheck}}</div> -->
-                      {{demoCode}}
+                      <content select=".content"></content>
                     </div>
                     <h4>Import:</h4>
                     <px-clipboard copy-from="#import">
@@ -304,8 +304,15 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: Array,
         value: function() { return []; }
       },
+      /**
+       *
+       */
+      _selectedOptions: {
+        type: Object,
+        value: function() { return {}; }
+      }
     },
-    observers: ['_updateDemoClasses(styleOptionsArray)'],
+    observers: ['_setSelectedOptionsFirstTime(styleOptionsArray)'],
     /**
     * Method that composes the import statement from the constituent parts.
     *
@@ -327,41 +334,83 @@ Element providing documentation for a requested Predix UI Sass component (design
     _isEqual: function(a, b) {
       return a === b;
     },
+    _setSelectedOptionsFirstTime: function() {
+      if (this.styleOptionsArray.length > 0) {
+        // If we haven't already set our defaults, do it now. We only want to do so once.
+        if (!this._alreadySetDefaults) {
+          this._alreadySetDefaults = true;
+          var i = 0,
+              len = this.styleOptionsArray.length;
+          for (i; i < len; i++) {
+            var opt = this.styleOptionsArray[i];
+            if (opt.type == "dropdown") {
+              this._selectedOptions[opt.id] = opt.displayValue;
+            }
+            if (opt.type == "toggle") {
+              this._selectedOptions[opt.id] = opt.defaultValue;
+            }
+          };
+        }
+      }
+    },
+    /**
+    * TODO
+    *
+    * @method ready
+    */
+    ready: function() {
+      // Set the default values for our options (dropdown or checkbox)
+      // E.g.:
+      // _selectedOptions = {
+      //   "sizeDropdown" : "regular",
+      //   "typeDropdown" : "secondary"
+      // }
+      // Array.prototype.forEach(this.styleOptionsArray, function(opt){
+      //   if (opt.type == "dropdown") {
+      //     this._selectedOptions[opt.id] = opt.displayValue;
+      //   }
+      //   if (opt.type == "toggle") {
+      //     this._selectedOptions[opt.id] = opt.defaultValue;
+      //   }
+      // }).bind(this);
+    },
     /**
     * TODO
     *
     * @method attached
     */
     attached: function() {
-      var that = this;
 
-      setTimeout(function() {
-        var styleOptionsArray = that.styleOptionsArray;
-        for(i=0; i<styleOptionsArray.length; i++) {
-          var id = styleOptionsArray[i].id,
-              element = document.querySelector('#'+id);
-          if(styleOptionsArray[i].type === 'dropdown') {
-            element.addEventListener('dropdown_content_value_changed', that._handleDropdownChange(evt));
-          }
-          else if(styleOptionsArray[i].type === 'boolean') {
-            element.addEventListener('change', function(evt) {
-              var attribute = evt.target.id,
-                  value = evt.target.checked;
-              if(value === true) {
-                // add class to demoConfig[0].class
-              }
-              else {
-                // look for class in demoConfig[0].class and remove it if found
-              }
-            });
-          }
-        }
-      }, 500);
+
+
+
+      // setTimeout(function() {
+      //   var styleOptionsArray = that.styleOptionsArray;
+      //   for(i=0; i<styleOptionsArray.length; i++) {
+      //     var id = styleOptionsArray[i].id,
+      //         element = document.querySelector('#'+id);
+      //     if(styleOptionsArray[i].type === 'dropdown') {
+      //       element.addEventListener('dropdown_content_value_changed', that._handleDropdownChange(evt));
+      //     }
+      //     else if(styleOptionsArray[i].type === 'boolean') {
+      //       element.addEventListener('change', function(evt) {
+      //         var attribute = evt.target.id,
+      //             value = evt.target.checked;
+      //         if(value === true) {
+      //           // add class to demoConfig[0].class
+      //         }
+      //         else {
+      //           // look for class in demoConfig[0].class and remove it if found
+      //         }
+      //       });
+      //     }
+      //   }
+      // }, 500);
 
       // Syncs the _demoClasses property with the wanted classes from the styleOptionsArray
       this._updateDemoClasses();
       // Renders the demo code element to the page
-      this._renderDemoCode();
+      // this._renderDemoCode();
     },
     _updateDemoClasses: function() {
       var that = this;
@@ -372,42 +421,34 @@ Element providing documentation for a requested Predix UI Sass component (design
       for(i=0; i<classArray.length; i++) {
         that.demoConfig[i].class = classArray[i];
       }
-      that._renderDemoCode();
+      // that._renderDemoCode();
     },
-    _renderDemoCode: function() {
-      var demoConfig = this.demoConfig,
-          htmlCode = '',
-          demoCode = document.querySelector('#demoCode'),
-          usageDemo = document.querySelector('#usageDemo');
+    _handleOptionChange: function(evt) {
 
-      demoCode.innerHTML = "";
-      usageDemo.innerHTML = "";
-
-      for(i=0; i<demoConfig.length; i++) {
-        var htmlCode = document.createElement(demoConfig[i].elem);
-        if(demoConfig[i].id) {
-          htmlCode.id = demoConfig[i].id;
-        }
-        htmlCode.classList.add(demoConfig[i].class);
-        htmlCode.innerHTML = demoConfig[i].elemContent;
-        // htmlCode = '<' + demoConfig[i].elem;
-        // if(demoConfig[i].id) {
-        //   htmlCode += ' id="' + demoConfig[i].id + '"';
-        // }
-        // htmlCode += ' class="' + demoConfig[i].class + '"';
-        // if(demoConfig[i].extra) {
-        //   htmlCode += ' ' + demoConfig[i].extra;
-        // }
-        // htmlCode+= '>';
-        // if(demoConfig[i].elemContent) {
-        //   htmlCode += demoConfig[i].elemContent;
-        // }
-        // htmlCode += '</' + demoConfig[i].elem + '>';
-        demoCode.appendChild(htmlCode);
-        var s = new XMLSerializer();
-        usageDemo.innerHTML = s.serializeToString(htmlCode).split("<").join("&lt;").split(">").join("&gt;") + '<br/>';
-      }
+      debugger;
     }
+    // _renderDemoCode: function() {
+    //   var demoConfig = this.demoConfig,
+    //       htmlCode = '',
+    //       demoCode = document.querySelector('#demoCode'),
+    //       usageDemo = document.querySelector('#usageDemo');
+    //
+    //   demoCode.innerHTML = "";
+    //   usageDemo.innerHTML = "";
+    //
+    //   for(i=0; i<demoConfig.length; i++) {
+    //     var htmlCode = document.createElement(demoConfig[i].elem);
+    //     if(demoConfig[i].id) {
+    //       htmlCode.id = demoConfig[i].id;
+    //     }
+    //     htmlCode.classList.add(demoConfig[i].class);
+    //     htmlCode.innerHTML = demoConfig[i].elemContent;
+    //
+    //     demoCode.appendChild(htmlCode);
+    //     var s = new XMLSerializer();
+    //     usageDemo.innerHTML = s.serializeToString(htmlCode).split("<").join("&lt;").split(">").join("&gt;") + '<br/>';
+    //   }
+    // }
 
   });
 </script>
