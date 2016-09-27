@@ -68,7 +68,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <!-- <div class="u-mb">Toggle size is <strong>{{dropdown}}</strong></div> -->
                     <div id="demoCode" class="flex u-mb-">
                       <!-- <div class="u-ml-">Toggle 'checked' value is {{togglecheck}}</div> -->
-                      <px-sass-doc-demo-code config={{demoConfig}}></px-sass-doc-demo-code>
+                      {{demoCode}}
                     </div>
                     <h4>Import:</h4>
                     <px-clipboard copy-from="#import">
@@ -293,8 +293,19 @@ Element providing documentation for a requested Predix UI Sass component (design
       _importCode: {
         type: String,
         computed: '_calculateImportCode(libraryName,layer,baseName)'
-      }
+      },
+      /**
+      * Composed array that represents the classes we want to place on the demo code based on the initialization of the component or updates to its state from the options pickers.
+      *
+      * @property _demoClasses
+      * @type Array
+      */
+      _demoClasses: {
+        type: Array,
+        value: function() { return []; }
+      },
     },
+    observers: ['_updateDemoClasses(styleOptionsArray)'],
     /**
     * Method that composes the import statement from the constituent parts.
     *
@@ -314,7 +325,7 @@ Element providing documentation for a requested Predix UI Sass component (design
     * @param b
     */
     _isEqual: function(a, b) {
-      return a === b ? true : false;
+      return a === b;
     },
     /**
     * TODO
@@ -330,13 +341,7 @@ Element providing documentation for a requested Predix UI Sass component (design
           var id = styleOptionsArray[i].id,
               element = document.querySelector('#'+id);
           if(styleOptionsArray[i].type === 'dropdown') {
-            element.addEventListener('dropdown_content_value_changed', function(evt) {
-              var classArray = evt.detail.key;
-              for(i=0; i<classArray.length; i++) {
-                that.demoConfig[i].class = classArray[i];
-              }
-              that._updateCode();
-            });
+            element.addEventListener('dropdown_content_value_changed', that._handleDropdownChange(evt));
           }
           else if(styleOptionsArray[i].type === 'boolean') {
             element.addEventListener('change', function(evt) {
@@ -353,9 +358,23 @@ Element providing documentation for a requested Predix UI Sass component (design
         }
       }, 500);
 
-      this._updateCode();
+      // Syncs the _demoClasses property with the wanted classes from the styleOptionsArray
+      this._updateDemoClasses();
+      // Renders the demo code element to the page
+      this._renderDemoCode();
     },
-    _updateCode: function() {
+    _updateDemoClasses: function() {
+      var that = this;
+
+    },
+    _handleDropdownChange: function() {
+      var classArray = evt.detail.key;
+      for(i=0; i<classArray.length; i++) {
+        that.demoConfig[i].class = classArray[i];
+      }
+      that._renderDemoCode();
+    },
+    _renderDemoCode: function() {
       var demoConfig = this.demoConfig,
           htmlCode = '',
           demoCode = document.querySelector('#demoCode'),
@@ -365,21 +384,28 @@ Element providing documentation for a requested Predix UI Sass component (design
       usageDemo.innerHTML = "";
 
       for(i=0; i<demoConfig.length; i++) {
-        htmlCode = '<' + demoConfig[i].elem;
+        var htmlCode = document.createElement(demoConfig[i].elem);
         if(demoConfig[i].id) {
-          htmlCode += ' id="' + demoConfig[i].id + '"';
+          htmlCode.id = demoConfig[i].id;
         }
-        htmlCode += ' class="' + demoConfig[i].class + '"';
-        if(demoConfig[i].extra) {
-          htmlCode += ' ' + demoConfig[i].extra;
-        }
-        htmlCode+= '>';
-        if(demoConfig[i].elemContent) {
-          htmlCode += demoConfig[i].elemContent;
-        }
-        htmlCode += '</' + demoConfig[i].elem + '>';
-        demoCode.innerHTML += htmlCode;
-        usageDemo.innerHTML += htmlCode.split("<").join("&lt;").split(">").join("&gt;") + '<br/>';
+        htmlCode.classList.add(demoConfig[i].class);
+        htmlCode.innerHTML = demoConfig[i].elemContent;
+        // htmlCode = '<' + demoConfig[i].elem;
+        // if(demoConfig[i].id) {
+        //   htmlCode += ' id="' + demoConfig[i].id + '"';
+        // }
+        // htmlCode += ' class="' + demoConfig[i].class + '"';
+        // if(demoConfig[i].extra) {
+        //   htmlCode += ' ' + demoConfig[i].extra;
+        // }
+        // htmlCode+= '>';
+        // if(demoConfig[i].elemContent) {
+        //   htmlCode += demoConfig[i].elemContent;
+        // }
+        // htmlCode += '</' + demoConfig[i].elem + '>';
+        demoCode.appendChild(htmlCode);
+        var s = new XMLSerializer();
+        usageDemo.innerHTML = s.serializeToString(htmlCode).split("<").join("&lt;").split(">").join("&gt;") + '<br/>';
       }
     }
 

@@ -53,7 +53,6 @@
                      "$inuit-enable-btn--disabled",
                      "$inuit-enable-btn--bare",
                      "$inuit-enable-btn--icon"]'
-      usage-html = "{{usageHtml}}"
       style-variables = '["$inuit-btn-color",
                           "$inuit-btn-background",
                           "$inuit-btn-background--hover",
@@ -76,12 +75,87 @@
                           "$inuit-btn-disabled-background",
                           "$inuit-btn-disabled-border-color"]'
       dependencies = '["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'
+      usage-html = "{{usageHtml}}"
       demo-config = '[{
           "elem": "button",
           "class": "btn",
-          "elemContent":"text"
+          "elemContent":"Test"
         }]'
-      style-options-array = "{{styleOptionsArray}}">
+      style-options-array ="[
+      {
+        'label': 'Size',
+        'type': 'dropdown',
+        'id': 'sizeDropdown',
+        'dropdownItems': [
+          {
+            'key':['btn--small'],
+            'val': 'small'
+          },{
+            'key':['btn'],
+            'val': 'regular'
+          },{
+            'key':['btn--large'],
+            'val': 'large'
+          },{
+            'key':['btn--huge'],
+            'val': 'huge'
+          }
+        ],
+        'displayValue': 'regular'
+      },
+      {
+        'label': 'Type',
+        'type': 'dropdown',
+        'id': 'typeDropdown',
+        'dropdownItems': [
+          {
+            'key':['btn--primary'],
+            'val': 'primary'
+          },{
+            'key':['btn'],
+            'val': 'secondary'
+          },{
+            'key':['btn--tertiary'],
+            'val': 'tertiary'
+          }
+        ],
+        'displayValue': 'secondary'
+      }]"
+    >
+      <!-- Light DOM of px-sass-doc-viewer -->
+      <template selectedOptions="[[selectedOptions]]" is="px-button-demo">
+        <!--
+          selectedOptions = [
+            { id: "sizeDropdown", displayValue: { key: ["btn--huge"], val: "huge" } },
+            { id: "typeDropdown", displayValue: { key: ["btn--primary"], val: "primary" } }
+          ]
+        -->
+        <button class="{{ classes }}" >Example button</button>
+      </template>
+      <script>
+        Polymer({
+          is: 'px-button-demo',
+          properties: {
+            selectedOptions: {
+              type: Array,
+              value: function() { return []; }
+            },
+            classes: {
+              type: String,
+              computed: '_computeClasses(selectedOptions)'
+            },
+          },
+          /*
+           *  We want to return a String of classes with spaces
+           *  take selectedOptions array and loop over each option and return the key value
+           */
+          _computeClasses: function() {
+            return this.selectOptions.map(function(option){
+              return option.displayValue.key.join(" ")
+            }).join(" ");
+          }
+        })
+      </script>
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">
@@ -131,7 +205,7 @@
             "val": "huge"
           }],
           dropdownItemsType = [{
-            "key":["btn btn--primary"],
+            "key":["btn--primary"],
             "val": "primary"
           },{
             "key":["btn"],
@@ -139,7 +213,7 @@
           },{
             "key":["btn btn--tertiary"],
             "val": "tertiary"
-          }]
+          }],
           styleOptionsArray = [{
             "label": "Size",
             "type": "dropdown",
