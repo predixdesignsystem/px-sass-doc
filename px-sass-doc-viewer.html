@@ -44,7 +44,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                   <template is="dom-if" if="{{_isEqual(item.type,'dropdown')}}">
                     <div class="u-mb-">{{item.label}}:
                       <div style="width: 100%;">
-                        <px-dropdown id="{{item.id}}" display-value="{{_selectedOptions[item.id]}}" value="{{_selectedOptions[item.id]}}">
+                        <px-dropdown id="{{item.id}}" display-value="{{item.selectedValue}}" value="{{item.selectedValue}}">
                           <px-dropdown-content
                             items="{{item.dropdownItems}}">
                           </px-dropdown-content>
@@ -54,7 +54,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                   </template>
                   <template is="dom-if" if="{{_isEqual(item.type,'boolean')}}">
                     <div class="flex u-mb-">
-                      <input id="{{item.id}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.value::change}}">
+                      <input id="{{item.id}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.selectedValue::change}}">
                       <label for$="{{item.id}}" class="toggle__label toggle__label--small"></label>
                       <div class="u-ml-">{{item.label}}</div>
                     </div>
@@ -68,7 +68,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <!-- <div class="u-mb">Toggle size is <strong>{{dropdown}}</strong></div> -->
                     <div id="demoCode" class="flex u-mb-">
                       <!-- <div class="u-ml-">Toggle 'checked' value is {{togglecheck}}</div> -->
-                      <content select=".content"></content>
+                      <content ></content>
                     </div>
                     <h4>Import:</h4>
                     <px-clipboard copy-from="#import">
@@ -254,28 +254,13 @@ Element providing documentation for a requested Predix UI Sass component (design
         value: function() { return [];}
       },
       /**
-      * Array of objects describing the HTML structure of the component.
-      * Each object should contain:
-      * - elem (the HTML tag for the element)
-      * - id (for the element)
-      * - class (one or more classes)
-      * - extra (any additional HTML to include in the element, e.g. "checked")
-      *
-      * @property demoConfig
-      * @type Array
-      */
-      demoConfig: {
-        type: Array,
-        value: function() { return [];}
-      },
-      /**
       * Array of objects representing the options to populate on the left side of the mega demo.
       * Each object should contain:
       * - label (to place above or next to the option)
       * - type ("dropdown" or "boolean")
       * - id (for the selector)
       * - dropdownItems (only applies for type dropdown)
-      * - displayValue (only applies for type dropdown)
+      * - selectedValue (only applies for type dropdown)
       *
       * @property styleOptionsArray
       * @type Array
@@ -295,24 +280,17 @@ Element providing documentation for a requested Predix UI Sass component (design
         computed: '_calculateImportCode(libraryName,layer,baseName)'
       },
       /**
-      * Composed array that represents the classes we want to place on the demo code based on the initialization of the component or updates to its state from the options pickers.
+      * Represents the options that are selected at the time. Used by external components to update themselves based on what options are selected.
       *
-      * @property _demoClasses
-      * @type Array
+      * @property selectedOptions
+      * @type Object
       */
-      _demoClasses: {
-        type: Array,
-        value: function() { return []; }
-      },
-      /**
-       *
-       */
-      _selectedOptions: {
+      selectedOptions: {
         type: Object,
         value: function() { return {}; }
       }
     },
-    observers: ['_setSelectedOptionsFirstTime(styleOptionsArray)'],
+    observers: ['_updateSelectedOptions(styleOptionsArray.*)'],
     /**
     * Method that composes the import statement from the constituent parts.
     *
@@ -334,121 +312,27 @@ Element providing documentation for a requested Predix UI Sass component (design
     _isEqual: function(a, b) {
       return a === b;
     },
-    _setSelectedOptionsFirstTime: function() {
+    /**
+     * if the styleOptionsArray has a value run through each item, get the selectedValue, and assign it to selectedOptions
+     */
+    _updateSelectedOptions: function() {
       if (this.styleOptionsArray.length > 0) {
         // If we haven't already set our defaults, do it now. We only want to do so once.
-        if (!this._alreadySetDefaults) {
-          this._alreadySetDefaults = true;
-          var i = 0,
-              len = this.styleOptionsArray.length;
-          for (i; i < len; i++) {
-            var opt = this.styleOptionsArray[i];
-            if (opt.type == "dropdown") {
-              this._selectedOptions[opt.id] = opt.displayValue;
-            }
-            if (opt.type == "toggle") {
-              this._selectedOptions[opt.id] = opt.defaultValue;
-            }
-          };
-        }
+        var i = 0,
+            len = this.styleOptionsArray.length;
+        for (i; i < len; i++) {
+          var opt = this.styleOptionsArray[i];
+          if (opt.type == "dropdown") {
+            this.selectedOptions[opt.id] = opt.selectedValue;
+          }
+          if (opt.type == "toggle") {
+            this.selectedOptions[opt.id] = opt.defaultValue;
+          }
+        };
+
+        // Notify the world that we changed
+        this.fire('px-sass-doc-viewer-selected-options-changed', this.selectedOptions);
       }
-    },
-    /**
-    * TODO
-    *
-    * @method ready
-    */
-    ready: function() {
-      // Set the default values for our options (dropdown or checkbox)
-      // E.g.:
-      // _selectedOptions = {
-      //   "sizeDropdown" : "regular",
-      //   "typeDropdown" : "secondary"
-      // }
-      // Array.prototype.forEach(this.styleOptionsArray, function(opt){
-      //   if (opt.type == "dropdown") {
-      //     this._selectedOptions[opt.id] = opt.displayValue;
-      //   }
-      //   if (opt.type == "toggle") {
-      //     this._selectedOptions[opt.id] = opt.defaultValue;
-      //   }
-      // }).bind(this);
-    },
-    /**
-    * TODO
-    *
-    * @method attached
-    */
-    attached: function() {
-
-
-
-
-      // setTimeout(function() {
-      //   var styleOptionsArray = that.styleOptionsArray;
-      //   for(i=0; i<styleOptionsArray.length; i++) {
-      //     var id = styleOptionsArray[i].id,
-      //         element = document.querySelector('#'+id);
-      //     if(styleOptionsArray[i].type === 'dropdown') {
-      //       element.addEventListener('dropdown_content_value_changed', that._handleDropdownChange(evt));
-      //     }
-      //     else if(styleOptionsArray[i].type === 'boolean') {
-      //       element.addEventListener('change', function(evt) {
-      //         var attribute = evt.target.id,
-      //             value = evt.target.checked;
-      //         if(value === true) {
-      //           // add class to demoConfig[0].class
-      //         }
-      //         else {
-      //           // look for class in demoConfig[0].class and remove it if found
-      //         }
-      //       });
-      //     }
-      //   }
-      // }, 500);
-
-      // Syncs the _demoClasses property with the wanted classes from the styleOptionsArray
-      this._updateDemoClasses();
-      // Renders the demo code element to the page
-      // this._renderDemoCode();
-    },
-    _updateDemoClasses: function() {
-      var that = this;
-
-    },
-    _handleDropdownChange: function() {
-      var classArray = evt.detail.key;
-      for(i=0; i<classArray.length; i++) {
-        that.demoConfig[i].class = classArray[i];
-      }
-      // that._renderDemoCode();
-    },
-    _handleOptionChange: function(evt) {
-
-      debugger;
     }
-    // _renderDemoCode: function() {
-    //   var demoConfig = this.demoConfig,
-    //       htmlCode = '',
-    //       demoCode = document.querySelector('#demoCode'),
-    //       usageDemo = document.querySelector('#usageDemo');
-    //
-    //   demoCode.innerHTML = "";
-    //   usageDemo.innerHTML = "";
-    //
-    //   for(i=0; i<demoConfig.length; i++) {
-    //     var htmlCode = document.createElement(demoConfig[i].elem);
-    //     if(demoConfig[i].id) {
-    //       htmlCode.id = demoConfig[i].id;
-    //     }
-    //     htmlCode.classList.add(demoConfig[i].class);
-    //     htmlCode.innerHTML = demoConfig[i].elemContent;
-    //
-    //     demoCode.appendChild(htmlCode);
-    //     var s = new XMLSerializer();
-    //     usageDemo.innerHTML = s.serializeToString(htmlCode).split("<").join("&lt;").split(">").join("&gt;") + '<br/>';
-    //   }
-    // }
-
   });
 </script>

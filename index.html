@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>px-sass-doc-viewer Demo</title>
   <link rel="stylesheet" type="text/css" href="css/px-sass-doc-viewer-demo.css" />
+  <link rel="import" type="text/css" href="css/px-sass-doc-viewer-styles.html" />
   <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
   <script src="../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../px-theme/px-theme.html" />
@@ -82,41 +83,13 @@
           "elemContent":"Test"
         }]'
       style-options-array ="{{styleOptionsArray}}"
+      markup-manager="{{MarkupManager}}"
     >
       <!-- Light DOM of px-sass-doc-viewer -->
-      <template selectedOptions="[[selectedOptions]]" is="px-button-demo">
-        <!--
-          selectedOptions = [
-            { id: "sizeDropdown", displayValue: { key: ["btn--huge"], val: "huge" } },
-            { id: "typeDropdown", displayValue: { key: ["btn--primary"], val: "primary" } }
-          ]
-        -->
-        <button class="{{ classes }}" >Example button</button>
-      </template>
-      <script>
-        Polymer({
-          is: 'px-button-demo',
-          properties: {
-            selectedOptions: {
-              type: Array,
-              value: function() { return []; }
-            },
-            classes: {
-              type: String,
-              computed: '_computeClasses(selectedOptions)'
-            },
-          },
-          /*
-           *  We want to return a String of classes with spaces
-           *  take selectedOptions array and loop over each option and return the key value
-           */
-          _computeClasses: function() {
-            return this.selectOptions.map(function(option){
-              return option.displayValue.key.join(" ")
-            }).join(" ");
-          }
-        })
-      </script>
+      <!-- <template id="component-button-demo"> -->
+      <!-- </template> -->
+      <button class$="{{classInsert1}}" >Example button</button>
+
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">
@@ -140,6 +113,10 @@
       </div>
     </footer>
   </template>
+
+
+
+
   <script>
     window.addEventListener('WebComponentsReady', function() {
       var template = document.querySelector('template[is=dom-bind]'),
@@ -180,19 +157,48 @@
             "type": "dropdown",
             "id": "sizeDropdown",
             "dropdownItems": dropdownItemsSize,
-            "displayValue": "regular"
+            "selectedValue": "regular"
           },
           {
             "label": "Type",
             "type": "dropdown",
             "id": "typeDropdown",
             "dropdownItems": dropdownItemsType,
-            "displayValue": "secondary"
-          }];
+            "selectedValue": "secondary"
+          }],
+          lookupTable = {
+            "sizeDropdown" : {
+              "small" : "btn--small",
+              "regular" : "",
+              "large" : "btn--large",
+              "huge" : "btn--huge"
+            },
+            "typeDropdown" : {
+              "primary" : "btn--primary",
+              "secondary" : "",
+              "tertiary" : "btn--tertiary"
+            }
+          };
       template.selected = "0";
       template.styleOptionsArray = styleOptionsArray;
       template.usageHtml = usageHtml;
+      template.classes = "";
+      // Set the default value for classInsert
+      template.classInsert1 = "btn";
+
+      document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
+        template.selectedOptions = evt.detail;
+        //output obj {size : small}
+        template.classInsert1 =
+          "btn " +
+          lookupTable["sizeDropdown"][template.selectedOptions.sizeDropdown] +
+          " " +
+          lookupTable["typeDropdown"][template.selectedOptions.typeDropdown];
+      })
     });
+
+
+
   </script>
 </body>
 </html>
