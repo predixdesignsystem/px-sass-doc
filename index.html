@@ -130,26 +130,26 @@
                        "<button class=\"btn btn--icon\">...</button>",
                        "<button class=\"btn btn--bare\">...</button>"],
           dropdownItemsSize = [{
-            "key":["btn--small"],
+            "key":["small"],
             "val": "small"
           },{
-            "key":["btn"],
+            "key":["regular"],
             "val": "regular"
           },{
-            "key":["btn--large"],
+            "key":["large"],
             "val": "large"
           },{
-            "key":["btn--huge"],
+            "key":["huge"],
             "val": "huge"
           }],
           dropdownItemsType = [{
-            "key":["btn--primary"],
+            "key":["primary"],
             "val": "primary"
           },{
-            "key":["btn"],
+            "key":["secondary"],
             "val": "secondary"
           },{
-            "key":["btn--tertiary"],
+            "key":["tertiary"],
             "val": "tertiary"
           }],
           styleOptionsArray = [{
@@ -184,7 +184,9 @@
       template.usageHtml = usageHtml;
       template.classes = "";
       // Set the default value for classInsert
+      // TODO: figure out first pass before px-sass-doc-viewer-selected-options-changed
       template.classInsert1 = "btn";
+
 
       document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
         template.selectedOptions = evt.detail;
