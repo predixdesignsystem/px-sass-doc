@@ -67,21 +67,20 @@ Element providing documentation for a requested Predix UI Sass component (design
                 <div class="flex flex--col">
                   <div class="demo u-p+">
                     <div class="flex u-mb-">
-                      <content id="demoCode"></content>
+                      <content id="htmlDemo" select="#htmlDemo"></content>
                     </div>
                     <h4>Sass Import:</h4>
-                    <px-clipboard copy-from="#demoCodeImport">
+                    <px-clipboard copy-from="#importDemo">
                       <figure class="code u-mr-">
                         <code id="import">
-                          {{_importCode}}
+                          <content id="importCode" select="#importDemo"></content>
                         </code>
-                        <code id="demoCodeImport"></code>
                       </figure>
                     </px-clipboard>
                     <h4>HTML Usage:</h4>
-                    <px-clipboard copy-from="#demoCodeUsage">
+                    <px-clipboard copy-from="#htmlDemoUsage">
                       <figure class="code u-mr-">
-                        <code id="demoCodeUsage"></code>
+                        <code id="htmlDemoUsage"></code>
                       </figure>
                     </px-clipboard>
                 </div>
@@ -344,13 +343,13 @@ Element providing documentation for a requested Predix UI Sass component (design
     * called on attached and when style options is updated
     */
     _render: function() {
-      var code = this.getContentChildren('#demoCode')[0].outerHTML,
-          output = this._fireOutputEvent(code, 'html');
+      var code = this.getContentChildren('#htmlDemo')[0].innerHTML,
+          output = this._fireOutputEvent(code, 'html').replace(/\n/g, '').trim();
       if (output.substr(0, 5) !== '<span') {
         //prism highlighter hasn't loaded yet. run this again with async.
         this.async(this._render,50);
       } else {
-        this.$.demoCodeUsage.innerHTML = output;
+        this.$.htmlDemoUsage.innerHTML = output;
       }
     },
     /**
