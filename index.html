@@ -29,16 +29,15 @@
         <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
       </a>
       <h1 class="delta">px-sass-doc-viewer</h1>
-      <div class="description-text">
+      <p class="description-text">
         Element providing documentation for a requested Predix UI Sass component (design library).
-      </div>
+      </p>
       <div class="flex">
         <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/px-sass-doc-viewer.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
         <img class="u-mr--" src="https://img.shields.io/bower/v/px-sass-doc-viewer.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
         <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/px-sass-doc-viewer.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
       </div>
     </div>
-    <br />
 
     <px-sass-doc-viewer
       id = "px-sass-doc"
@@ -86,9 +85,7 @@
       markup-manager="{{MarkupManager}}"
     >
       <!-- Light DOM of px-sass-doc-viewer -->
-      <!-- <template id="component-button-demo"> -->
-      <!-- </template> -->
-      <button class$="{{classInsert1}}" >Example button</button>
+      <button class$="{{classInsert1}}">Example button</button>
 
     </px-sass-doc-viewer>
 
@@ -114,9 +111,6 @@
     </footer>
   </template>
 
-
-
-
   <script>
     window.addEventListener('WebComponentsReady', function() {
       var template = document.querySelector('template[is=dom-bind]'),
@@ -132,23 +126,23 @@
           dropdownItemsSize = [{
             "key":["small"],
             "val": "small"
-          },{
+            },{
             "key":["regular"],
             "val": "regular"
-          },{
+            },{
             "key":["large"],
             "val": "large"
-          },{
+            },{
             "key":["huge"],
             "val": "huge"
           }],
           dropdownItemsType = [{
             "key":["primary"],
             "val": "primary"
-          },{
+            },{
             "key":["secondary"],
             "val": "secondary"
-          },{
+            },{
             "key":["tertiary"],
             "val": "tertiary"
           }],
@@ -158,13 +152,17 @@
             "id": "sizeDropdown",
             "dropdownItems": dropdownItemsSize,
             "selectedValue": "regular"
-          },
-          {
+            },{
             "label": "Type",
             "type": "dropdown",
             "id": "typeDropdown",
             "dropdownItems": dropdownItemsType,
             "selectedValue": "secondary"
+            },{
+            "label": "Disabled",
+            "type": "boolean",
+            "id": "disabledBool",
+            "selectedValue": false
           }],
           lookupTable = {
             "sizeDropdown" : {
@@ -177,12 +175,14 @@
               "primary" : "btn--primary",
               "secondary" : "",
               "tertiary" : "btn--tertiary"
+            },
+            "disabledBool" : {
+              true : "btn--disabled",
+              false : ""
             }
           };
-      template.selected = "0";
       template.styleOptionsArray = styleOptionsArray;
       template.usageHtml = usageHtml;
-      template.classes = "";
       // Set the default value for classInsert
       // TODO: figure out first pass before px-sass-doc-viewer-selected-options-changed
       template.classInsert1 = "btn";
@@ -195,7 +195,9 @@
           "btn " +
           lookupTable["sizeDropdown"][template.selectedOptions.sizeDropdown] +
           " " +
-          lookupTable["typeDropdown"][template.selectedOptions.typeDropdown];
+          lookupTable["typeDropdown"][template.selectedOptions.typeDropdown] +
+          " " +
+          lookupTable["disabledBool"][template.selectedOptions.disabledBool];
       })
     });
 

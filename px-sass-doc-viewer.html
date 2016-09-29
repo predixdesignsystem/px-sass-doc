@@ -44,7 +44,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                   <template is="dom-if" if="{{_isEqual(item.type,'dropdown')}}">
                     <div class="u-mb-">{{item.label}}:
                       <div style="width: 100%;">
-                        <px-dropdown id="{{item.id}}" display-value="{{item.selectedValue}}" value="{{item.selectedValue}}">
+                        <px-dropdown id="{{item.id}}" display-value="{{item.selectedValue}}">
                           <px-dropdown-content
                             items="{{item.dropdownItems}}">
                           </px-dropdown-content>
@@ -65,10 +65,8 @@ Element providing documentation for a requested Predix UI Sass component (design
             <div class="demoContainer u-mt+">
                 <div class="flex flex--col">
                   <div class="demo u-p+">
-                    <!-- <div class="u-mb">Toggle size is <strong>{{dropdown}}</strong></div> -->
                     <div id="demoCode" class="flex u-mb-">
-                      <!-- <div class="u-ml-">Toggle 'checked' value is {{togglecheck}}</div> -->
-                      <content ></content>
+                      <content></content>
                     </div>
                     <h4>Import:</h4>
                     <px-clipboard copy-from="#import">
@@ -155,7 +153,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <p>This module depends on the following modules (automatically included with Bower install):
                       <ul>
                         <template is="dom-repeat" items="{{dependencies}}">
-                          <li><a href="{{item}}" target="_blank">{{item}}</a></li>
+                          <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
                         </template>
                       </ul>
                     </p>
@@ -325,8 +323,8 @@ Element providing documentation for a requested Predix UI Sass component (design
           if (opt.type == "dropdown") {
             this.selectedOptions[opt.id] = opt.selectedValue;
           }
-          if (opt.type == "toggle") {
-            this.selectedOptions[opt.id] = opt.defaultValue;
+          if (opt.type == "boolean") {
+            this.selectedOptions[opt.id] = opt.selectedValue;
           }
         };
 
