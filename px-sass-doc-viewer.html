@@ -66,7 +66,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                 <div class="flex flex--col">
                   <div class="demo u-p+">
                     <div id="demoCode" class="flex u-mb-">
-                      <content></content>
+                      <content id="lightDemoCode"></content>
                     </div>
                     <h4>Import:</h4>
                     <px-clipboard copy-from="#import">
@@ -80,6 +80,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <px-clipboard copy-from="#usageDemo">
                       <figure class="code u-mr-">
                         <code id="usageDemo">
+                          <content></content>
                         </code>
                       </figure>
                     </px-clipboard>
@@ -330,7 +331,6 @@ Element providing documentation for a requested Predix UI Sass component (design
 
         // Notify the world that we changed
         this.fire('px-sass-doc-viewer-selected-options-changed', this.selectedOptions);
-        // debugger;
       }
     }
   });
