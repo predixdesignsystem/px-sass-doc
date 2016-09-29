@@ -7,8 +7,8 @@
 
 <link rel="import" href="css/px-sass-doc-viewer-styles.html">
 <link rel="import" href="../px-clipboard/px-clipboard.html">
+<link rel="import" href="../prism-element/prism-highlighter.html" />
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
-
 
 <!--
 Element providing documentation for a requested Predix UI Sass component (design library).
@@ -34,6 +34,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 <dom-module id="px-sass-doc-viewer">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
+    <prism-highlighter></prism-highlighter>
 
     <div style="position: relative;" class="u-pb++ flex flex--col">
           <section>
@@ -77,10 +78,9 @@ Element providing documentation for a requested Predix UI Sass component (design
                       </figure>
                     </px-clipboard>
                     <h4>Usage:</h4>
-                    <px-clipboard copy-from="#usageDemo">
+                    <px-clipboard copy-from="#demoCodePrint">
                       <figure class="code u-mr-">
-                        <code id="usageDemo">
-                          <content></content>
+                        <code id="demoCodePrint">
                         </code>
                       </figure>
                     </px-clipboard>
@@ -290,6 +290,9 @@ Element providing documentation for a requested Predix UI Sass component (design
       }
     },
     observers: ['_updateSelectedOptions(styleOptionsArray.*)'],
+    attached: function() {
+      this._render();
+    },
     /**
     * Method that composes the import statement from the constituent parts.
     *
@@ -331,7 +334,34 @@ Element providing documentation for a requested Predix UI Sass component (design
 
         // Notify the world that we changed
         this.fire('px-sass-doc-viewer-selected-options-changed', this.selectedOptions);
+        // Re-render usage
+        this._render();
       }
+    },
+    /**
+    * function to render the demo element that is created
+    * called on attached and when style options is updated
+    */
+    _render: function() {
+      var code = this.getContentChildren('#lightDemoCode')[0].outerHTML,
+          output = this._fireOutputEvent(code, 'html');
+      if (output.substr(0, 5) !== '<span') {
+        //prism highlighter hasn't loaded yet. run this again with async.
+        this.async(this._render,50);
+      } else {
+        this.$.demoCodePrint.innerHTML = output;
+      }
+    },
+    /**
+    *
+    * This method fires a syntax-highlight event (meant for prism-highlighter), and returns the code, with formatting.
+    *
+    * @method _fireOutputEvent
+    * @return {Highlighted Code}
+    */
+    _fireOutputEvent: function(code, lang) {
+      // debugger
+      return this.fire('syntax-highlight', {code: code, lang: lang}).detail.code;
     }
   });
 </script>

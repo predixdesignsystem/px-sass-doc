@@ -187,19 +187,29 @@
       // TODO: figure out first pass before px-sass-doc-viewer-selected-options-changed
       template.classInsert1 = "btn";
 
+      function makeClassInsert(defaultClass,arr) {
+        // defaultClass = "btn"
+        // arr = [sizeDropdown, typeDropdown, disabledBool]
+        var i = 0,
+            len = arr.length,
+            classes = [defaultClass];
+        for (i; i < len; i++) {
+          // arr[i] is 'sizeDropdown'
+          classes.push(lookupTable[arr[i]][template.selectedOptions[arr[i]]]);
+        }
+        // ["btn", "", "btn--something", ""]
+        return classes.filter(function(klass) {
+          // only return true if not empty string
+          return klass !== "";
+        }).join(" ");
+      };
 
       document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
         template.selectedOptions = evt.detail;
-        //output obj {size : small}
-        template.classInsert1 =
-          "btn " +
-          lookupTable["sizeDropdown"][template.selectedOptions.sizeDropdown] +
-          " " +
-          lookupTable["typeDropdown"][template.selectedOptions.typeDropdown] +
-          " " +
-          lookupTable["disabledBool"][template.selectedOptions.disabledBool];
-      })
-    });
+        template.classInsert1 = makeClassInsert("btn",["sizeDropdown","typeDropdown","disabledBool"])
+      });
+
+    });//close WebComponentsReady
 
 
 
