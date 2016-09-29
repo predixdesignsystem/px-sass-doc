@@ -66,22 +66,22 @@ Element providing documentation for a requested Predix UI Sass component (design
             <div class="demoContainer u-mt+">
                 <div class="flex flex--col">
                   <div class="demo u-p+">
-                    <div id="demoCode" class="flex u-mb-">
-                      <content id="lightDemoCode"></content>
+                    <div class="flex u-mb-">
+                      <content id="demoCode"></content>
                     </div>
-                    <h4>Import:</h4>
-                    <px-clipboard copy-from="#import">
+                    <h4>Sass Import:</h4>
+                    <px-clipboard copy-from="#demoCodeImport">
                       <figure class="code u-mr-">
                         <code id="import">
                           {{_importCode}}
                         </code>
+                        <code id="demoCodeImport"></code>
                       </figure>
                     </px-clipboard>
-                    <h4>Usage:</h4>
-                    <px-clipboard copy-from="#demoCodePrint">
+                    <h4>HTML Usage:</h4>
+                    <px-clipboard copy-from="#demoCodeUsage">
                       <figure class="code u-mr-">
-                        <code id="demoCodePrint">
-                        </code>
+                        <code id="demoCodeUsage"></code>
                       </figure>
                     </px-clipboard>
                 </div>
@@ -291,6 +291,7 @@ Element providing documentation for a requested Predix UI Sass component (design
     },
     observers: ['_updateSelectedOptions(styleOptionsArray.*)'],
     attached: function() {
+      // @TODO Put an observer on the light dom (to make sure the content slot has its content distributed)
       this._render();
     },
     /**
@@ -343,13 +344,13 @@ Element providing documentation for a requested Predix UI Sass component (design
     * called on attached and when style options is updated
     */
     _render: function() {
-      var code = this.getContentChildren('#lightDemoCode')[0].outerHTML,
+      var code = this.getContentChildren('#demoCode')[0].outerHTML,
           output = this._fireOutputEvent(code, 'html');
       if (output.substr(0, 5) !== '<span') {
         //prism highlighter hasn't loaded yet. run this again with async.
         this.async(this._render,50);
       } else {
-        this.$.demoCodePrint.innerHTML = output;
+        this.$.demoCodeUsage.innerHTML = output;
       }
     },
     /**
