@@ -85,7 +85,7 @@
     >
       <!-- Light DOM of px-sass-doc-viewer -->
       <span id="htmlDemo">
-        <button class$="{{classInsert}}">Example button</button>
+        <button class$="{{inserts.classInsert}}">Example button</button>
       </span>
 
       <span id="importDemo">
@@ -214,6 +214,59 @@
               }
             }
           };
+
+      var options = [
+        {
+          name: "Size",
+          type: "dropdown",
+          choices: [
+            "small",
+            { name: "regular (default)", isDefault: true },
+            "large",
+            "huge"
+          ]
+        },
+        {
+          name: "Type",
+          type: "dropdown",
+          choices: [
+            "primary",
+            { name: "secondary", isDefault: true },
+            "tertiary"
+          ]
+        },
+        {
+          name: "Disabled",
+          type: "boolean",
+          defaultChoice: true
+        }
+      ];
+
+      var PxSassDocViewer = document.querySelector('px-sass-doc-viewer'),
+          Demo = PxSassDocViwer.demo({
+            domBindTemplate: template,
+            options: options
+          });
+
+      // Define our inserts
+      Demo.createInsert("classInsert").prependBase("btn").joinedBy(" ");
+      Demo.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
+
+      // Describe how we'll build those inserts
+      Demo.whenOption("Size").is("small").include("btn--small").in("classInsert");
+      Demo.whenOption("Type").is("primary").include("btn--primary").in("classInsert");
+
+      Demo.whenOption("Size").is("large").include("btn--large").in("classInsert");
+      Demo.whenOption("Size").is("regular").include("").in("classInsert");
+      Demo.whenOption("Size").is("small").include("btn--disabled").in("classInsert");
+
+      // Render classInsert
+      template.classInsert = Demo._inserts.classInsert.render("small");
+      template.classInsert = Demo._inserts.classInsert.render(selectedOptions);
+      template.classInsert = Demo._inserts.classInsert.render(["Size","regular"],["Type","primary"]);
+
+      // -> return a finished string that we can print out and put in our light DOM
+
       template.styleOptionsArray = styleOptionsArray;
       template.usageHtml = usageHtml;
       // Set the default value for classInsert
