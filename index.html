@@ -82,10 +82,11 @@
           "elemContent":"Test"
         }]'
       style-options-array ="{{styleOptionsArray}}"
+      style-options="{{styleOptions}}"
     >
       <!-- Light DOM of px-sass-doc-viewer -->
       <span id="htmlDemo">
-        <button class$="{{inserts.classInsert}}">Example button</button>
+        <button class$="{{classInsert}}">Example button</button>
       </span>
 
       <span id="importDemo">
@@ -129,213 +130,226 @@
                        "<button class=\"btn btn--disabled\">...</button>",
                        "<button class=\"btn btn--icon\">...</button>",
                        "<button class=\"btn btn--bare\">...</button>"],
-          dropdownItemsSize = [{
-            "key":["small"],
-            "val": "small"
-            },{
-            "key":["regular"],
-            "val": "regular (default)"
-            },{
-            "key":["large"],
-            "val": "large"
-            },{
-            "key":["huge"],
-            "val": "huge"
-          }],
-          dropdownItemsType = [{
-            "key":["primary"],
-            "val": "primary"
-            },{
-            "key":["secondary"],
-            "val": "secondary (default)"
-            },{
-            "key":["tertiary"],
-            "val": "tertiary"
-          }],
-          styleOptionsArray = [{
-            "label": "Size",
-            "type": "dropdown",
-            "id": "sizeDropdown",
-            "dropdownItems": dropdownItemsSize,
-            "selectedValue": "regular (default)"
-            },{
-            "label": "Type",
-            "type": "dropdown",
-            "id": "typeDropdown",
-            "dropdownItems": dropdownItemsType,
-            "selectedValue": "secondary (default)"
-            },{
-            "label": "Disabled",
-            "type": "boolean",
-            "id": "disabledBool",
-            "selectedValue": false
-          }],
-          lookupTable = {
-            "sizeDropdown" : {
-              "small": {
-                "class": "btn--small",
-                "import": '$inuit-enable-btn--small : true;'
-              },
-              "regular (default)": {
-                "class": "" ,
-                "import": ''
-              },
-              "large" : {
-                "class" : "btn--large" ,
-                "import" : '$inuit-enable-btn--large : true;'
-              },
-              "huge" : {
-                "class" : "btn--huge" ,
-                "import" : '$inuit-enable-btn--huge : true;'
-              }
+          styleOptions = [
+            {
+              name: "Size",
+              type: "dropdown",
+              choices: [
+                "small",
+                { name: "regular (default)", isDefault: true },
+                "large",
+                "huge"
+              ]
             },
-            "typeDropdown" : {
-              "primary" : {
-                "class": "btn--primary",
-                "import": '$inuit-enable-btn--primary : true;'
-              },
-              "secondary (default)" :{
-                "class": "",
-                "import": ''
-              },
-              "tertiary" :{
-                "class": "btn--tertiary",
-                "import": '$inuit-enable-btn--tertiary : true;'
-              }
+            {
+              name: "Type",
+              type: "dropdown",
+              choices: [
+                "primary",
+                { name: "secondary", isDefault: true },
+                "tertiary"
+              ]
             },
-            "disabledBool" : {
-              true : {
-                "class": "btn--disabled",
-                "import": '$inuit-enable-btn--disabled : true;'
-              },
-              false : {
-                "class": "",
-                "import": ''
-              }
+            {
+              name: "Disabled",
+              type: "boolean",
+              defaultChoice: true
             }
-          };
+          ];
 
-      var options = [
-        {
-          name: "Size",
-          type: "dropdown",
-          choices: [
-            "small",
-            { name: "regular (default)", isDefault: true },
-            "large",
-            "huge"
-          ]
-        },
-        {
-          name: "Type",
-          type: "dropdown",
-          choices: [
-            "primary",
-            { name: "secondary", isDefault: true },
-            "tertiary"
-          ]
-        },
-        {
-          name: "Disabled",
-          type: "boolean",
-          defaultChoice: true
-        }
-      ];
+      // Find the DocViwer in the DOM
+      var DocViewer = document.querySelector('px-sass-doc-viewer');
 
-      var PxSassDocViewer = document.querySelector('px-sass-doc-viewer'),
-          Demo = PxSassDocViwer.demo({
-            domBindTemplate: template,
-            options: options
-          });
+      // Define our insertion points (inserts) in the light DOM
+      DocViewer.createInsert("classInsert").prependBase("btn").joinedBy(" ");
+      // DocViewer.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
 
-      // Define our inserts
-      Demo.createInsert("classInsert").prependBase("btn").joinedBy(" ");
-      Demo.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
+      // Describe those inserts by explaining how chosen options should add or remove information
+      //// Cases for `classInsert`
+      DocViewer.whenOption("Size").is("small").include("btn--small").in("classInsert");
+      DocViewer.whenOption("Size").is("regular (default)").include("").in("classInsert");
+      DocViewer.whenOption("Size").is("large").include("btn--large").in("classInsert");
+      DocViewer.whenOption("Size").is("huge").include("btn--huge").in("classInsert");
 
-      // Describe how we'll build those inserts
-      Demo.whenOption("Size").is("small").include("btn--small").in("classInsert");
-      Demo.whenOption("Type").is("primary").include("btn--primary").in("classInsert");
+      DocViewer.whenOption("Type").is("primary").include("btn--primary").in("classInsert");
+      DocViewer.whenOption("Type").is("secondary").include("").in("classInsert");
+      DocViewer.whenOption("Type").is("tertiary").include("btn--tertiary").in("classInsert");
 
-      Demo.whenOption("Size").is("large").include("btn--large").in("classInsert");
-      Demo.whenOption("Size").is("regular").include("").in("classInsert");
-      Demo.whenOption("Size").is("small").include("btn--disabled").in("classInsert");
-
-      // Render classInsert
-      template.classInsert = Demo._inserts.classInsert.render("small");
-      template.classInsert = Demo._inserts.classInsert.render(selectedOptions);
-      template.classInsert = Demo._inserts.classInsert.render(["Size","regular"],["Type","primary"]);
+      DocViewer.whenOption("Disabled").is(true).include("btn--disabled").in("classInsert");
+      DocViewer.whenOption("Disabled").is(false).include("").in("classInsert");
 
       // -> return a finished string that we can print out and put in our light DOM
 
-      template.styleOptionsArray = styleOptionsArray;
+      template.styleOptions = styleOptions;
       template.usageHtml = usageHtml;
+      // Render classInsert
+      template.classInsert = DocViewer._inserts.classInsert.render([["Size","small"],["Type","primary"]]);
+
       // Set the default value for classInsert
       // TODO: figure out first pass before px-sass-doc-viewer-selected-options-changed
-      template.classInsert = "btn";
-      template.importInsert = ["@import 'px-buttons-design/_objects.buttons.scss';"];
+      // template.classInsert = "btn";
+      // template.importInsert = ["@import 'px-buttons-design/_objects.buttons.scss';"];
 
       // Takes a base thing
       // Takes an array of things to look up
       // Builds a string and returns it
       // function makeClassInsert(defaultClass,arr) {
-      function printWantedString(arr,type,baseString,seperator) {
-        // arr = ['sizeDropdown','typeDropdown']
-        // type = "class" or "import"
-        // baseString = { before: "btn", after: "$intuit-font-size: 44px !default;" }
-        // seperator = " " or "\n"
-        // makeClassInsert(['...'], "class", {"before":"btn"}, " ")
-        // makeClassInsert(['...'], "import", {"after":"@import ..."}, "\n")
-        var i = 0,
-            len = arr.length,
-            classes = [];
-
-        baseString = baseString || {};
-        if (baseString.before) {
-          classes.push(baseString.before);
-        }
-
-        for (i; i < len; i++) {
-          // arr[i] is 'sizeDropdown'
-          var typeOfOption = arr[i], // e.g. 'sizeDropdown'
-              activeSelection = template.selectedOptions[typeOfOption], // find the key of `typeOfOption` in `lookupTable`, get its value
-              toPush = lookupTable[typeOfOption][activeSelection][type];
-              // lookupTable["sizeDropdown"]["huge"]["class"]
-          classes.push(lookupTable[arr[i]][template.selectedOptions[arr[i]]][type]);
-        }
-
-        if (baseString.after) {
-          classes.push(baseString.after);
-        }
-        // ["btn", "", "btn--something", ""]
-        classes = classes.filter(function(klass) {
-          // only return true if not empty string
-          return klass !== "";
-        });
-        if (seperator) {
-          return classes.join(seperator).trim();
-        }
-        return classes;
-      };
-
-      document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
-        template.selectedOptions = evt.detail;
-        template.classInsert = printWantedString(
-          ["sizeDropdown","typeDropdown","disabledBool"],
-          "class",
-          { "before" : "btn" },
-          " "
-        );
-        template.importInsert = printWantedString(
-          ["sizeDropdown","typeDropdown","disabledBool"],
-          "import",
-          { "after" : "@import 'px-buttons-design/_objects.buttons.scss';" }
-        );
-      });
+      // function printWantedString(arr,type,baseString,seperator) {
+      //   // arr = ['sizeDropdown','typeDropdown']
+      //   // type = "class" or "import"
+      //   // baseString = { before: "btn", after: "$intuit-font-size: 44px !default;" }
+      //   // seperator = " " or "\n"
+      //   // makeClassInsert(['...'], "class", {"before":"btn"}, " ")
+      //   // makeClassInsert(['...'], "import", {"after":"@import ..."}, "\n")
+      //   var i = 0,
+      //       len = arr.length,
+      //       classes = [];
+      //
+      //   baseString = baseString || {};
+      //   if (baseString.before) {
+      //     classes.push(baseString.before);
+      //   }
+      //
+      //   for (i; i < len; i++) {
+      //     // arr[i] is 'sizeDropdown'
+      //     var typeOfOption = arr[i], // e.g. 'sizeDropdown'
+      //         activeSelection = template.selectedOptions[typeOfOption], // find the key of `typeOfOption` in `lookupTable`, get its value
+      //         toPush = lookupTable[typeOfOption][activeSelection][type];
+      //         // lookupTable["sizeDropdown"]["huge"]["class"]
+      //     classes.push(lookupTable[arr[i]][template.selectedOptions[arr[i]]][type]);
+      //   }
+      //
+      //   if (baseString.after) {
+      //     classes.push(baseString.after);
+      //   }
+      //   // ["btn", "", "btn--something", ""]
+      //   classes = classes.filter(function(klass) {
+      //     // only return true if not empty string
+      //     return klass !== "";
+      //   });
+      //   if (seperator) {
+      //     return classes.join(seperator).trim();
+      //   }
+      //   return classes;
+      // };
+      //
+      // document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
+      //   template.selectedOptions = evt.detail;
+      //   template.classInsert = printWantedString(
+      //     ["sizeDropdown","typeDropdown","disabledBool"],
+      //     "class",
+      //     { "before" : "btn" },
+      //     " "
+      //   );
+      //   template.importInsert = printWantedString(
+      //     ["sizeDropdown","typeDropdown","disabledBool"],
+      //     "import",
+      //     { "after" : "@import 'px-buttons-design/_objects.buttons.scss';" }
+      //   );
+      // });
 
     });//close WebComponentsReady
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // dropdownItemsSize = [{
+    //   "key":["small"],
+    //   "val": "small"
+    //   },{
+    //   "key":["regular"],
+    //   "val": "regular (default)"
+    //   },{
+    //   "key":["large"],
+    //   "val": "large"
+    //   },{
+    //   "key":["huge"],
+    //   "val": "huge"
+    // }],
+    // dropdownItemsType = [{
+    //   "key":["primary"],
+    //   "val": "primary"
+    //   },{
+    //   "key":["secondary"],
+    //   "val": "secondary (default)"
+    //   },{
+    //   "key":["tertiary"],
+    //   "val": "tertiary"
+    // }],
+    // styleOptionsArray = [{
+    //   "label": "Size",
+    //   "type": "dropdown",
+    //   "id": "sizeDropdown",
+    //   "dropdownItems": dropdownItemsSize,
+    //   "selectedValue": "regular (default)"
+    //   },{
+    //   "label": "Type",
+    //   "type": "dropdown",
+    //   "id": "typeDropdown",
+    //   "dropdownItems": dropdownItemsType,
+    //   "selectedValue": "secondary (default)"
+    //   },{
+    //   "label": "Disabled",
+    //   "type": "boolean",
+    //   "id": "disabledBool",
+    //   "selectedValue": false
+    // }],
+    // lookupTable = {
+    //   "sizeDropdown" : {
+    //     "small": {
+    //       "class": "btn--small",
+    //       "import": '$inuit-enable-btn--small : true;'
+    //     },
+    //     "regular (default)": {
+    //       "class": "" ,
+    //       "import": ''
+    //     },
+    //     "large" : {
+    //       "class" : "btn--large" ,
+    //       "import" : '$inuit-enable-btn--large : true;'
+    //     },
+    //     "huge" : {
+    //       "class" : "btn--huge" ,
+    //       "import" : '$inuit-enable-btn--huge : true;'
+    //     }
+    //   },
+    //   "typeDropdown" : {
+    //     "primary" : {
+    //       "class": "btn--primary",
+    //       "import": '$inuit-enable-btn--primary : true;'
+    //     },
+    //     "secondary (default)" :{
+    //       "class": "",
+    //       "import": ''
+    //     },
+    //     "tertiary" :{
+    //       "class": "btn--tertiary",
+    //       "import": '$inuit-enable-btn--tertiary : true;'
+    //     }
+    //   },
+    //   "disabledBool" : {
+    //     true : {
+    //       "class": "btn--disabled",
+    //       "import": '$inuit-enable-btn--disabled : true;'
+    //     },
+    //     false : {
+    //       "class": "",
+    //       "import": ''
+    //     }
+    //   }
+    // };
   </script>
 </body>
 </html>
