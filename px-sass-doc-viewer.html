@@ -339,7 +339,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         value: function() { return []; }
       }
     },
-    observers: ['_updateSelectedOptions(styleOptionsArray.*)','_computeStyleOptions(styleOptions.*)'],
+    observers: ['_updateSelectedOptions(_computedStyleOptions.*)','_computeStyleOptions(styleOptions.*)'],
     attached: function() {
       // @TODO Put an observer on the light dom (to make sure the content slot has its content distributed)
       this._render();
@@ -410,24 +410,22 @@ Element providing documentation for a requested Predix UI Sass component (design
      * if the styleOptionsArray has a value run through each item, get the selectedValue, and assign it to selectedOptions
      */
     _updateSelectedOptions: function() {
-      if (this.styleOptionsArray.length > 0) {
-        // If we haven't already set our defaults, do it now. We only want to do so once.
-        var i = 0,
-            len = this.styleOptionsArray.length;
-        for (i; i < len; i++) {
-          var opt = this.styleOptionsArray[i];
-          if (opt.type == "dropdown") {
-            this.selectedOptions[opt.id] = opt.selectedValue;
-          }
-          if (opt.type == "boolean") {
-            this.selectedOptions[opt.id] = opt.selectedValue;
-          }
-        };
+      if (this._computedStyleOptions.length > 0) {
+        // Get the selected options to use in each Insert render function
+        this.selectedOptions = this._computedStyleOptions.map(function(option){
+          return [ option.name, option.selectedValue ]
+        });
 
-        // Notify the world that we changed
-        this.fire('px-sass-doc-viewer-selected-options-changed', this.selectedOptions);
-        // Re-render usage
-        this._render();
+        // Loop over each Insert and run its render function, pass the result
+        var selectedOptions = this.selectedOptions,
+            inserts = this._inserts;
+        for (var key in inserts) {
+          if (inserts.hasOwnProperty(key)) {
+            var insert = inserts[key],
+                insertStr = insert.render(selectedOptions);
+            this.fire('px-sass-doc-viewer-selected-options-changed', { insert: insert.name, string: insertStr });
+          }
+        }
       }
     },
     /**
