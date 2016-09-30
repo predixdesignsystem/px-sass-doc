@@ -360,7 +360,6 @@ Element providing documentation for a requested Predix UI Sass component (design
     * @return {Highlighted Code}
     */
     _fireOutputEvent: function(code, lang) {
-      // debugger
       return this.fire('syntax-highlight', {code: code, lang: lang}).detail.code;
     }
   });

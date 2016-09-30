@@ -134,7 +134,7 @@
             "val": "small"
             },{
             "key":["regular"],
-            "val": "regular"
+            "val": "regular (default)"
             },{
             "key":["large"],
             "val": "large"
@@ -147,7 +147,7 @@
             "val": "primary"
             },{
             "key":["secondary"],
-            "val": "secondary"
+            "val": "secondary (default)"
             },{
             "key":["tertiary"],
             "val": "tertiary"
@@ -157,13 +157,13 @@
             "type": "dropdown",
             "id": "sizeDropdown",
             "dropdownItems": dropdownItemsSize,
-            "selectedValue": "regular"
+            "selectedValue": "regular (default)"
             },{
             "label": "Type",
             "type": "dropdown",
             "id": "typeDropdown",
             "dropdownItems": dropdownItemsType,
-            "selectedValue": "secondary"
+            "selectedValue": "secondary (default)"
             },{
             "label": "Disabled",
             "type": "boolean",
@@ -173,10 +173,10 @@
           lookupTable = {
             "sizeDropdown" : {
               "small": {
-                "class": "btn-small",
+                "class": "btn--small",
                 "import": '$inuit-enable-btn--small : true;'
               },
-              "regular": {
+              "regular (default)": {
                 "class": "" ,
                 "import": ''
               },
@@ -194,7 +194,7 @@
                 "class": "btn--primary",
                 "import": '$inuit-enable-btn--primary : true;'
               },
-              "secondary" :{
+              "secondary (default)" :{
                 "class": "",
                 "import": ''
               },
@@ -243,9 +243,9 @@
 
         for (i; i < len; i++) {
           // arr[i] is 'sizeDropdown'
-          var theTypeOfOption = arr[i], // e.g. 'sizeDropdown'
-              activeSelection = template.selectedOptions[theTypeOfOption], // find the key of `theTypeOfOption` in `lookupTable`, get its value
-              toPush = lookupTable[theTypeOfOption][activeSelection][type];
+          var typeOfOption = arr[i], // e.g. 'sizeDropdown'
+              activeSelection = template.selectedOptions[typeOfOption], // find the key of `typeOfOption` in `lookupTable`, get its value
+              toPush = lookupTable[typeOfOption][activeSelection][type];
               // lookupTable["sizeDropdown"]["huge"]["class"]
           classes.push(lookupTable[arr[i]][template.selectedOptions[arr[i]]][type]);
         }
