@@ -34,6 +34,11 @@ Element providing documentation for a requested Predix UI Sass component (design
 <dom-module id="px-sass-doc-viewer">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
+    <style>
+      .import-code pre {
+        white-space: pre;
+      }
+    </style>
     <prism-highlighter></prism-highlighter>
 
     <div style="position: relative;" class="u-pb++ flex flex--col">
@@ -72,9 +77,11 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <h4>Sass Import:</h4>
                     <px-clipboard copy-from="#importDemo">
                       <figure class="code u-mr-">
-                        <code id="import">
-                          <content id="importCode" select="#importDemo"></content>
+                        <!-- <pre> -->
+                        <code id="import" class="import-code">
+                          <content id="importCode" select="#importDemo" style="white-space:pre;"></content>
                         </code>
+                        <!-- </pre>   -->
                       </figure>
                     </px-clipboard>
                     <h4>HTML Usage:</h4>
@@ -340,10 +347,7 @@ Element providing documentation for a requested Predix UI Sass component (design
       }
     },
     observers: ['_updateSelectedOptions(_computedStyleOptions.*)','_computeStyleOptions(styleOptions.*)'],
-    attached: function() {
-      // @TODO Put an observer on the light dom (to make sure the content slot has its content distributed)
-      this._render();
-    },
+
     /**
     * Computes the `options` to make the more verbose `_computedOptions` we need
     * for the px-dropdown-content component.
@@ -424,6 +428,7 @@ Element providing documentation for a requested Predix UI Sass component (design
             var insert = inserts[key],
                 insertStr = insert.render(selectedOptions);
             this.fire('px-sass-doc-viewer-selected-options-changed', { insert: insert.name, string: insertStr });
+            this._highlight();
           }
         }
       }
@@ -432,12 +437,12 @@ Element providing documentation for a requested Predix UI Sass component (design
     * function to render the demo element that is created
     * called on attached and when style options is updated
     */
-    _render: function() {
+    _highlight: function() {
       var code = this.getContentChildren('#htmlDemo')[0].innerHTML,
           output = this._fireOutputEvent(code, 'html').replace(/\n/g, '').trim();
       if (output.substr(0, 5) !== '<span') {
         //prism highlighter hasn't loaded yet. run this again with async.
-        this.async(this._render,50);
+        this.async(this._highlight,50);
       } else {
         this.$.htmlDemoUsage.innerHTML = output;
       }
@@ -518,7 +523,7 @@ Element providing documentation for a requested Predix UI Sass component (design
     * @return {Object} this - Returns `this`, a reference to the Insert, to allow chaining methods.
     */
     PxSassInsert.prototype.appendBase = function(base) {
-      this.base = { str: base, position: this.APPEND_PREPEND };
+      this.base = { str: base, position: this.POSITION_APPEND };
       return this;
     };
 
@@ -560,7 +565,7 @@ Element providing documentation for a requested Predix UI Sass component (design
       }.bind(this)).join(this.joiner);
 
       // Return the final string to render with base
-      return this._renderWithBase(combinedStr);
+      return this._renderWithBase(combinedStr).trim();
     };
 
     /**

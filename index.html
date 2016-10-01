@@ -89,11 +89,7 @@
         <button class$="{{classInsert}}">Example button</button>
       </span>
 
-      <span id="importDemo">
-        <template is="dom-repeat" items={{importInsert}}>
-          {{item}}<br/>
-        </template>
-      </span>
+      <span id="importDemo" style="">{{importInsert}}</span>
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">
@@ -119,9 +115,9 @@
   </template>
 
   <script>
+  var template = document.querySelector('template[is=dom-bind]');
     window.addEventListener('WebComponentsReady', function() {
-      var template = document.querySelector('template[is=dom-bind]'),
-          usageHtml = ["<button class=\"btn\">...</button>",
+      var usageHtml = ["<button class=\"btn\">...</button>",
                        "<button class=\"btn btn--primary\">...</button>",
                        "<button class=\"btn btn--tertiary\">...</button>",
                        "<button class=\"btn btn--small\">...</button>",
@@ -146,14 +142,14 @@
               type: "dropdown",
               choices: [
                 "primary",
-                { name: "secondary", isDefault: true },
+                { name: "secondary (default)", isDefault: true },
                 "tertiary"
               ]
             },
             {
               name: "Disabled",
               type: "boolean",
-              defaultChoice: true
+              defaultChoice: false
             }
           ];
 
@@ -162,7 +158,7 @@
 
       // Define our insertion points (inserts) in the light DOM
       DocViewer.createInsert("classInsert").prependBase("btn").joinedBy(" ");
-      // DocViewer.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
+      DocViewer.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
 
       // Describe those inserts by explaining how chosen options should add or remove information
       //// Cases for `classInsert`
@@ -178,16 +174,73 @@
       DocViewer.whenOption("Disabled").is(true).include("btn--disabled").in("classInsert");
       DocViewer.whenOption("Disabled").is(false).include("").in("classInsert");
 
+      // for @import
+      DocViewer.whenOption("Size").is("small").include("$inuit-enable-btn--small : true;").in("importInsert");
+      DocViewer.whenOption("Size").is("regular (default)").include("").in("importInsert");
+      DocViewer.whenOption("Size").is("large").include("$inuit-enable-btn--large : true;").in("importInsert");
+      DocViewer.whenOption("Size").is("huge").include("$inuit-enable-btn--huge : true;").in("importInsert");
+
+      DocViewer.whenOption("Type").is("primary").include("$inuit-enable-btn--primary : true;").in("importInsert");
+      DocViewer.whenOption("Type").is("secondary").include("").in("importInsert");
+      DocViewer.whenOption("Type").is("tertiary").include("$inuit-enable-btn--tertiary : true;").in("importInsert");
+
+      DocViewer.whenOption("Disabled").is(true).include("$inuit-enable-btn--disabled : true;").in("importInsert");
+      DocViewer.whenOption("Disabled").is(false).include("").in("importInsert");
+
+      // lookupTable = {
+      //   "sizeDropdown" : {
+      //     "small": {
+      //       "class": "btn-small",
+      //       "import": '$inuit-enable-btn--small : true;'
+      //     },
+      //     "regular": {
+      //       "class": "" ,
+      //       "import": ''
+      //     },
+      //     "large" : {
+      //       "class" : "btn--large" ,
+      //       "import" : '$inuit-enable-btn--large : true;'
+      //     },
+      //     "huge" : {
+      //       "class" : "btn--huge" ,
+      //       "import" : '$inuit-enable-btn--huge : true;'
+      //     }
+      //   },
+      //   "typeDropdown" : {
+      //     "primary" : {
+      //       "class": "btn--primary",
+      //       "import": '$inuit-enable-btn--primary : true;'
+      //     },
+      //     "secondary" :{
+      //       "class": "",
+      //       "import": ''
+      //     },
+      //     "tertiary" :{
+      //       "class": "btn--tertiary",
+      //       "import": '$inuit-enable-btn--tertiary : true;'
+      //     }
+      //   },
+      //   "disabledBool" : {
+      //     true : {
+      //       "class": "btn--disabled",
+      //       "import": '$inuit-enable-btn--disabled : true;'
+      //     },
+      //     false : {
+      //       "class": "",
+      //       "import": ''
+      //     }
+      //   }
+      // };
 
       template.styleOptions = styleOptions;
       template.usageHtml = usageHtml;
-      template.classInsert = "btn";
-
-      document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
-        template[evt.detail.insert] = evt.detail.string;
-      });
+      // template.classInsert = "btn";
 
     });//close WebComponentsReady
+
+    document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
+      template[evt.detail.insert] = evt.detail.string;
+    });
   </script>
 </body>
 </html>
