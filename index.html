@@ -87,40 +87,20 @@
                           "$inuit-btn-disabled-border-color"]'
       dependencies = '["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'
       usage-html = "{{usageHtml}}"
-      style-options="{{styleOptions}}"
-    >
-      <!-- Dynamic snippets for the mega demo at the top of the page -->
-      <section data-slot="sassFlags" data-highlight="true">
-$inuit-btn-color
-$inuit-btn-background
-$inuit-btn-background--hover
-$inuit-btn-background--pressed
-$inuit-btn-border-color
-$inuit-btn-border-color--hover
-$inuit-btn-border-color--pressed
-$inuit-btn-shadow
-$inuit-btn-shadow--light
-$inuit-btn-primary-color
-$inuit-btn-primary-background
-$inuit-btn-primary-background--hover
-$inuit-btn-primary-background--pressed
-$inuit-btn-primary-border-color
-$inuit-btn-tertiary-color
-$inuit-btn-tertiary-background
-$inuit-btn-tertiary-background--hover
-$inuit-btn-tertiary-background--pressed
-$inuit-btn-disabled-color
-$inuit-btn-disabled-background
-$inuit-btn-disabled-border-color
-      </section>
-
-      <section data-slot="styleVariables" data-highlight="true">
-      </section>
+      style-options="{{styleOptions}}">
 
       <section data-slot="usageHTML" data-highlight="true">
+<button class="btn">...</button>
+<button class="btn btn--primary">...</button>
+<button class="btn btn--tertiary">...</button>
+<button class="btn btn--small">...</button>
+<button class="btn btn--large">...</button>
+<button class="btn btn--huge">...</button>
+<button class="btn btn--disabled">...</button>
+<button class="btn btn--icon">...</button>
+<button class="btn btn--bare">...</button>
       </section>
-
-      <!-- Code blocks for the doc viewer at the bottom of the page -->
+      
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">

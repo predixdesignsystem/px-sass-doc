@@ -79,14 +79,13 @@ Element providing documentation for a requested Predix UI Sass component (design
         <!-- USAGE -->
         <div class="componentHeader">Usage</div>
         <p>Include the following HTML in your main application to use the element:</p>
-        <px-clipboard copy-from="#usage2">
-          <figure class="code u-mr-">
-            <code id="usage2">
-              <template is="dom-repeat" items="{{usageHtml}}">
-                {{item}} <br/>
-              </template>
-            </code>
-          </figure>
+        <px-clipboard copy-from="#usageHTML">
+          <px-highlighter highlight-target="#usageHTML">
+            <content select="[data-slot=usageHTML]"></content>
+          </px-highlighter>
+          <pre class="code u-mr- u-mb-">
+            <code id="usageHTML" class="import-code"></code>
+          </pre>
         </px-clipboard>
 
         <!-- CUSTOMIZATION -->
