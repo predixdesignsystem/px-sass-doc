@@ -23,7 +23,7 @@
   <!-- allow use of Polymer bindings in main document -->
   <template id="just-for-demo" is="dom-bind">
 
-    <!-- discription -->
+    <!-- description -->
     <div class="hero u-p++ text--shadow">
       <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/px-sass-doc-viewer" target="_blank">
         <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
@@ -81,15 +81,16 @@
           "class": "btn",
           "elemContent":"Test"
         }]'
-      style-options-array ="{{styleOptionsArray}}"
       style-options="{{styleOptions}}"
     >
-      <!-- Light DOM of px-sass-doc-viewer -->
-      <span id="htmlDemo">
+      <section data-slot="htmlDemo" data-highlight="true">
         <button class$="{{classInsert}}">Example button</button>
-      </span>
+      </section>
 
-      <span id="importDemo" style="">{{importInsert}}</span>
+      px-
+      <section data-slot="importDemo" data-highlight="true">
+        {{importInsert}}
+      </section>
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">
@@ -187,56 +188,9 @@
       DocViewer.whenOption("Disabled").is(true).include("$inuit-enable-btn--disabled : true;").in("importInsert");
       DocViewer.whenOption("Disabled").is(false).include("").in("importInsert");
 
-      // lookupTable = {
-      //   "sizeDropdown" : {
-      //     "small": {
-      //       "class": "btn-small",
-      //       "import": '$inuit-enable-btn--small : true;'
-      //     },
-      //     "regular": {
-      //       "class": "" ,
-      //       "import": ''
-      //     },
-      //     "large" : {
-      //       "class" : "btn--large" ,
-      //       "import" : '$inuit-enable-btn--large : true;'
-      //     },
-      //     "huge" : {
-      //       "class" : "btn--huge" ,
-      //       "import" : '$inuit-enable-btn--huge : true;'
-      //     }
-      //   },
-      //   "typeDropdown" : {
-      //     "primary" : {
-      //       "class": "btn--primary",
-      //       "import": '$inuit-enable-btn--primary : true;'
-      //     },
-      //     "secondary" :{
-      //       "class": "",
-      //       "import": ''
-      //     },
-      //     "tertiary" :{
-      //       "class": "btn--tertiary",
-      //       "import": '$inuit-enable-btn--tertiary : true;'
-      //     }
-      //   },
-      //   "disabledBool" : {
-      //     true : {
-      //       "class": "btn--disabled",
-      //       "import": '$inuit-enable-btn--disabled : true;'
-      //     },
-      //     false : {
-      //       "class": "",
-      //       "import": ''
-      //     }
-      //   }
-      // };
-
       template.styleOptions = styleOptions;
       template.usageHtml = usageHtml;
-      // template.classInsert = "btn";
-
-    });//close WebComponentsReady
+    });
 
     document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
       template[evt.detail.insert] = evt.detail.string;

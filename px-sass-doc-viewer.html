@@ -9,6 +9,7 @@
 <link rel="import" href="../px-clipboard/px-clipboard.html">
 <link rel="import" href="../prism-element/prism-highlighter.html" />
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
+<link rel="import" href="px-highlighter.html" />
 
 <!--
 Element providing documentation for a requested Predix UI Sass component (design library).
@@ -72,23 +73,25 @@ Element providing documentation for a requested Predix UI Sass component (design
                 <div class="flex flex--col">
                   <div class="demo u-p+">
                     <div class="flex u-mb-">
-                      <content id="htmlDemo" select="#htmlDemo"></content>
+                      <px-highlighter highlight-target="#htmlDemoUsage" raw-target="#htmlDemo">
+                        <content select="[data-slot=htmlDemo]"></content>
+                      </px-highlighter>
+                      <section id="htmlDemo"></section>
                     </div>
                     <h4>Sass Import:</h4>
                     <px-clipboard copy-from="#importDemo">
-                      <figure class="code u-mr-">
-                        <!-- <pre> -->
-                        <code id="import" class="import-code">
-                          <content id="importCode" select="#importDemo" style="white-space:pre;"></content>
-                        </code>
-                        <!-- </pre>   -->
-                      </figure>
+                        <px-highlighter highlight-target="#importDemo">
+                          <content select="[data-slot=importDemo]"></content>
+                        </px-highlighter>
+                        <pre class="code u-mr-">
+                          <code id="importDemo" class="import-code"></code>
+                        </pre>
                     </px-clipboard>
                     <h4>HTML Usage:</h4>
                     <px-clipboard copy-from="#htmlDemoUsage">
-                      <figure class="code u-mr-">
+                      <pre class="code u-mr-">
                         <code id="htmlDemoUsage"></code>
-                      </figure>
+                      </pre>
                     </px-clipboard>
                 </div>
               </div>
@@ -259,22 +262,6 @@ Element providing documentation for a requested Predix UI Sass component (design
         value: function() { return [];}
       },
       /**
-      * Array of objects representing the options to populate on the left side of the mega demo.
-      * Each object should contain:
-      * - label (to place above or next to the option)
-      * - type ("dropdown" or "boolean")
-      * - id (for the selector)
-      * - dropdownItems (only applies for type dropdown)
-      * - selectedValue (only applies for type dropdown)
-      *
-      * @property styleOptionsArray
-      * @type Array
-      */
-      styleOptionsArray: {
-        type: Array,
-        value: function() { return []; }
-      },
-      /**
       * Array of objects representing the options that can be changed for this demo.
       * Each object should contain:
       * - {string} name - The name of the option (to place above or next to the option)
@@ -326,7 +313,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         value: function() { return {}; }
       },
       /**
-      * @TODO doc this
+      * PRIVATE. An internal representation of the inserts that are defined.
       *
       * @property _inserts
       * @type Object
@@ -336,7 +323,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         value: function() { return {}; }
       },
       /**
-      * @TODO doc this
+      * PRIVATE. An internal representation of the whenCases that are defined.
       *
       * @property _cases
       * @type Array
@@ -347,7 +334,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       }
     },
     observers: ['_updateSelectedOptions(_computedStyleOptions.*)','_computeStyleOptions(styleOptions.*)'],
-
     /**
     * Computes the `options` to make the more verbose `_computedOptions` we need
     * for the px-dropdown-content component.
@@ -378,12 +364,26 @@ Element providing documentation for a requested Predix UI Sass component (design
         }
       });
     },
+    /**
+    * Creates an insert from the PxSassInsert constructor and saves an internal
+    * representation to use later.
+    *
+    * @method createInsert
+    * @param name
+    * @returns {Insert}
+    */
     createInsert: function(name) {
       this._inserts[name] = new PxSassInsert(name, this);
-      // this._inserts["classInsert"] = new PxSassInsert(classInsert, <px-sass-doc-viewer></px-sass-doc-viwer>);
-      //
       return this._inserts[name];
     },
+    /**
+    * Creates a whenCase from the PxSassWhenCase constructor and saves an internal
+    * representation to use later.
+    *
+    * @method createInsert
+    * @param name
+    * @returns {WhenCase}
+    */
     whenOption: function(optionName) {
       var whenCase = new PxSassWhenCase(optionName, this);
       this._cases.push(whenCase);
@@ -428,7 +428,7 @@ Element providing documentation for a requested Predix UI Sass component (design
             var insert = inserts[key],
                 insertStr = insert.render(selectedOptions);
             this.fire('px-sass-doc-viewer-selected-options-changed', { insert: insert.name, string: insertStr });
-            this._highlight();
+            // this._highlight();
           }
         }
       }
