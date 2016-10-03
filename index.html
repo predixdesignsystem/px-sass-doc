@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>px-sass-doc-viewer Demo</title>
   <link rel="stylesheet" type="text/css" href="css/px-sass-doc-viewer-demo.css" />
   <link rel="import" type="text/css" href="css/px-sass-doc-viewer-styles.html" />
+
   <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
   <script src="../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../px-theme/px-theme.html" />
@@ -14,17 +14,10 @@
   <link rel="import" href="px-sass-doc-viewer.html" />
   <link rel="import" href="px-sass-demo-viewer.html" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
-  <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
 </head>
-
 <body>
-
-  <!-- Wrap elements with auto-binding template to -->
-  <!-- allow use of Polymer bindings in main document -->
   <template id="just-for-demo" is="dom-bind">
-
-    <!-- description -->
+    <!-- DESCRIPTION -->
     <div class="hero u-p++ text--shadow">
       <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/px-sass-doc-viewer" target="_blank">
         <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
@@ -40,6 +33,7 @@
       </div>
     </div>
 
+    <!-- DEMO VIEWER -->
     <px-sass-demo-viewer style-options="{{styleOptions}}">
       <!-- Dynamic snippets for the mega demo at the top of the page -->
       <section data-slot="htmlDemo" data-highlight="true">
@@ -51,44 +45,51 @@
       </section>
     </px-sass-demo-viewer>
 
+    <!-- DOC VIEWER -->
     <px-sass-doc-viewer
       library-name = "px-buttons-design"
       layer = "objects"
       base-name = "buttons"
-      inuit-flags = '["$inuit-enable-btn--small",
-                     "$inuit-enable-btn--large",
-                     "$inuit-enable-btn--huge",
-                     "$inuit-enable-btn--full",
-                     "$inuit-enable-btn--primary",
-                     "$inuit-enable-btn--tertiary",
-                     "$inuit-enable-btn--disabled",
-                     "$inuit-enable-btn--bare",
-                     "$inuit-enable-btn--icon"]'
-      style-variables = '["$inuit-btn-color",
-                          "$inuit-btn-background",
-                          "$inuit-btn-background--hover",
-                          "$inuit-btn-background--pressed",
-                          "$inuit-btn-border-color",
-                          "$inuit-btn-border-color--hover",
-                          "$inuit-btn-border-color--pressed",
-                          "$inuit-btn-shadow",
-                          "$inuit-btn-shadow--light",
-                          "$inuit-btn-primary-color",
-                          "$inuit-btn-primary-background",
-                          "$inuit-btn-primary-background--hover",
-                          "$inuit-btn-primary-background--pressed",
-                          "$inuit-btn-primary-border-color",
-                          "$inuit-btn-tertiary-color",
-                          "$inuit-btn-tertiary-background",
-                          "$inuit-btn-tertiary-background--hover",
-                          "$inuit-btn-tertiary-background--pressed",
-                          "$inuit-btn-disabled-color",
-                          "$inuit-btn-disabled-background",
-                          "$inuit-btn-disabled-border-color"]'
-      dependencies = '["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'
-      usage-html = "{{usageHtml}}"
-      style-options="{{styleOptions}}">
-
+      inuit-flags = '[
+      "$inuit-enable-btn--small",
+      "$inuit-enable-btn--large",
+      "$inuit-enable-btn--huge",
+      "$inuit-enable-btn--full",
+      "$inuit-enable-btn--primary",
+      "$inuit-enable-btn--tertiary",
+      "$inuit-enable-btn--disabled",
+      "$inuit-enable-btn--bare",
+      "$inuit-enable-btn--icon"
+      ]'
+      style-variables = '[
+      "$inuit-btn-color",
+      "$inuit-btn-background",
+      "$inuit-btn-background--hover",
+      "$inuit-btn-background--pressed",
+      "$inuit-btn-border-color",
+      "$inuit-btn-border-color--hover",
+      "$inuit-btn-border-color--pressed",
+      "$inuit-btn-shadow",
+      "$inuit-btn-shadow--light",
+      "$inuit-btn-primary-color",
+      "$inuit-btn-primary-background",
+      "$inuit-btn-primary-background--hover",
+      "$inuit-btn-primary-background--pressed",
+      "$inuit-btn-primary-border-color",
+      "$inuit-btn-tertiary-color",
+      "$inuit-btn-tertiary-background",
+      "$inuit-btn-tertiary-background--hover",
+      "$inuit-btn-tertiary-background--pressed",
+      "$inuit-btn-disabled-color",
+      "$inuit-btn-disabled-background",
+      "$inuit-btn-disabled-border-color"
+      ]'
+      dependencies = '[
+      "https://github.com/PredixDev/px-colors-design",
+      "https://github.com/PredixDev/px-defaults-design",
+      "https://github.com/PredixDev/px-helpers-design"
+      ]'>
+      <!-- Tags in slot aligned hard left so the whitespace will look correct when rendered -->
       <section data-slot="usageHTML" data-highlight="true">
 <button class="btn">...</button>
 <button class="btn btn--primary">...</button>
@@ -100,24 +101,17 @@
 <button class="btn btn--icon">...</button>
 <button class="btn btn--bare">...</button>
       </section>
-      
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">
       <div class="footer__container u-pv++">
         <div>
-          <a href="https://ge.com/digital" >
-            <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
-          </a>
+          <a href="https://ge.com/digital"><img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img"></a>
         </div>
         <div class="footer__list">
           <ul class="list-inline list-inline--delimited">
-            <li>
-              <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
-            </li>
-            <li>
-              <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
-            </li>
+            <li><a href="http://predix.io/legal" class="footer__list--lnk">Legal</a></li>
+            <li><a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a></li>
             <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
           </ul>
         </div>
@@ -126,85 +120,74 @@
   </template>
 
   <script>
-  var template = document.querySelector('template[is=dom-bind]');
-    window.addEventListener('WebComponentsReady', function() {
-      var usageHtml = ["<button class=\"btn\">...</button>",
-                       "<button class=\"btn btn--primary\">...</button>",
-                       "<button class=\"btn btn--tertiary\">...</button>",
-                       "<button class=\"btn btn--small\">...</button>",
-                       "<button class=\"btn btn--large\">...</button>",
-                       "<button class=\"btn btn--huge\">...</button>",
-                       "<button class=\"btn btn--disabled\">...</button>",
-                       "<button class=\"btn btn--icon\">...</button>",
-                       "<button class=\"btn btn--bare\">...</button>"],
-          styleOptions = [
-            {
-              name: "Size",
-              type: "dropdown",
-              choices: [
-                "small",
-                { name: "regular (default)", isDefault: true },
-                "large",
-                "huge"
-              ]
-            },
-            {
-              name: "Type",
-              type: "dropdown",
-              choices: [
-                "primary",
-                { name: "secondary (default)", isDefault: true },
-                "tertiary"
-              ]
-            },
-            {
-              name: "Disabled",
-              type: "boolean",
-              defaultChoice: false
-            }
-          ];
+  var template = document.querySelector('template[is=dom-bind]'),
+  styleOptions = [
+    {
+      name: "Size",
+      type: "dropdown",
+      choices: [
+        "small",
+        { name: "regular (default)", isDefault: true },
+        "large",
+        "huge"
+      ]
+    },
+    {
+      name: "Type",
+      type: "dropdown",
+      choices: [
+        "primary",
+        { name: "secondary (default)", isDefault: true },
+        "tertiary"
+      ]
+    },
+    {
+      name: "Disabled",
+      type: "boolean",
+      defaultChoice: false
+    }
+  ];
 
-      // Find the DocViwer in the DOM
-      var DocViewer = document.querySelector('px-sass-demo-viewer');
+  // Listen for changes to demo viewer selected options
+  document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
+    template[evt.detail.insert] = evt.detail.string;
+  });
 
-      // Define our insertion points (inserts) in the light DOM
-      DocViewer.createInsert("classInsert").prependBase("btn").joinedBy(" ");
-      DocViewer.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
+  window.addEventListener('WebComponentsReady', function() {
+    // Attach styleOptions to the template
+    template.styleOptions = styleOptions;
 
-      // Describe those inserts by explaining how chosen options should add or remove information
-      //// Cases for `classInsert`
-      DocViewer.whenOption("Size").is("small").include("btn--small").in("classInsert");
-      DocViewer.whenOption("Size").is("regular (default)").include("").in("classInsert");
-      DocViewer.whenOption("Size").is("large").include("btn--large").in("classInsert");
-      DocViewer.whenOption("Size").is("huge").include("btn--huge").in("classInsert");
+    // Find the DemoViewer in the DOM
+    var DemoViewer = document.querySelector('px-sass-demo-viewer');
 
-      DocViewer.whenOption("Type").is("primary").include("btn--primary").in("classInsert");
-      DocViewer.whenOption("Type").is("secondary").include("").in("classInsert");
-      DocViewer.whenOption("Type").is("tertiary").include("btn--tertiary").in("classInsert");
+    // Define our insertion points (inserts) in the light DOM
+    DemoViewer.createInsert("classInsert").prependBase("btn").joinedBy(" ");
+    DemoViewer.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
 
-      DocViewer.whenOption("Disabled").is(true).include("btn--disabled").in("classInsert");
-      DocViewer.whenOption("Disabled").is(false).include("").in("classInsert");
+    // Describe what should go in those inserts by explaining how chosen options should add or remove information
 
-      // for @import
-      DocViewer.whenOption("Size").is("small").include("$inuit-enable-btn--small : true;").in("importInsert");
-      DocViewer.whenOption("Size").is("regular (default)").include("").in("importInsert");
-      DocViewer.whenOption("Size").is("large").include("$inuit-enable-btn--large : true;").in("importInsert");
-      DocViewer.whenOption("Size").is("huge").include("$inuit-enable-btn--huge : true;").in("importInsert");
+    //// Cases for `classInsert`
+    DemoViewer.whenOption("Size").is("small").include("btn--small").in("classInsert");
+    DemoViewer.whenOption("Size").is("regular (default)").include("").in("classInsert");
+    DemoViewer.whenOption("Size").is("large").include("btn--large").in("classInsert");
+    DemoViewer.whenOption("Size").is("huge").include("btn--huge").in("classInsert");
+    DemoViewer.whenOption("Type").is("primary").include("btn--primary").in("classInsert");
+    DemoViewer.whenOption("Type").is("secondary").include("").in("classInsert");
+    DemoViewer.whenOption("Type").is("tertiary").include("btn--tertiary").in("classInsert");
+    DemoViewer.whenOption("Disabled").is(true).include("btn--disabled").in("classInsert");
+    DemoViewer.whenOption("Disabled").is(false).include("").in("classInsert");
 
-      DocViewer.whenOption("Type").is("primary").include("$inuit-enable-btn--primary : true;").in("importInsert");
-      DocViewer.whenOption("Type").is("secondary").include("").in("importInsert");
-      DocViewer.whenOption("Type").is("tertiary").include("$inuit-enable-btn--tertiary : true;").in("importInsert");
-
-      DocViewer.whenOption("Disabled").is(true).include("$inuit-enable-btn--disabled : true;").in("importInsert");
-      DocViewer.whenOption("Disabled").is(false).include("").in("importInsert");
-
-      template.styleOptions = styleOptions;
-      template.usageHtml = usageHtml;
-    });
-
-    document.addEventListener('px-sass-doc-viewer-selected-options-changed', function(evt){
-      template[evt.detail.insert] = evt.detail.string;
-    });
+    //// Cases for `importInsert`
+    DemoViewer.whenOption("Size").is("small").include("$inuit-enable-btn--small : true;").in("importInsert");
+    DemoViewer.whenOption("Size").is("regular (default)").include("").in("importInsert");
+    DemoViewer.whenOption("Size").is("large").include("$inuit-enable-btn--large : true;").in("importInsert");
+    DemoViewer.whenOption("Size").is("huge").include("$inuit-enable-btn--huge : true;").in("importInsert");
+    DemoViewer.whenOption("Type").is("primary").include("$inuit-enable-btn--primary : true;").in("importInsert");
+    DemoViewer.whenOption("Type").is("secondary").include("").in("importInsert");
+    DemoViewer.whenOption("Type").is("tertiary").include("$inuit-enable-btn--tertiary : true;").in("importInsert");
+    DemoViewer.whenOption("Disabled").is(true).include("$inuit-enable-btn--disabled : true;").in("importInsert");
+    DemoViewer.whenOption("Disabled").is(false).include("").in("importInsert");
+  });
   </script>
-</body>
+  </body>
 </html>
