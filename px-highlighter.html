@@ -92,6 +92,10 @@ element to be somewhere in the DOM to handle highlighting events.
       '_render(_rawCode,rawTarget)'
     ],
     ready: function() {
+      // When element is first created, try to highlight
+      this._highlight();
+
+      // Watch for changes in the future and keep highlighting
       var observer = new MutationObserver(function(mutations) {
         // Go highlight myself.
         this._highlight();

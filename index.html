@@ -12,6 +12,7 @@
   <link rel="import" href="../px-theme/px-theme.html" />
   <link rel="import" href="../px-dropdown/px-dropdown.html" />
   <link rel="import" href="px-sass-doc-viewer.html" />
+  <link rel="import" href="px-sass-demo-viewer.html" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
@@ -39,8 +40,18 @@
       </div>
     </div>
 
+    <px-sass-demo-viewer style-options="{{styleOptions}}">
+      <!-- Dynamic snippets for the mega demo at the top of the page -->
+      <section data-slot="htmlDemo" data-highlight="true">
+        <button class$="{{classInsert}}">Example button</button>
+      </section>
+
+      <section data-slot="importDemo" data-highlight="true">
+        {{importInsert}}
+      </section>
+    </px-sass-demo-viewer>
+
     <px-sass-doc-viewer
-      id = "px-sass-doc"
       library-name = "px-buttons-design"
       layer = "objects"
       base-name = "buttons"
@@ -76,21 +87,40 @@
                           "$inuit-btn-disabled-border-color"]'
       dependencies = '["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'
       usage-html = "{{usageHtml}}"
-      demo-config = '[{
-          "elem": "button",
-          "class": "btn",
-          "elemContent":"Test"
-        }]'
       style-options="{{styleOptions}}"
     >
-      <section data-slot="htmlDemo" data-highlight="true">
-        <button class$="{{classInsert}}">Example button</button>
+      <!-- Dynamic snippets for the mega demo at the top of the page -->
+      <section data-slot="sassFlags" data-highlight="true">
+$inuit-btn-color
+$inuit-btn-background
+$inuit-btn-background--hover
+$inuit-btn-background--pressed
+$inuit-btn-border-color
+$inuit-btn-border-color--hover
+$inuit-btn-border-color--pressed
+$inuit-btn-shadow
+$inuit-btn-shadow--light
+$inuit-btn-primary-color
+$inuit-btn-primary-background
+$inuit-btn-primary-background--hover
+$inuit-btn-primary-background--pressed
+$inuit-btn-primary-border-color
+$inuit-btn-tertiary-color
+$inuit-btn-tertiary-background
+$inuit-btn-tertiary-background--hover
+$inuit-btn-tertiary-background--pressed
+$inuit-btn-disabled-color
+$inuit-btn-disabled-background
+$inuit-btn-disabled-border-color
       </section>
 
-      px-
-      <section data-slot="importDemo" data-highlight="true">
-        {{importInsert}}
+      <section data-slot="styleVariables" data-highlight="true">
       </section>
+
+      <section data-slot="usageHTML" data-highlight="true">
+      </section>
+
+      <!-- Code blocks for the doc viewer at the bottom of the page -->
     </px-sass-doc-viewer>
 
     <footer class="footer flex flex--center">
@@ -155,7 +185,7 @@
           ];
 
       // Find the DocViwer in the DOM
-      var DocViewer = document.querySelector('px-sass-doc-viewer');
+      var DocViewer = document.querySelector('px-sass-demo-viewer');
 
       // Define our insertion points (inserts) in the light DOM
       DocViewer.createInsert("classInsert").prependBase("btn").joinedBy(" ");
