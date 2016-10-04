@@ -32,99 +32,74 @@ Element providing documentation for a requested Predix UI Sass component (design
 @demo index.html
 -->
 
-<dom-module id="px-sass-doc-viewer">
+<dom-module id="px-sass-doc-demo">
   <template>
-    <style include="px-sass-doc-viewer-styles"></style>
-    <prism-highlighter></prism-highlighter>
-    <div class="apiContainer">
-      <div class="flex flex--col api u-mt++">
+  <style include="px-sass-doc-viewer-styles"></style>
+  <prism-highlighter></prism-highlighter>
 
-        <!-- INSTALLATION -->
-        <div class="componentHeader">Installation</div>
-        <p>Install via command line:</p>
-        <px-clipboard copy-from="#install">
-          <figure class="code u-mr-">
-            <code id="install">
-              bower install --save {{libraryName}}
-            </code>
-          </figure>
-        </px-clipboard>
-
-        <!-- IMPORT -->
-        <div class="componentHeader">Import</div>
-        <template is="dom-if" if="{{inuitFlags}}">
-          <p>The following flags are available and, if necessary, should be set to true <strong>prior to the import</strong> statement below.</p>
-          <px-clipboard copy-from="#enable">
-            <figure class="code u-mr-">
-              <code id="install">
-                <template is="dom-repeat" items="{{inuitFlags}}">
-                  {{item}} : true;<br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
+  <section style="position: relative;" class="u-pb++ flex flex--col">
+    <div class="mega-demo flex u-ph++ u-pb++">
+      <!-- Style Options Sidebar -->
+      <div class="properties u-ph+ u-pb+ u-mt+">
+        <p class="epsilon">Style Options</p>
+        <template is="dom-repeat" items="{{_computedStyleOptions}}">
+          <template is="dom-if" if="{{_isEqual(item.type,'dropdown')}}">
+            <div class="u-mb-">{{item.name}}:
+              <div style="width: 100%;">
+                <px-dropdown id="{{item.id}}" display-value="{{item.selectedValue}}">
+                  <px-dropdown-content items="{{item.dropdownItems}}">
+                  </px-dropdown-content>
+                </px-dropdown>
+              </div>
+            </div>
+          </template>
+          <template is="dom-if" if="{{_isEqual(item.type,'boolean')}}">
+            <div class="flex u-mb-">
+              <input id="{{item.id}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.selectedValue::change}}">
+              <label for$="{{item.id}}" class="toggle__label toggle__label--small"></label>
+              <div class="u-ml-">{{item.name}}</div>
+            </div>
+          </template>
         </template>
+      </div>
 
-
-        <!-- INCLUDE -->
-        <p>Include the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
-        <px-clipboard copy-from="#import2">
-          <figure class="code u-mr-">
-            <code id="import2">
-              {{_importCode}}
-            </code>
-          </figure>
-        </px-clipboard>
-
-        <!-- USAGE -->
-        <div class="componentHeader">Usage</div>
-        <p>Include the following HTML in your main application to use the element:</p>
-        <px-clipboard copy-from="#usageHTML">
-          <px-highlighter highlight-target="#usageHTML">
-            <content select="[data-slot=usageHTML]"></content>
-          </px-highlighter>
-          <pre class="code u-mr- u-mb">
-            <code id="usageHTML" class="import-code"></code>
-          </pre>
-        </px-clipboard>
-
-        <!-- CUSTOMIZATION -->
-        <template is="dom-if" if="{{styleVariables}}">
-          <div class="componentHeader">Customization</div>
-          <p>The following variables are available to customize the style of this element:</p>
-          <px-clipboard copy-from="#customize">
-            <figure class="code u-mr-">
-              <code id="customize">
-                <template is="dom-repeat" items="{{styleVariables}}">
-                  {{item}} <br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
-        </template>
-
-        <!-- DEPENDENCIES -->
-        <template is="dom-if" if="{{dependencies}}">
-          <div class="componentHeader">Dependencies</div>
-          <p>This module depends on the following modules (automatically included with Bower install):
-            <ul>
-              <template is="dom-repeat" items="{{dependencies}}">
-                <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
-              </template>
-            </ul>
-          </p>
-        </template>
-
+      <!-- Demo Container -->
+      <div class="demoContainer u-mt+">
+        <div class="flex flex--col">
+          <div class="demo u-p+">
+            <div class="flex u-mb-">
+              <px-highlighter highlight-target="#htmlDemoUsage" raw-target="#htmlDemo">
+                <content select="[data-slot=htmlDemo]"></content>
+              </px-highlighter>
+              <section id="htmlDemo"></section>
+            </div>
+            <h4>Sass Import:</h4>
+            <px-clipboard copy-from="#importDemo">
+              <px-highlighter highlight-target="#importDemo">
+                <content select="[data-slot=importDemo]"></content>
+              </px-highlighter>
+              <pre class="code u-mr-">
+                <code id="importDemo" class="import-code"></code>
+              </pre>
+            </px-clipboard>
+            <h4>HTML Usage:</h4>
+            <px-clipboard copy-from="#htmlDemoUsage">
+              <pre class="code u-mr-">
+                <code id="htmlDemoUsage"></code>
+              </pre>
+            </px-clipboard>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
   </template>
 </dom-module>
 
 <script>
   Polymer({
-
-    is: 'px-sass-doc-viewer',
+    is: 'px-sass-doc-demo',
 
     /**
      * Properties block, expose attribute values to the DOM via 'notify'
@@ -134,96 +109,180 @@ Element providing documentation for a requested Predix UI Sass component (design
      */
     properties: {
       /**
-      * Name of the overall sass repository.
+      * Array of objects representing the options that can be changed for this demo.
+      * Each object should contain:
+      * - {string} name - The name of the option (to place above or next to the option)
+      * - {string} type - The type of the object ("dropdown" or "boolean")
       *
-      * @property libraryName
-      * @type String
-      **/
-      libraryName: {
-        type: String,
-        value: ''
-      },
-      /**
-      * Inuit flags that are used to enable features and functionality, represented as an array of strings, which will display with line breaks between each.
+      * If the option will be displayed as a dropdown, provide an array of `choices` in the object:
+      * - {Array} choices: An array of choices. Each should either be a string (e.g. "small") or an object
+      *                    with the keys `name` and `isDefault` (e.g. { name: "small", isDefault: true })
       *
-      * @property inuitFlags
+      * If the option will be displayed as a boolean, just specify a `defaultChoice`:
+      * - {boolean} defaultChoice: A boolean that describes if this option should appear as `true` or `false` by default.
+      *
+      * @property styleOptions
       * @type Array
       */
-      inuitFlags: {
+      styleOptions: {
         type: Array,
         value: function() { return []; }
       },
+
       /**
-      *  ITCSS layer that this component belongs in, e.g. generic, objects, trumps, etc.
+      * Represents the options that are selected at the time. Used by external components to update themselves based on what options are selected.
       *
-      * @property layer
-      * @type String
+      * @property selectedOptions
+      * @type Object
       */
-      layer: {
-        type: String,
-        value: ''
+      selectedOptions: {
+        type: Object,
+        value: function() { return {}; }
       },
+
       /**
-      * Base name of the component in the file path, e.g. _objects.BASENAME.scss.
+      * PRIVATE. An array of objects that is computed from `options` to provide
+      * the boilerplate we need to create
       *
-      * @property baseName
-      * @type String
-      */
-      baseName: {
-        type: String,
-        value: ''
-      },
-      /**
-      * The HTML code snippet to actually use the component, represented as an array of strings. A newline will appear between each string in the array. Include an empty string to result in an extra line break.
-      *
-      * @property usageHtml
+      * @property _computedOptions
       * @type Array
       */
-      usageHtml: {
+      _computedStyleOptions: {
         type: Array,
         value: function() { return []; }
       },
+
       /**
-      * The SASS variables available for customizing the appearance of the component, represented as an array of strings, which will display with line breaks between each.
+      * PRIVATE. An internal representation of the inserts that are defined.
       *
-      * @property styleVariables
+      * @property _inserts
+      * @type Object
+      */
+      _inserts: {
+        type: Object,
+        value: function() { return {}; }
+      },
+
+      /**
+      * PRIVATE. An internal representation of the whenCases that are defined.
+      *
+      * @property _cases
       * @type Array
       */
-      styleVariables: {
+      _cases: {
         type: Array,
         value: function() { return []; }
-      },
-      /**
-      * Any dependencies that exist for this component, represented as an array of strings, which will display in a list. Each string item should be the fully qualified URL of the repo.
-      *
-      * @property dependencies
-      * @type Array
-      */
-      dependencies: {
-        type: Array,
-        value: function() { return [];}
-      },
-      /**
-      * Composed string that represents the import statement of the sass component.
-      *
-      * @property _importCode
-      * @type String
-      */
-      _importCode: {
-        type: String,
-        computed: '_calculateImportCode(libraryName,layer,baseName)'
       }
     },
+
     /**
-    * Method that composes the import statement from the constituent parts.
-    *
-    * @method _calculateImportCode
-    * @param library
-    * @param layer
-    * @param base
+    * Observe changes to styleOptions and _computedStyleOptions, respond
     */
-    _calculateImportCode: function(library,layer,base) {
-      return '@import "' + library + '/_' + layer + '.' + base + '.scss";';
+    observers: [
+      '_updateSelectedOptions(_computedStyleOptions.*)',
+      '_computeStyleOptions(styleOptions.*)'
+    ],
+
+    /**
+    * On ready, wait 50 miliseconds then update the selected options
+    */
+    ready: function() {
+      this.async(this._updateSelectedOptions, 50);
+    },
+
+    /**
+    * Creates an insert from the PxSassInsert constructor and saves an internal
+    * representation to use later.
+    *
+    * @method createInsert
+    * @param name
+    * @returns {Insert}
+    */
+    createInsert: function(name) {
+      this._inserts[name] = new PxSassInsert(name, this);
+      return this._inserts[name];
+    },
+
+    /**
+    * Creates a whenCase from the PxSassWhenCase constructor and saves an internal
+    * representation to use later.
+    *
+    * @method createInsert
+    * @param name
+    * @returns {WhenCase}
+    */
+    whenOption: function(optionName) {
+      var whenCase = new PxSassWhenCase(optionName, this);
+      this._cases.push(whenCase);
+      return whenCase;
+    },
+
+    /**
+    * Computes the `options` to make the more verbose `_computedOptions` we need
+    * for the px-dropdown-content component.
+    *
+    * @method _computeOptions
+    */
+    _computeStyleOptions: function() {
+      this._computedStyleOptions = this.styleOptions.map(function(opt){
+        if (opt.type === "dropdown") {
+          return {
+            name: opt.name,
+            id: opt.name.replace(/ /g, '') + "SassDocDropdown",
+            type: opt.type,
+            dropdownItems: opt.choices.map(function(choice){
+              if (typeof choice === "string") { return { "key": choice,      "val":choice }; };
+              if (typeof choice === "object") { return { "key": choice.name, "val":choice.name };; };
+            }),
+            selectedValue: opt.choices.filter(function(choice){ return (typeof choice === "object") && (choice.isDefault) })[0].name
+          }
+        }
+        if (opt.type === "boolean") {
+          return {
+            name: opt.name,
+            id: opt.name.replace(/ /g, '') + "SassDocDropdown",
+            type: opt.type,
+            selectedValue: opt.defaultChoice
+          }
+        }
+      });
+    },
+
+    /**
+    * If _computedStyleOptions has a value run through each item, get the selectedValue,
+    * and assign it to selectedOptions.
+    *
+    * @method _updateSelectedOptions
+    */
+    _updateSelectedOptions: function() {
+      if (this._computedStyleOptions.length > 0) {
+        // Get the selected options to use in each Insert render function
+        this.selectedOptions = this._computedStyleOptions.map(function(option){
+          return [ option.name, option.selectedValue ]
+        });
+
+        // Loop over each Insert and run its render function, pass the result
+        var selectedOptions = this.selectedOptions,
+            inserts = this._inserts;
+        for (var key in inserts) {
+          if (inserts.hasOwnProperty(key)) {
+            var insert = inserts[key],
+                insertStr = insert.render(selectedOptions);
+            this.fire('px-sass-doc-demo-selected-options-changed', { insert: insert.name, string: insertStr });
+          }
+        }
+      }
+    },
+
+    /**
+    * Compares strings for dom-if logic.
+    *
+    * @method _isEqual
+    * @param a
+    * @param b
+    */
+    _isEqual: function(a, b) {
+      return a === b;
     }
   });
 

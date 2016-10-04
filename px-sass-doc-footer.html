@@ -32,99 +32,30 @@ Element providing documentation for a requested Predix UI Sass component (design
 @demo index.html
 -->
 
-<dom-module id="px-sass-doc-viewer">
+<dom-module id="px-sass-doc-footer">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
-    <prism-highlighter></prism-highlighter>
-    <div class="apiContainer">
-      <div class="flex flex--col api u-mt++">
-
-        <!-- INSTALLATION -->
-        <div class="componentHeader">Installation</div>
-        <p>Install via command line:</p>
-        <px-clipboard copy-from="#install">
-          <figure class="code u-mr-">
-            <code id="install">
-              bower install --save {{libraryName}}
-            </code>
-          </figure>
-        </px-clipboard>
-
-        <!-- IMPORT -->
-        <div class="componentHeader">Import</div>
-        <template is="dom-if" if="{{inuitFlags}}">
-          <p>The following flags are available and, if necessary, should be set to true <strong>prior to the import</strong> statement below.</p>
-          <px-clipboard copy-from="#enable">
-            <figure class="code u-mr-">
-              <code id="install">
-                <template is="dom-repeat" items="{{inuitFlags}}">
-                  {{item}} : true;<br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
-        </template>
-
-
-        <!-- INCLUDE -->
-        <p>Include the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
-        <px-clipboard copy-from="#import2">
-          <figure class="code u-mr-">
-            <code id="import2">
-              {{_importCode}}
-            </code>
-          </figure>
-        </px-clipboard>
-
-        <!-- USAGE -->
-        <div class="componentHeader">Usage</div>
-        <p>Include the following HTML in your main application to use the element:</p>
-        <px-clipboard copy-from="#usageHTML">
-          <px-highlighter highlight-target="#usageHTML">
-            <content select="[data-slot=usageHTML]"></content>
-          </px-highlighter>
-          <pre class="code u-mr- u-mb">
-            <code id="usageHTML" class="import-code"></code>
-          </pre>
-        </px-clipboard>
-
-        <!-- CUSTOMIZATION -->
-        <template is="dom-if" if="{{styleVariables}}">
-          <div class="componentHeader">Customization</div>
-          <p>The following variables are available to customize the style of this element:</p>
-          <px-clipboard copy-from="#customize">
-            <figure class="code u-mr-">
-              <code id="customize">
-                <template is="dom-repeat" items="{{styleVariables}}">
-                  {{item}} <br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
-        </template>
-
-        <!-- DEPENDENCIES -->
-        <template is="dom-if" if="{{dependencies}}">
-          <div class="componentHeader">Dependencies</div>
-          <p>This module depends on the following modules (automatically included with Bower install):
-            <ul>
-              <template is="dom-repeat" items="{{dependencies}}">
-                <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
-              </template>
-            </ul>
-          </p>
-        </template>
-
+    <footer class="footer flex flex--center">
+      <div class="footer__container u-pv++">
+        <div>
+          <a href="https://ge.com/digital"><img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img"></a>
+        </div>
+        <div class="footer__list">
+          <ul class="list-inline list-inline--delimited">
+            <li><a href="http://predix.io/legal" class="footer__list--lnk">Legal</a></li>
+            <li><a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a></li>
+            <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
+          </ul>
+        </div>
       </div>
-    </div>
-
+    </footer>
   </template>
 </dom-module>
 
 <script>
   Polymer({
 
-    is: 'px-sass-doc-viewer',
+    is: 'px-sass-doc-footer',
 
     /**
      * Properties block, expose attribute values to the DOM via 'notify'
