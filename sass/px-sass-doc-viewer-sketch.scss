@@ -29,6 +29,13 @@ Predix branding rules go in px-sass-doc-viewer-predix.scss, not in this file.
 // Base
 @import "px-flexbox-design/_base.flexbox.scss";
 @import "px-viewport-design/_base.viewport.scss";
+@import "px-typography-design/_base.typography.scss";
+@import "px-headings-design/_base.headings.scss";
+
+// Objects
+$inuit-enable-list-ui--small : true;
+$inuit-enable-list-ui--large : true;
+@import "px-list-ui-design/_objects.list-ui.scss";
 
 // Component
 :host pre.code {

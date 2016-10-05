@@ -9,6 +9,10 @@
 <link rel="import" href="../px-clipboard/px-clipboard.html">
 <link rel="import" href="../prism-element/prism-highlighter.html" />
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
+<link rel="import" href="../iron-ajax/iron-ajax.html"/>
+<link rel="import" href="../polymer-font-awesome/polymer-font-awesome.html" />
+<link rel="import" href="../iron-collapse/iron-collapse.html" />
+<link rel="import" href="../iron-icon/iron-icon.html" />
 <link rel="import" href="px-highlighter.html" />
 
 <!--
@@ -35,85 +39,170 @@ Element providing documentation for a requested Predix UI Sass component (design
 <dom-module id="px-sass-doc-viewer">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
+    <style is="custom-style">
+      .arrow--small {
+        --iron-icon-height: 16px;
+        --iron-icon-width: 16px;
+      }
+      .arrow--inactive {
+        transform: rotate(-90deg);
+      }
+    </style>
     <prism-highlighter></prism-highlighter>
+    <iron-ajax
+        auto
+        url="[[sassdocJsonPath]]"
+        handle-as="json"
+        last-response="{{_sassdocJson}}">
+    </iron-ajax>
+
     <div class="apiContainer">
       <div class="flex flex--col api u-mt++">
 
         <!-- INSTALLATION -->
-        <div class="componentHeader">Installation</div>
-        <p>Install via command line:</p>
-        <px-clipboard copy-from="#install">
-          <figure class="code u-mr-">
-            <code id="install">
-              bower install --save {{libraryName}}
-            </code>
-          </figure>
-        </px-clipboard>
-
-        <!-- IMPORT -->
-        <div class="componentHeader">Import</div>
-        <template is="dom-if" if="{{inuitFlags}}">
-          <p>The following flags are available and, if necessary, should be set to true <strong>prior to the import</strong> statement below.</p>
-          <px-clipboard copy-from="#enable">
+        <section class="u-mb++">
+          <div class="componentHeader">Installation</div>
+          <p>Install the module and any dependencies using Bower. Run this task from the command line inside your project folder:</p>
+          <px-clipboard copy-from="#install">
             <figure class="code u-mr-">
               <code id="install">
-                <template is="dom-repeat" items="{{inuitFlags}}">
-                  {{item}} : true;<br/>
-                </template>
+                bower install --save {{libraryName}}
               </code>
             </figure>
           </px-clipboard>
-        </template>
+        </section>
 
+        <section class="u-mb++">
+          <!-- IMPORT -->
+          <div class="componentHeader">Enable and Import</div>
+          <h3>Enable Flags</h3>
+          <template is="dom-if" if="{{_hasFlags}}">
+            <p>The following flags can be enabled to generate additional styles for the module. To use these styles, set the flags to true <strong>above the module @import statement</strong> in your project Sass file:</p>
+          </template>
+          <template is="dom-if" if="{{_hasIntuitFlags}}">
+            <px-clipboard copy-from="#enable">
+              <figure class="code u-mr-">
+                <code id="install">
+                  <template is="dom-repeat" items="{{inuitFlags}}">
+                    {{item}} : true;<br/>
+                  </template>
+                </code>
+              </figure>
+            </px-clipboard>
+          </template>
+          <template is="dom-if" if="{{_hasSassdocIntuitFlags}}">
+            <ul class="list-ui list-ui--large u-m++">
+              <template is="dom-repeat" items="{{_sassdocIntuitFlags}}">
+                <li class="list-ui__item">
+                  <h4>
+                    <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
+                    ${{item.context.name}}
+                    <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
+                    <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
+                  </h4>
+                  <iron-collapse id="{{item.context.name}}-container" no-animation>
+                    <p class="u-mt++">{{item.description}}</p>
+                    <px-clipboard copy-from="#{{item.context.name}}-code">
+                      <figure class="code u-mr-">
+                        <code id="{{item.context.name}}-code">
+                          ${{item.context.name}} : true;
+                        </code>
+                      </figure>
+                    </px-clipboard>
+                  </iron-collapse>
+                </li>
+              </template>
+            </ul>
+          </template>
+          <template is="dom-if" if="{{!_hasFlags}}">
+            <p>There are no flags to set before importing this module in your project Sass file.</p>
+          </template>
 
-        <!-- INCLUDE -->
-        <p>Include the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
-        <px-clipboard copy-from="#import2">
-          <figure class="code u-mr-">
-            <code id="import2">
-              {{_importCode}}
-            </code>
-          </figure>
-        </px-clipboard>
+          <!-- INCLUDE -->
+          <h3>Import Sass</h3>
+          <p>Import the module by placing this code into the <strong>{{layer}}</strong> layer of your project Sass file: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
+          <px-clipboard copy-from="#import2">
+            <figure class="code u-mr-">
+              <code id="import2">
+                {{_importCode}}
+              </code>
+            </figure>
+          </px-clipboard>
+        </section>
 
         <!-- USAGE -->
-        <div class="componentHeader">Usage</div>
-        <p>Include the following HTML in your main application to use the element:</p>
-        <px-clipboard copy-from="#usageHTML">
-          <px-highlighter highlight-target="#usageHTML">
-            <content select="[data-slot=usageHTML]"></content>
-          </px-highlighter>
-          <pre class="code u-mr- u-mb">
-            <code id="usageHTML" class="import-code"></code>
-          </pre>
-        </px-clipboard>
+        <section class="u-mb++">
+          <div class="componentHeader">Usage</div>
+          <p>Include the following HTML in your project to use the module:</p>
+          <px-clipboard copy-from="#usageHTML">
+            <px-highlighter highlight-target="#usageHTML">
+              <content select="[data-slot=usageHTML]"></content>
+            </px-highlighter>
+            <pre class="code u-mr- u-mb">
+              <code id="usageHTML" class="import-code"></code>
+            </pre>
+          </px-clipboard>
+        </section>
 
         <!-- CUSTOMIZATION -->
-        <template is="dom-if" if="{{styleVariables}}">
+        <template is="dom-if" if="{{_hasStyles}}">
           <div class="componentHeader">Customization</div>
           <p>The following variables are available to customize the style of this element:</p>
-          <px-clipboard copy-from="#customize">
-            <figure class="code u-mr-">
-              <code id="customize">
-                <template is="dom-repeat" items="{{styleVariables}}">
-                  {{item}} <br/>
-                </template>
-              </code>
-            </figure>
-          </px-clipboard>
+        </template>
+        <template is="dom-if" if="{{_hasStyleVariables}}">
+          <section class="u-mb++">
+            <px-clipboard copy-from="#customize">
+              <figure class="code u-mr-">
+                <code id="customize">
+                  <template is="dom-repeat" items="{{styleVariables}}">
+                    {{item}} <br/>
+                  </template>
+                </code>
+              </figure>
+            </px-clipboard>
+          </section>
+        </template>
+        <template is="dom-if" if="{{_hasSassdocStyleVariables}}">
+          <ul class="list-ui list-ui--large u-m++">
+            <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
+              <li class="list-ui__item">
+                <h4>
+                  <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
+                  ${{item.context.name}}
+                  <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
+                  <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
+                </h4>
+                <iron-collapse id="{{item.context.name}}-container" no-animation>
+                  <p class="u-mt++">{{item.description}}</p>
+                  <px-clipboard copy-from="#{{item.context.name}}-code">
+                    <figure class="code u-mr-">
+                      <code id="{{item.context.name}}-code">
+                        ${{item.context.name}} : {{item.context.value}};
+                      </code>
+                    </figure>
+                  </px-clipboard>
+                </iron-collapse>
+              </li>
+            </template>
+          </ul>
         </template>
 
         <!-- DEPENDENCIES -->
-        <template is="dom-if" if="{{dependencies}}">
+        <section class="u-mb++">
           <div class="componentHeader">Dependencies</div>
-          <p>This module depends on the following modules (automatically included with Bower install):
-            <ul>
-              <template is="dom-repeat" items="{{dependencies}}">
-                <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
-              </template>
-            </ul>
-          </p>
-        </template>
+          <template is="dom-if" if="{{_hasDependencies}}">
+            <p>This module depends on the following modules (automatically included with Bower install):
+              <ul>
+                <template is="dom-repeat" items="{{dependencies}}">
+                  <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
+                </template>
+              </ul>
+            </p>
+          </template>
+          <template is="dom-if" if="{{!_hasDependencies}}">
+            <p>This module doesn't have any dependencies.</p>
+          </template>
+        </section>
 
       </div>
     </div>
@@ -152,6 +241,17 @@ Element providing documentation for a requested Predix UI Sass component (design
       inuitFlags: {
         type: Array,
         value: function() { return []; }
+      },
+      /**
+      * PRIVATE. Is true if intuitFlags and _sassdocIntuitFlags aren't empty.
+      *
+      * @property _hasIntuitFlags
+      * @type boolean
+      */
+      _hasIntuitFlags: {
+        type: Boolean,
+        value: false,
+        computed: '_hasSome(inuitFlags)'
       },
       /**
       *  ITCSS layer that this component belongs in, e.g. generic, objects, trumps, etc.
@@ -193,6 +293,11 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: Array,
         value: function() { return []; }
       },
+      _hasStyleVariables: {
+        type: Boolean,
+        value: false,
+        computed: '_hasSome(styleVariables)'
+      },
       /**
       * Any dependencies that exist for this component, represented as an array of strings, which will display in a list. Each string item should be the fully qualified URL of the repo.
       *
@@ -201,7 +306,18 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       dependencies: {
         type: Array,
-        value: function() { return [];}
+        value: function() { return []; }
+      },
+      /**
+      * PRIVATE. Is true if dependencies isn't empty.
+      *
+      * @property _hasDependencies
+      * @type boolean
+      */
+      _hasDependencies: {
+        type: Boolean,
+        value: false,
+        computed: '_hasSome(dependencies)'
       },
       /**
       * Composed string that represents the import statement of the sass component.
@@ -212,7 +328,62 @@ Element providing documentation for a requested Predix UI Sass component (design
       _importCode: {
         type: String,
         computed: '_calculateImportCode(libraryName,layer,baseName)'
-      }
+      },
+      sassdocJsonPath: {
+        type: String
+      },
+      _sassdocJson: {
+        type: Array,
+        value: function(){ []; }
+      },
+      _sassdocStyleVariables: {
+        type: Array,
+        value: function(){ []; },
+        computed: '_computeSassdocStyleVariables(_sassdocJson)'
+      },
+      _hasSassdocStyleVariables: {
+        type: Boolean,
+        value: false,
+        computed: '_hasSome(_sassdocStyleVariables)'
+      },
+      _sassdocIntuitFlags: {
+        type: Array,
+        value: function(){ []; },
+        computed: '_computeSassdocIntuitFlags(_sassdocJson)'
+      },
+      _hasSassdocIntuitFlags: {
+        type: Boolean,
+        value: false,
+        computed: '_hasSome(_sassdocIntuitFlags)'
+      },
+      _hasFlags: {
+        type: Boolean,
+        value: false
+      },
+      _hasStyles: {
+        type: Boolean,
+        value: false
+      },
+    },
+    observers: [
+      '_computeHasFlags(intuitFlags)', '_computeHasFlags(_sassdocIntuitFlags)',
+      '_computeHasStyles(styleVariables)', '_computeHasStyles(_sassdocStyleVariables)'
+    ],
+    _computeHasFlags: function() {
+      this._hasFlags = this._hasSome(this.intuitFlags) || this._hasSome(this._sassdocIntuitFlags);
+    },
+    _computeHasStyles: function() {
+      this._hasStyles = this._hasSome(this.styleVariables) || this._hasSome(this._sassdocStyleVariables);
+    },
+    _computeSassdocStyleVariables: function() {
+      return this._sassdocJson.filter(function(docItem){
+        return docItem.group && docItem.group.indexOf('px-toggle-design:variables:style') > -1;
+      });
+    },
+    _computeSassdocIntuitFlags: function() {
+      return this._sassdocJson.filter(function(docItem){
+        return docItem.group && docItem.group.indexOf('px-toggle-design:variables:flag') > -1;
+      });
     },
     /**
     * Method that composes the import statement from the constituent parts.
@@ -224,6 +395,27 @@ Element providing documentation for a requested Predix UI Sass component (design
     */
     _calculateImportCode: function(library,layer,base) {
       return '@import "' + library + '/_' + layer + '.' + base + '.scss";';
+    },
+    /**
+    * Method that determines if this element has a property or method with the
+    * key provided, and checks if the value of that key has a length.
+    *
+    * @method _hasSome
+    * @param {String} thing - a string representing the key of the property or method
+    * @return {Boolean}
+    */
+    _hasSome: function(arr) {
+      arr = arr || [];
+      return arr.length > 0;
+    },
+    _toggle: function(evt) {
+      var source = evt.target,
+          target = '#' + evt.target.dataToggle + '-container';
+      this.$$(target).toggle();
+      this._toggleArrow(source);
+    },
+    _toggleArrow: function(el) {
+      el.classList.toggle('arrow--inactive');
     }
   });
 
