@@ -31,7 +31,8 @@
     "px-list-ui-design": "https://github.com/PredixDev/px-list-ui-design.git#^0.3.11",
     "polymer-font-awesome": "^0.1.5",
     "iron-collapse": "^1.2.1",
-    "iron-icon": "^1.0.11"
+    "iron-icon": "^1.0.11",
+    "marked-element": "PolymerElements/marked-element#^1.2.0"
   },
   "devDependencies": {
     "px-forms-design": "#~0.3.15",

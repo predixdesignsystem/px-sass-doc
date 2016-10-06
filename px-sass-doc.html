@@ -58,7 +58,9 @@ Pass additional content into its light DOM to pass down to its children.
   </px-sass-doc-demo>
 
   <!-- Viewer -->
-  <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] style-variables=[[styleVariables]] dependencies=[[dependencies]]>
+  <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] style-variables=[[styleVariables]] dependencies=[[dependencies]] sassdoc-path=[[sassdocPath]]>
+    <content select="[data-slot=intro]"></content>
+    <content select="[data-slot=usage]"></content>
     <content select="[data-slot=usageHTML]"></content>
   </px-sass-doc-viewer>
 
@@ -150,10 +152,10 @@ Pass additional content into its light DOM to pass down to its children.
       * Base name of the component in the file path, e.g. _objects.BASENAME.scss.
       * Computed from the moduleName.
       *
-      * @property _baseName
+      * @property baseName
       * @type String
       */
-      _baseName: {
+      baseName: {
         type: String,
         value: '',
         computed: '_computeBaseName(moduleName)'

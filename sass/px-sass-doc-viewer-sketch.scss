@@ -32,6 +32,9 @@ Predix branding rules go in px-sass-doc-viewer-predix.scss, not in this file.
 @import "px-typography-design/_base.typography.scss";
 @import "px-headings-design/_base.headings.scss";
 
+$inuit-enable-code--inline : true;
+@import "px-code-design/_base.code.scss";
+
 // Objects
 $inuit-enable-list-ui--small : true;
 $inuit-enable-list-ui--large : true;
@@ -41,6 +44,15 @@ $inuit-enable-list-ui--large : true;
 :host pre.code {
   white-space: pre;
   margin: 0;
+  font-size: 0rem;
+}
+.markdown-html h1 {
+  border-bottom: 1px solid $gray4;
+  font-size: calculateRem(25px);
+  font-weight: 400;
+}
+.markdown-html pre {
+  @extend %code;
   font-size: 0rem;
 }
 
