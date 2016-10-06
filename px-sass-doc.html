@@ -1,0 +1,185 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+
+<link rel="import" href="../px-clipboard/px-clipboard.html">
+<link rel="import" href="../prism-element/prism-highlighter.html" />
+<link rel="import" href="../px-dropdown/px-dropdown.html"/>
+
+<link rel="import" href="css/px-sass-doc-viewer-styles.html">
+<link rel="import" href="px-sass-doc-header.html" />
+<link rel="import" href="px-sass-doc-demo.html" />
+<link rel="import" href="px-sass-doc-viewer.html" />
+<link rel="import" href="px-sass-doc-footer.html" />
+<link rel="import" href="px-highlighter.html" />
+
+<!--
+Element providing documentation for a requested Predix UI Sass component (design library).
+
+##### Usage
+
+      <px-sass-doc-viewer
+        library-name="px-toggle-design"
+        layer="objects"
+        base-name="toggle"
+        inuit-flags='["$inuit-enable-toggle--small","$inuit-enable-toggle--large","$inuit-enable-toggle--huge"]'
+        usage-html='["<input id=\"toggle1\" class=\"toggle__input\" type=\"checkbox\">","<label for=\"toggle1\" class=\"toggle__label\"></label>"]'
+        style-variables='["$inuit-toggle-color","$inuit-toggle-background","$inuit-toggle-border","$inuit-toggle-switch","$inuit-toggle-switch-border","$inuit-toggle-switch-shadow","$inuit-toggle-background--on","$inuit-toggle-border--on"]'
+        dependencies='["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'>
+      </px-sass-doc-viewer>
+
+@element px-sass-doc-viewer
+@blurb Element providing documentation for a requested Predix UI Sass component (design library).
+@homepage index.html
+@demo index.html
+-->
+
+<dom-module id="px-sass-doc">
+  <template>
+  <style include="px-sass-doc-viewer-styles"></style>
+  <prism-highlighter></prism-highlighter>
+
+  <!-- Header -->
+  <px-sass-doc-header
+    module-name="[[moduleName]]"
+    module-description="[[description]]">
+  </px-sass-doc-header>
+
+  <!-- Demo -->
+  <px-sass-doc-demo selected-options="{{selectedOptions}}">
+    <content select="px-sass-doc-option"></content>
+    <content select="[data-slot=htmlDemo]"></content>
+    <content select="[data-slot=importDemo]"></content>
+  </px-sass-doc-demo>
+
+  <!-- Viewer -->
+  <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] style-variables=[[styleVariables]] dependencies=[[dependencies]]>
+    <content select="[data-slot=usageHTML]"></content>
+  </px-sass-doc-viewer>
+
+  <!-- Footer -->
+  <px-sass-doc-footer></px-sass-doc-footer>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'px-sass-doc',
+
+    /**
+     * Properties block, expose attribute values to the DOM via 'notify'
+     *
+     * @property properties
+     * @type Object
+     */
+    properties: {
+
+      /**
+      * Name of the Sass module.
+      *
+      * @property moduleName
+      * @type String
+      **/
+      moduleName: {
+        type: String,
+        value: ''
+      },
+
+      /**
+      * Description of the Sass module.
+      *
+      * @property description
+      * @type String
+      **/
+      description: {
+        type: String,
+        value: ''
+      },
+
+      /**
+      * Sass layer that this component belongs in, e.g. generic, objects, trumps, etc.
+      *
+      * @property layer
+      * @type String
+      */
+      layer: {
+        type: String,
+        value: ''
+      },
+
+      /**
+      * List of modules this module depends on (as Github repository URLs).
+      *
+      * @property dependencies
+      * @type String
+      */
+      dependencies: {
+        type: Array,
+        value: function(){ return []; }
+      },
+
+      /**
+      * Path to a generated Sassdoc JSON file.
+      *
+      * @property sassdocPath
+      * @type String
+      */
+      sassdocPath: {
+        type: String,
+        value: ''
+      },
+
+      /**
+      * Inuit flags that are used to enable features and functionality, represented as an array of strings, which will display with line breaks between each.
+      *
+      * @property inuitFlags
+      * @type Array
+      */
+      inuitFlags: {
+        type: Array,
+        value: function() { return []; }
+      },
+
+      /**
+      * Base name of the component in the file path, e.g. _objects.BASENAME.scss.
+      * Computed from the moduleName.
+      *
+      * @property _baseName
+      * @type String
+      */
+      _baseName: {
+        type: String,
+        value: '',
+        computed: '_computeBaseName(moduleName)'
+      },
+
+      /**
+      * The currently selected options, passed up from px-sass-doc-demo.
+      *
+      * @property selectedOptions
+      * @type Object
+      */
+      selectedOptions: {
+        type: Object,
+        notify: true,
+        value: function(){ return {}; },
+      }
+    },
+
+    /**
+    * Computes the name of the module by parsing the moduleName and removing unnecessary
+    * prefix ('px-') and suffix ('-design') strings.
+    *
+    * @method _computeBaseName
+    */
+    _computeBaseName: function() {
+      if (this.moduleName) {
+        return this.moduleName.replace('px-','').replace('-design','')
+      }
+    }
+  });
+</script>

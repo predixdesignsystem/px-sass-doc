@@ -14,10 +14,7 @@
   <!-- Boilerplate: Import Sass Doc Component -->
   <link rel="stylesheet" type="text/css" href="css/px-sass-doc-viewer-demo.css" />
   <link rel="import" type="text/css" href="css/px-sass-doc-viewer-styles.html" />
-  <link rel="import" href="px-sass-doc-viewer.html" />
-  <link rel="import" href="px-sass-doc-header.html" />
-  <link rel="import" href="px-sass-doc-footer.html" />
-  <link rel="import" href="px-sass-doc-demo.html" />
+  <link rel="import" href="px-sass-doc.html" />
 
   <!--  ==========================================================================
         [STEP 0]
@@ -28,12 +25,47 @@
 </head>
 <body>
   <template id="just-for-demo" is="dom-bind">
+  <px-sass-doc
+  module-name="px-buttons-design"
+  description="Element providing styles for buttons."
+  layer="objects"
+  dependencies='[
+    "https://github.com/PredixDev/px-colors-design",
+    "https://github.com/PredixDev/px-defaults-design",
+    "https://github.com/PredixDev/px-helpers-design"
+  ]'
+  selected-options="{{selectedOptions}}">
 
-    <!-- Boilerplate: Doc Header -->
-    <px-sass-doc-header library-name="[[moduleName]]" library-description="[[description]]"></px-sass-doc-header>
+    <!-- OPTIONS -->
+    <px-sass-doc-option
+    option-name="Size"
+    choose-with="dropdown"
+    choices='[
+      "small",
+      "regular (default)",
+      "large",
+      "huge"
+    ]'
+    default-choice="regular (default)">
+    </px-sass-doc-option>
 
-    <!-- Boilerplate: Doc Demo -->
-    <px-sass-doc-demo style-options="{{styleOptions}}">
+    <px-sass-doc-option
+    option-name="Type"
+    choose-with="dropdown"
+    choices='[
+      "primary",
+      "secondary (default)",
+      "tertiary"
+    ]'
+    default-choice="secondary (default)">
+    </px-sass-doc-option>
+
+    <px-sass-doc-option
+    option-name="Disabled"
+    choose-with="boolean"
+    default-choice="false">
+    </px-sass-doc-option>
+
 <!--  ==========================================================================
       [STEP 1]
       Define your HTML demo: Add some html that should be rendered to show how
@@ -44,19 +76,15 @@
       code that you want to appear indented (i.e. for style). Don't indent this
       code to line up with the rest of the index.html document.
 -->
-<section data-slot="htmlDemo" data-highlight="true">
-  <button class$="{{classInsert}}">Example button</button>
-</section>
-<!--  END HTML DEMO ============================================================ -->
+    <section data-slot="htmlDemo">
+<button class$="{{buttonClasses}}">Example button</button>
+    </section>
 
-      <!-- Boilerplate: Insert Demo Slot -->
-      <section data-slot="importDemo" data-highlight="true">
-        {{importInsert}}
-      </section>
-    </px-sass-doc-demo>
+    <!-- INSERT CODE -->
+    <section data-slot="importDemo">
+{{importCode}}
+    </section>
 
-    <!-- Boilerplate: Doc Viewer -->
-    <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[intuitFlags]] style-variables=[[styleVariables]] dependencies=[[dependencies]]>
 <!--  ==========================================================================
       [STEP 2]
       Define your usage HTML: Define the HTML that could be used to display your
@@ -66,7 +94,7 @@
       code that you want to appear indented (i.e. for style). Don't indent this
       code to line up with the rest of the index.html document.
 -->
-<section data-slot="usageHTML" data-highlight="true">
+    <section data-slot="usageHTML">
 <button class="btn">...</button>
 <button class="btn btn--primary">...</button>
 <button class="btn btn--tertiary">...</button>
@@ -76,15 +104,11 @@
 <button class="btn btn--disabled">...</button>
 <button class="btn btn--icon">...</button>
 <button class="btn btn--bare">...</button>
-</section>
-<!--  END USAGE HTML =========================================================== -->
-    </px-sass-doc-viewer>
-
-    <!-- Boilerplate: Doc Footer -->
-    <px-sass-doc-footer></px-sass-doc-footer>
+    </section>
+  </px-sass-doc>
   </template>
 
-  <script src="px-sass-doc-model.js"></script>
+
 <!--  ==========================================================================
       [STEPS 3-14]
       Describe your module, write your demo options, and define the behavior of
@@ -92,222 +116,72 @@
       up your module demo.
 -->
   <script>
-    // [STEP 3]
-    // Bind the template: Pass the name of your dom-bind template into SassDocModel
-    // (which is automatically created by importing `px-sass-doc-model.js`).
-    // NOTE: You can probably leave this as the default 'template[is=dom-bind]'.
-    SassDocModel.bindTemplate('template[is=dom-bind]')
+        // intuitFlags
+        // '$inuit-enable-btn--small',
+        // '$inuit-enable-btn--large',
+        // '$inuit-enable-btn--huge',
+        // '$inuit-enable-btn--full',
+        // '$inuit-enable-btn--primary',
+        // '$inuit-enable-btn--tertiary',
+        // '$inuit-enable-btn--disabled',
+        // '$inuit-enable-btn--bare',
+        // '$inuit-enable-btn--icon'
 
-      // [STEP 4]
-      // Name your module: Set the module name. It should be the same name as
-      // the slug of your Github Repo.
-      //
-      // {string} - example: 'px-sass-doc-viewer'
-      .setMetadata('moduleName',
-        'px-sass-doc-viewer')
+        // styleOptions
+        // '$inuit-btn-color',
+        // '$inuit-btn-background',
+        // '$inuit-btn-background--hover',
+        // '$inuit-btn-background--pressed',
+        // '$inuit-btn-border-color',
+        // '$inuit-btn-border-color--hover',
+        // '$inuit-btn-border-color--pressed',
+        // '$inuit-btn-shadow',
+        // '$inuit-btn-shadow--light',
+        // '$inuit-btn-primary-color',
+        // '$inuit-btn-primary-background',
+        // '$inuit-btn-primary-background--hover',
+        // '$inuit-btn-primary-background--pressed',
+        // '$inuit-btn-primary-border-color',
+        // '$inuit-btn-tertiary-color',
+        // '$inuit-btn-tertiary-background',
+        // '$inuit-btn-tertiary-background--hover',
+        // '$inuit-btn-tertiary-background--pressed',
+        // '$inuit-btn-disabled-color',
+        // '$inuit-btn-disabled-background',
+        // '$inuit-btn-disabled-border-color'
 
-      // [STEP 5]
-      // Give a base name: Give the name of your module without the preceding px-
-      // or the trailing -design. This will be used to build the `@import` instructions.
-      //
-      // {string} - example: 'sass-doc'
-      .setMetadata('baseName',
-        'sass-doc')
+    var template = document.querySelector('template[is=dom-bind]');
 
-      // [STEP 6]
-      // Describe the module: Give a brief description of your module and what
-      // it can be used for. Don't describe how to use it -- that comes later.
-      //
-      // {string} - example: 'The Sass Doc Viewer provides documentation for a requested Predix UI CSS module.'
-      .setMetadata('description',
-        'Element providing documentation for a requested Predix UI Sass component (design library).')
-
-      // [STEP 7]
-      // Set the layer: Set the name of the Intuit Sass layer this module will
-      // be imported into.
-      //
-      // {string} - example: 'objects'
-      .setMetadata('layer',
-        'objects')
-
-      // [STEP 8]
-      // Define intuit flags: Pass an array of flags that can be set before this
-      // module is imported into a project Sass file.
-      //
-      // {Array} - example: ['$inuit-enable-btn--small','$inuit-enable-btn--large']
-      .setMetadata('intuitFlags', [
-        '$inuit-enable-btn--small',
-        '$inuit-enable-btn--large',
-        '$inuit-enable-btn--huge',
-        '$inuit-enable-btn--full',
-        '$inuit-enable-btn--primary',
-        '$inuit-enable-btn--tertiary',
-        '$inuit-enable-btn--disabled',
-        '$inuit-enable-btn--bare',
-        '$inuit-enable-btn--icon' ])
-
-      // [STEP 9]
-      // Set style variables: Pass an array of style variables that can be set
-      // before this module is imported into a project Sass file.
-      //
-      // {Array} - example: ['$inuit-btn-color','$inuit-btn-background']
-      .setMetadata('styleVariables', [
-        '$inuit-btn-color',
-        '$inuit-btn-background',
-        '$inuit-btn-background--hover',
-        '$inuit-btn-background--pressed',
-        '$inuit-btn-border-color',
-        '$inuit-btn-border-color--hover',
-        '$inuit-btn-border-color--pressed',
-        '$inuit-btn-shadow',
-        '$inuit-btn-shadow--light',
-        '$inuit-btn-primary-color',
-        '$inuit-btn-primary-background',
-        '$inuit-btn-primary-background--hover',
-        '$inuit-btn-primary-background--pressed',
-        '$inuit-btn-primary-border-color',
-        '$inuit-btn-tertiary-color',
-        '$inuit-btn-tertiary-background',
-        '$inuit-btn-tertiary-background--hover',
-        '$inuit-btn-tertiary-background--pressed',
-        '$inuit-btn-disabled-color',
-        '$inuit-btn-disabled-background',
-        '$inuit-btn-disabled-border-color' ])
-
-      // [STEP 10]
-      // Define dependencies: Pass an array of URLs to the Github Repos that this
-      // module depends on.
-      //
-      // {Array} - example: ['https://github.com/PredixDev/px-colors-design','https://github.com/PredixDev/px-defaults-design']
-      .setMetadata('dependencies', [
-        'https://github.com/PredixDev/px-colors-design',
-        'https://github.com/PredixDev/px-defaults-design',
-        'https://github.com/PredixDev/px-helpers-design' ])
-
-      // [STEP 11]
-      // Define style options: Set the options that users can configure for the
-      // module's demo viewer. You'll pass an array of objects. For example:
-      //
-      //   [
-      //     {
-      //       // The name of the option. This will appear above it in the demo sidebar.
-      //       name: "Size",
-      //       // How users will pick the option. Can either be `dropdown` for a dropdown with choices, or `boolean` for a true/false toggle switch.
-      //       type: "dropdown",
-      //       // FOR DROPDOWNS: Pass an array of choices that users can pick from. Each choice should either be a string ("small") or object with the key name and key isDefault ({ name: "small", isDefault: true })
-      //       choices: [
-      //         "small",
-      //         { name: "large", isDefault: true }
-      //       ],
-      //       // FOR BOOLEANS: Just define a `defaultChoice` of `true` or `false` instead of passing an array of choices
-      //       defaultChoice: true
-      //     }
-      //   ]
-      //
-      // {Object} - example: see above
-      .setMetadata('styleOptions', [
-        {
-          name: "Size",
-          type: "dropdown",
-          choices: [
-            "small",
-            { name: "regular (default)", isDefault: true },
-            "large",
-            "huge"
-          ]
-        },
-        {
-          name: "Type",
-          type: "dropdown",
-          choices: [
-            "primary",
-            { name: "secondary (default)", isDefault: true },
-            "tertiary"
-          ]
-        },
-        {
-          name: "Disabled",
-          type: "boolean",
-          defaultChoice: false
-        }
-      ]);
-
-    window.addEventListener('WebComponentsReady', function() {
-      // [STEP 12]
-      // Find the demo: Select your px-sass-doc-demo in the DOM so we can do things
-      // to it. NOTE: You can probably leave this as the default 'px-sass-doc-demo'.
-      var demo = document.querySelector('px-sass-doc-demo');
-
-      // [STEP 13]
-      // Define your demo insert slots: You can use these slots above to build your
-      // demo snippets by declaring how different choices selected by a user will
-      // be rendered. Each insert will be automatically updated and bound to your
-      // template so you can pass it into the `px-sass-doc-demo` light dom.
-      //
-      // You can use this to create classes that you'll put on objects, a string
-      // of import text, and so on.
-      //
-      // Build inserts by chanining methods on your `demo` you found in the DOM above:
-      // demo.createInsert("nameOfYourInsert").prependBase("base").joinedBy(" ")
-      //
-      // Use these methods:
-      //
-      // - createInsert(name) - creates a new insert with the name you pass, binds it to your
-      //   template for use later.
-      //
-      // - prependBase(baseString) or appendBase(baseString) - adds the `baseString` to the
-      //   beginning or end of your insert (you can only have one, e.g. a prepend or append).
-      //
-      // - joinedBy(joinChars) - joins each piece of your insert together with a string
-      //   which can be anything you want (e.g. a space " " or a newline "\n").
-      demo.createInsert("classInsert").prependBase("btn").joinedBy(" ");
-      demo.createInsert("importInsert").appendBase("@import 'px-buttons-design/_objects.buttons.scss';").joinedBy("\n");
-
-      // [STEP 14]
-      // Add cases to your demo insert slots: Create the cases that will define
-      // each slot. Each case is tied to an insert and will activate if a particular
-      // option is selected.
-      //
-      // Build cases by chanining methods on your `demo` you found in the DOM above:
-      // demo.whenOption("Size").is("small").include("btn--small").in("classInsert");
-      //
-      // Use these methods:
-      //
-      // - whenOption(optName) - ties this case to one of the options you defined
-      //   in `styleOptions` above.
-      //
-      // - is(choiceNane) - activates this case if the choice you specify is selected
-      //   for the option.
-      //
-      // - include(string) - a string to include in the insert when this case
-      //   is active.
-      //
-      // - in(insertName) - the name of the insert that this case should add its
-      //   `include` text to if it is active.
-
-      //// Cases for `classInsert`
-      demo.whenOption("Size").is("small").include("btn--small").in("classInsert");
-      demo.whenOption("Size").is("regular (default)").include("").in("classInsert");
-      demo.whenOption("Size").is("large").include("btn--large").in("classInsert");
-      demo.whenOption("Size").is("huge").include("btn--huge").in("classInsert");
-      demo.whenOption("Type").is("primary").include("btn--primary").in("classInsert");
-      demo.whenOption("Type").is("secondary").include("").in("classInsert");
-      demo.whenOption("Type").is("tertiary").include("btn--tertiary").in("classInsert");
-      demo.whenOption("Disabled").is(true).include("btn--disabled").in("classInsert");
-      demo.whenOption("Disabled").is(false).include("").in("classInsert");
-
-      //// Cases for `importInsert`
-      demo.whenOption("Size").is("small").include("$inuit-enable-btn--small : true;").in("importInsert");
-      demo.whenOption("Size").is("regular (default)").include("").in("importInsert");
-      demo.whenOption("Size").is("large").include("$inuit-enable-btn--large : true;").in("importInsert");
-      demo.whenOption("Size").is("huge").include("$inuit-enable-btn--huge : true;").in("importInsert");
-      demo.whenOption("Type").is("primary").include("$inuit-enable-btn--primary : true;").in("importInsert");
-      demo.whenOption("Type").is("secondary").include("").in("importInsert");
-      demo.whenOption("Type").is("tertiary").include("$inuit-enable-btn--tertiary : true;").in("importInsert");
-      demo.whenOption("Disabled").is(true).include("$inuit-enable-btn--disabled : true;").in("importInsert");
-      demo.whenOption("Disabled").is(false).include("").in("importInsert");
+    document.addEventListener('px-sass-doc-options-updated', function(evt) {
+      template.buttonClasses = template._buttonClasses();
+      template.importCode = template._importCode();
     });
+
+    template._buttonClasses = function() {
+      var opts = template.selectedOptions || {}, strings = [];
+
+      if (opts.Size === "small")    strings.push("btn--small");
+      if (opts.Size === "large")    strings.push("btn--large");
+      if (opts.Size === "huge")     strings.push("btn--huge");
+      if (opts.Type === "primary")  strings.push("btn--primary");
+      if (opts.Type === "tertiary") strings.push("btn--tertiary");
+      if (opts.Disabled === true)   strings.push("btn--disabled");
+
+      return ("btn " + strings.join(" ")).trim();
+    };
+
+    template._importCode = function() {
+      var opts = template.selectedOptions || {}, strings = [];
+
+      if (opts.Size === "small")    strings.push("$inuit-enable-btn--small : true;");
+      if (opts.Size === "large")    strings.push("$inuit-enable-btn--large : true;");
+      if (opts.Size === "huge")     strings.push("$inuit-enable-btn--huge : true;");
+      if (opts.Type === "primary")  strings.push("$inuit-enable-btn--primary : true;");
+      if (opts.Type === "tertiary") strings.push("$inuit-enable-btn--tertiary : true;");
+      if (opts.Disabled === true)   strings.push("$inuit-enable-btn--disabled : true;");
+
+      return (strings.join("\n") + "\n@import 'px-buttons-design/_objects.buttons.scss';").trim();
+    };
   </script>
-<!--  END SASS DOC MODEL ======================================================= -->
   </body>
 </html>
