@@ -5,32 +5,29 @@
 -->
 <link rel="import" href="../polymer/polymer.html"/>
 
-<link rel="import" href="css/px-sass-doc-viewer-styles.html">
-<link rel="import" href="../px-clipboard/px-clipboard.html">
-<link rel="import" href="../prism-element/prism-highlighter.html" />
+<link rel="import" href="../px-clipboard/px-clipboard.html/">
+<link rel="import" href="../prism-element/prism-highlighter.html"/>
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
-<link rel="import" href="px-highlighter.html" />
-<link rel="import" href="px-sass-doc-option.html" />
+
+<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+<link rel="import" href="px-highlighter.html"/>
+<link rel="import" href="px-sass-doc-option.html"/>
 
 <!--
-Element providing documentation for a requested Predix UI Sass component (design library).
+Element wrapping the demo code inside px-sass-doc.
+
+Pass content into its light DOM by using data-slot="slotName" attributes.
 
 ##### Usage
 
-      <px-sass-doc-viewer
-        library-name="px-toggle-design"
-        layer="objects"
-        base-name="toggle"
-        inuit-flags='["$inuit-enable-toggle--small","$inuit-enable-toggle--large","$inuit-enable-toggle--huge"]'
-        usage-html='["<input id=\"toggle1\" class=\"toggle__input\" type=\"checkbox\">","<label for=\"toggle1\" class=\"toggle__label\"></label>"]'
-        style-variables='["$inuit-toggle-color","$inuit-toggle-background","$inuit-toggle-border","$inuit-toggle-switch","$inuit-toggle-switch-border","$inuit-toggle-switch-shadow","$inuit-toggle-background--on","$inuit-toggle-border--on"]'
-        dependencies='["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'>
-      </px-sass-doc-viewer>
+      <px-sass-doc-demo selected-options="{{selectedOptions}}">
+        <content select="px-sass-doc-option"></content>
+        <content select="[data-slot=htmlDemo]"></content>
+        <content select="[data-slot=importDemo]"></content>
+      </px-sass-doc-demo>
 
-@element px-sass-doc-viewer
-@blurb Element providing documentation for a requested Predix UI Sass component (design library).
-@homepage index.html
-@demo index.html
+@element px-sass-doc-demo
+@blurb Element wrapping the demo code inside px-sass-doc.
 -->
 
 <dom-module id="px-sass-doc-demo">
