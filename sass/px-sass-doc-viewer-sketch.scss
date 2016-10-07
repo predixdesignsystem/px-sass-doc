@@ -90,7 +90,7 @@ $inuit-enable-btn--icon : true;
 .markdown-html p > code {
   @extend %code;
   @extend %code--inline;
-  font-size: 0rem;
+  font-size: 0.9rem;
 }
 
 .mega-demo{

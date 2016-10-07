@@ -1,3 +1,7 @@
+v0.1.3
+==================
+* Fix font-size in inline code
+
 v0.1.2
 ==================
 * Add styles for inline code inside markdown
