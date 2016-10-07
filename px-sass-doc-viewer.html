@@ -115,10 +115,10 @@ Element providing documentation for a requested Predix UI Sass component (design
 
           <!-- If an array of inuit flags were generated from Sassdoc, parse and display here -->
           <template is="dom-if" if="[[_has(_sassdocInuitFlags)]]">
-            <ul class="list-ui list-ui--large u-m++">
+            <ul class="list-ui list-ui--small u-m++">
               <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
                 <li class="list-ui__item">
-                  <h4>
+                  <h4 class="u-mv--">
                     <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
                     ${{item.context.name}}
                     <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
@@ -164,10 +164,10 @@ Element providing documentation for a requested Predix UI Sass component (design
             </section>
           </template>
           <template is="dom-if" if="[[_has(_sassdocStyleVariables)]]">
-            <ul class="list-ui list-ui--large u-m++">
+            <ul class="list-ui list-ui--small u-m++">
               <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
                 <li class="list-ui__item">
-                  <h4>
+                  <h4 class="u-mv--">
                     <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
                     ${{item.context.name}}
                     <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
