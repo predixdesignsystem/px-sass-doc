@@ -51,6 +51,9 @@ $inuit-enable-list-ui--large : true;
   font-size: calculateRem(25px);
   font-weight: 400;
 }
+.markdown-html h3 {
+  margin-top: 2rem;
+}
 .markdown-html pre {
   @extend %code;
   font-size: 0rem;
