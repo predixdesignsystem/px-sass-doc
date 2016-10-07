@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>px-sass-doc-viewer Demo</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Boilerplate: Import Libraries -->
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../px-theme/px-theme.html" />
+  <link rel="import" href="../px-dropdown/px-dropdown.html" />
+
+  <!-- Boilerplate: Import Sass Doc Component -->
+  <link rel="stylesheet" type="text/css" href="css/px-sass-doc-viewer-demo.css" />
+  <link rel="import" type="text/css" href="css/px-sass-doc-viewer-styles.html" />
+  <link rel="import" href="px-sass-doc.html" />
+
+<!--  ========================================================================
+      [STEP 0]
+      Import the styles for your module here. -->
+  <!-- <link rel="stylesheet" type="text/css" href="css/px-toggle-design-demo.css"/> -->
+</head>
+<body>
+  <template id="just-for-demo" is="dom-bind">
+
+<!--  ========================================================================
+      [STEP 1]
+      Describe your module and list its dependencies. Don't touch `selectedOptions`. -->
+  <px-sass-doc
+  module-name="px-buttons-design"
+  description="Element providing styles for buttons."
+  layer="objects"
+  sassdoc-path="sassdoc.json"
+  dependencies='[
+    "https://github.com/PredixDev/px-colors-design",
+    "https://github.com/PredixDev/px-defaults-design",
+    "https://github.com/PredixDev/px-helpers-design"
+  ]'
+  selected-options="{{selectedOptions}}">
+
+<!--  ========================================================================
+      [STEP 2]
+      Describe the `options` users can select in your module demo. You can have
+      as many options as you'd like.
+
+      For an option that can be changed with a picker, follow this format:
+
+      <px-sass-doc-option
+        option-name="Size"
+        choose-with="dropdown"
+        choices='[
+          "small",
+          "regular (default)",
+          "large",
+          "huge"
+        ]'
+        default-choice="regular (default)">
+      </px-sass-doc-option>
+
+      For an option that can be changed with a toggle, follow this format:
+
+      <px-sass-doc-option
+        option-name="Disabled"
+        choose-with="boolean"
+        default-choice="false">
+      </px-sass-doc-option> -->
+    <px-sass-doc-option
+    option-name="Size"
+    choose-with="dropdown"
+    choices='[
+      "small",
+      "regular (default)",
+      "large",
+      "huge"
+    ]'
+    default-choice="regular (default)">
+    </px-sass-doc-option>
+
+    <px-sass-doc-option
+    option-name="Type"
+    choose-with="dropdown"
+    choices='[
+      "primary",
+      "secondary (default)",
+      "tertiary"
+    ]'
+    default-choice="secondary (default)">
+    </px-sass-doc-option>
+
+    <px-sass-doc-option
+    option-name="Disabled"
+    choose-with="boolean"
+    default-choice="false">
+    </px-sass-doc-option>
+
+<!--  ==========================================================================
+      [STEP 3]
+      Define your HTML demo: Add some HTML that should be rendered to show how
+      this module works. You can create data-bound classes, text, or anything
+      else that's rendered based on the `options` that the user selects by
+      editing the JavaScript below.
+
+      Define your HTML inside the <section></section>. Only indent code that you
+      want to appear indented (i.e. for style). Indentation will be rendered in
+      the demo (it's in a `pre` that keeps whitespace). -->
+<section data-slot="htmlDemo">
+<button class$="{{buttonClasses}}">Example button</button>
+</section>
+
+<!--  ==========================================================================
+      [STEP 4]
+      Your import code will automatically be built and made available to data-bind
+      with the `importCode` property by editing the JavaScript below. You likely
+      don't need to touch the code in this slot. -->
+<section data-slot="importDemo">
+{{importCode}}
+</section>
+
+<!--  ==========================================================================
+      [STEP 5]
+      Define your usage HTML: Add some HTML that could be used to display your
+      module. The HTML will be formatted and highlighted automatically.
+
+      Define your HTML inside the <section></section>. Only indent code that you
+      want to appear indented (i.e. for style). Indentation will be rendered in
+      the demo (it's in a `pre` that keeps whitespace). -->
+<section data-slot="usageHTML">
+<button class="btn">...</button>
+<button class="btn btn--primary">...</button>
+<button class="btn btn--tertiary">...</button>
+<button class="btn btn--small">...</button>
+<button class="btn btn--large">...</button>
+<button class="btn btn--huge">...</button>
+<button class="btn btn--disabled">...</button>
+<button class="btn btn--icon">...</button>
+<button class="btn btn--bare">...</button>
+</section>
+  </px-sass-doc>
+  </template>
+
+<!--  ==========================================================================
+      [STEP 6]
+      Create data-bound properties to use in your demo HTML above. You can create
+      as many properties as you need to make your demo show all the potential
+      configurations this module has.
+
+      # Using `selectedOptions`
+
+      When you create your <px-sass-doc-option>'s above, you'll get access to what's
+      selected in each option in the `selectedOptions` property, which is bound
+      to your template.
+
+      <px-sass-doc> will automatically update `selectedOptions` when an option is
+      changed. It will also fire an event `px-sass-doc-options-updated` to allow
+      you to update your demo HTML.
+
+      `selectedOptions` is an object of key/value data. The keys are the names of
+      your options defined by each <px-sass-doc-option>. The values are a string
+      of the choice that is currently selected for each option. For example,
+      `selectedOptions` might look like:
+
+          {
+            "Size" : "large",
+            "Disabled" : false
+          }
+
+      # Creating your dynamic demo HTML
+
+      You can look at the values of `selectedOptions` and use it to create data-bound
+      properties that change your demo HTML. For example, you could create a
+      function that builds a series of classes based on the options "Size" and
+      "Disabled" like this:
+
+          // selectedOptions = { "Size" : "small", Disabled: true }
+
+          function createClasses(selectedOptions) {
+            var opts = selectedOptions || {},
+                strings = [];
+
+            if (opts.Size === "small")    strings.push("btn--small");
+            if (opts.Size === "large")    strings.push("btn--large");
+
+            return ("btn " + strings.join(" ")).trim();
+          }
+
+      You can then data-bind the result of that function to your template:
+
+          template.activeClasses = createClasses(selectedOptions);
+
+      You can call that function whenever the `selectedOptions` are updating by
+      listening for the updated event:
+
+          document.addEventListener('px-sass-doc-options-updated', function(evt) {
+            template.activeClasses = createClasses(selectedOptions);
+          });
+
+      And you can use the resulting {{activeClasses}} in your demo HTML. -->
+  <script>
+    var template = document.querySelector('template[is=dom-bind]');
+
+    document.addEventListener('px-sass-doc-options-updated', function(evt) {
+      template.buttonClasses = template._buttonClasses();
+      template.importCode = template._importCode();
+    });
+
+    template._buttonClasses = function() {
+      var opts = template.selectedOptions || {}, strings = [];
+
+      if (opts.Size === "small")    strings.push("btn--small");
+      if (opts.Size === "large")    strings.push("btn--large");
+      if (opts.Size === "huge")     strings.push("btn--huge");
+      if (opts.Type === "primary")  strings.push("btn--primary");
+      if (opts.Type === "tertiary") strings.push("btn--tertiary");
+      if (opts.Disabled === true)   strings.push("btn--disabled");
+
+      return ("btn " + strings.join(" ")).trim();
+    };
+
+    template._importCode = function() {
+      var opts = template.selectedOptions || {}, strings = [];
+
+      if (opts.Size === "small")    strings.push("$inuit-enable-btn--small : true;");
+      if (opts.Size === "large")    strings.push("$inuit-enable-btn--large : true;");
+      if (opts.Size === "huge")     strings.push("$inuit-enable-btn--huge : true;");
+      if (opts.Type === "primary")  strings.push("$inuit-enable-btn--primary : true;");
+      if (opts.Type === "tertiary") strings.push("$inuit-enable-btn--tertiary : true;");
+      if (opts.Disabled === true)   strings.push("$inuit-enable-btn--disabled : true;");
+
+      return (strings.join("\n") + "\n@import 'px-buttons-design/_objects.buttons.scss';").trim();
+    };
+  </script>
+  </body>
+</html>

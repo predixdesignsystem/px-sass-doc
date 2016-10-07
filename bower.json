@@ -1,8 +1,8 @@
 {
-  "name": "px-sass-doc-viewer",
+  "name": "px-sass-doc",
   "version": "0.0.4",
   "main": [
-    "px-sass-doc-viewer.html"
+    "px-sass-doc.html"
   ],
   "ignore": [
     ".*",

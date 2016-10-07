@@ -1,10 +1,10 @@
-#px-sass-doc-viewer [![Build Status](https://travis-ci.org/PredixDev/px-sass-doc-viewer.svg?branch=master)](https://travis-ci.org/PredixDev/px-sass-doc-viewer)
+#px-sass-doc [![Build Status](https://travis-ci.org/PredixDev/px-sass-doc.svg?branch=master)](https://travis-ci.org/PredixDev/px-sass-doc)
 
-[![px-sass-doc-viewer demo](px-sass-doc-viewer.png?raw=true)](https://github.com/PredixDev/px-sass-doc-viewer)
+[![px-sass-doc demo](px-sass-doc.png?raw=true)](https://github.com/PredixDev/px-sass-doc)
 
 ## Overview
 
-px-sass-doc-viewer is a Predix UI component for displaying the Sass documentation for one of our Px design repositories.
+px-sass-doc is a Predix UI component for displaying the Sass documentation for one of our Px design repositories.
 
 ## Usage
 
@@ -21,19 +21,19 @@ Node, npm and bower are necessary to install the component and dependencies. web
 First, install the component via bower on the command line.
 
 ```
-bower install px-sass-doc-viewer --save
+bower install px-sass-doc --save
 ```
 
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/px-sass-doc-viewer/px-sass-doc-viewer.html"/>
+<link rel="import" href="/bower_components/px-sass-doc/px-sass-doc.html"/>
 ```
 
 Finally, use the component in your application:
 
 ```
-<px-sass-doc-viewer
+<px-sass-doc
   library-name="px-toggle-design"
   layer="objects"
   base-name="toggle"
@@ -41,7 +41,7 @@ Finally, use the component in your application:
   usage-html='["<input id=\"toggle1\" class=\"toggle__input\" type=\"checkbox\">","<label for=\"toggle1\" class=\"toggle__label\"></label>"]'
   style-variables='["$inuit-toggle-color","$inuit-toggle-background","$inuit-toggle-border"]'
   dependencies='["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'>
-</px-sass-doc-viewer>
+</px-sass-doc>
 ```
 
 <br />
@@ -49,7 +49,7 @@ Finally, use the component in your application:
 
 ## Documentation
 
-Read the full API and view the demo [here](https://predixdev.github.io/px-sass-doc-viewer).
+Read the full API and view the demo [here](https://predixdev.github.io/px-sass-doc).
 
 The documentation in this repository is supplemental to the official Predix documentation, which is continuously updated and maintained by the Predix documentation team. Go to [http://predix.io](http://predix.io)  to see the official Predix documentation.
 
@@ -80,4 +80,4 @@ Navigate to the root of that server (e.g. http://localhost:8080/) in a browser t
 
 ## Known Issues
 
-Please use [Github Issues](https://github.com/PredixDev/px-sass-doc-viewer/issues) to submit any bugs you might find.
+Please use [Github Issues](https://github.com/PredixDev/px-sass-doc/issues) to submit any bugs you might find.
