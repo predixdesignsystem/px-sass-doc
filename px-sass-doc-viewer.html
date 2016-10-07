@@ -5,10 +5,17 @@
 -->
 <link rel="import" href="../polymer/polymer.html"/>
 
-<link rel="import" href="css/px-sass-doc-viewer-styles.html">
-<link rel="import" href="../px-clipboard/px-clipboard.html">
+<link rel="import" href="../px-clipboard/px-clipboard.html"/>
+<link rel="import" href="../prism-element/prism-highlighter.html"/>
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
+<link rel="import" href="../iron-ajax/iron-ajax.html"/>
+<link rel="import" href="../polymer-font-awesome/polymer-font-awesome.html"/>
+<link rel="import" href="../iron-collapse/iron-collapse.html"/>
+<link rel="import" href="../iron-icon/iron-icon.html"/>
+<link rel="import" href="../marked-element/marked-element.html"/>
 
+<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+<link rel="import" href="px-highlighter.html" />
 
 <!--
 Element providing documentation for a requested Predix UI Sass component (design library).
@@ -27,146 +34,219 @@ Element providing documentation for a requested Predix UI Sass component (design
 
 @element px-sass-doc-viewer
 @blurb Element providing documentation for a requested Predix UI Sass component (design library).
-@homepage index.html
-@demo index.html
 -->
 
 <dom-module id="px-sass-doc-viewer">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
+    <style is="custom-style">
+      .arrow--small {
+        --iron-icon-height: 16px;
+        --iron-icon-width: 16px;
+      }
+      .arrow--inactive {
+        transform: rotate(-90deg);
+      }
+    </style>
+    <prism-highlighter></prism-highlighter>
+    <iron-ajax
+        auto
+        url="[[sassdocPath]]"
+        handle-as="json"
+        last-response="{{_sassdocJson}}">
+    </iron-ajax>
 
-    <div style="position: relative;" class="u-pb++ flex flex--col">
-          <section>
-            <div class="mega-demo flex u-ph++ u-pb++">
-              <div class="properties u-ph+ u-pb+ u-mt+">
-              <p class="epsilon">Style Options</p>
-              <template is="dom-repeat" items="{{styleOptionsArray}}">
-                  <template is="dom-if" if="{{_isEqual(item.type,'dropdown')}}">
-                    <div class="u-mb-">{{item.label}}:
-                      <div style="width: 100%;">
-                        <px-dropdown id="{{item.id}}" display-value="{{item.displayValue}}" value="{{item.displayValue}}">
-                          <px-dropdown-content
-                            items="{{item.dropdownItems}}">
-                          </px-dropdown-content>
-                        </px-dropdown>
-                      </div>
-                    </div>
-                  </template>
-                  <template is="dom-if" if="{{_isEqual(item.type,'boolean')}}">
-                    <div class="flex u-mb-">
-                      <input id="{{item.id}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.value::change}}">
-                      <label for$="{{item.id}}" class="toggle__label toggle__label--small"></label>
-                      <div class="u-ml-">{{item.label}}</div>
-                    </div>
-                  </template>
-              </template>
-            </div>
+    <div style="display:none" id="incomingMarkdown">
+      <content select="[data-slot=intro]" class="data-slot"></content>
+      <content select="[data-slot=usage]" class="data-slot"></content>
+    </div>
 
-            <div class="demoContainer u-mt+">
-                <div class="flex flex--col">
-                  <div class="demo u-p+">
-                    <!-- <div class="u-mb">Toggle size is <strong>{{dropdown}}</strong></div> -->
-                    <div id="demoCode" class="flex u-mb-">
-                      <!-- <div class="u-ml-">Toggle 'checked' value is {{togglecheck}}</div> -->
-                      <px-sass-doc-demo-code config={{demoConfig}}></px-sass-doc-demo-code>
-                    </div>
-                    <h4>Import:</h4>
-                    <px-clipboard copy-from="#import">
+    <div class="apiContainer">
+      <div class="flex flex--col api u-mt++">
+
+        <template is="dom-if" if="[[_has(_introMarkdown)]]">
+          <section class="u-mb++">
+            <marked-element markdown="{{_introMarkdown}}">
+              <div class="markdown-html"></div>
+            </marked-element>
+          </section>
+        </template>
+
+        <!-- 1. INSTALLATION INSTRUCTIONS -->
+        <section class="u-mb++">
+          <div class="componentHeader">Install the module</div>
+          <p>To use the {{baseName}} module, you need to install it in your project using Bower. Run this task on the command line from inside your project folder:</p>
+          <px-clipboard copy-from="#install">
+            <figure class="code u-mr-">
+              <code id="install">
+                bower install --save {{libraryName}}
+              </code>
+            </figure>
+          </px-clipboard>
+        </section>
+        <!-- 1. END INSTALLATION INSTRUCTIONS -->
+
+        <!-- 2. IMPORT SASS INSTRUCTIONS -->
+        <section class="u-mb++">
+          <div class="componentHeader">Import it in your Sass</div>
+          <p>The {{baseName}} module won't do anything until you import and configure it in your project Sass file. Follow these steps to import it:</p>
+
+          <!-- 2.1 ENABLE FLAGS -->
+          <h3>1. Enable Flags</h3>
+          <template is="dom-if" if="[[_hasAnyInuitFlags]]">
+            <p>You can turn on flags to generate additional styles defined in the {{baseName}} module. To generate new styles, set any of these flags to true above the module's @import statement in your project Sass file:</p>
+          </template>
+          <template is="dom-if" if="[[!_hasAnyInuitFlags]]">
+            <p>There are no flags to set before importing this module in your project Sass file.</p>
+          </template>
+
+          <!-- If an array of inuit flags were passed in directly, parse and display here -->
+          <template is="dom-if" if="[[_has(inuitFlags)]]">
+            <px-clipboard copy-from="#enable">
+              <figure class="code u-mr-">
+                <code id="install">
+                  <template is="dom-repeat" items="{{inuitFlags}}">
+                    {{item}} : true;<br/>
+                  </template>
+                </code>
+              </figure>
+            </px-clipboard>
+          </template>
+
+          <!-- If an array of inuit flags were generated from Sassdoc, parse and display here -->
+          <template is="dom-if" if="[[_has(_sassdocInuitFlags)]]">
+            <ul class="list-ui list-ui--small u-m++">
+              <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
+                <li class="list-ui__item">
+                  <h4 class="u-mv--">
+                    <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
+                    ${{item.context.name}}
+                    <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
+                    <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
+                  </h4>
+                  <iron-collapse id="{{item.context.name}}-container" no-animation>
+                    <p class="u-mt++">{{item.description}}</p>
+                    <px-clipboard copy-from="#{{item.context.name}}-code">
                       <figure class="code u-mr-">
-                        <code id="import">
+                        <code id="{{item.context.name}}-code">
+                          ${{item.context.name}} : true;<br />
                           {{_importCode}}
                         </code>
                       </figure>
                     </px-clipboard>
-                    <h4>Usage:</h4>
-                    <px-clipboard copy-from="#usageDemo">
-                      <figure class="code u-mr-">
-                        <code id="usageDemo">
-                        </code>
-                      </figure>
-                    </px-clipboard>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="apiContainer">
-            <div class="flex flex--col api u-mt++">
-              <div class="componentHeader">Installation</div>
-              <p>Install via command line:</p>
-              <px-clipboard copy-from="#install">
+                  </iron-collapse>
+                </li>
+              </template>
+            </ul>
+          </template>
+          <!-- END 2.1 ENABLE FLAGS -->
+
+          <!-- 2.2 CUSTOMIZE MODULE -->
+          <h3>2. Customize Styles</h3>
+          <template is="dom-if" if="[[_hasAnyStyleVariables]]">
+            <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any the variables below to a new value above the module's @import statement in your project Sass file: </p>
+          </template>
+          <template is="dom-if" if="[[!_hasAnyStyleVariables]]">
+            <p>There are no style variables to set before importing this module in your project Sass file.</p>
+          </template>
+
+          <template is="dom-if" if="[[_has(styleVariables)]]">
+            <section class="u-mb++">
+              <px-clipboard copy-from="#customize">
                 <figure class="code u-mr-">
-                  <code id="install">
-                    bower install --save {{libraryName}}
+                  <code id="customize">
+                    <template is="dom-repeat" items="{{styleVariables}}">
+                      {{item}} <br/>
+                    </template>
                   </code>
                 </figure>
               </px-clipboard>
-
-              <div class="componentHeader">Import</div>
-                <template is="dom-if" if="{{inuitFlags}}">
-                  <p>The following flags are available and, if necessary, should be set to true <strong>prior to the import</strong> statement below.</p>
-                  <px-clipboard copy-from="#enable">
-                    <figure class="code u-mr-">
-                      <code id="enable">
-                        <template is="dom-repeat" items="{{inuitFlags}}">
-                          {{item}} : true;<br/>
-                        </template>
-                      </code>
-                    </figure>
-                  </px-clipboard>
-                </template>
-
-                  <p>Include the required import below in your Sass file in the <strong>{{layer}}</strong> layer: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
-                  <px-clipboard copy-from="#import2">
-                    <figure class="code u-mr-">
-                      <code id="import2">
-                        {{_importCode}}
-                      </code>
-                    </figure>
-                  </px-clipboard>
-
-                  <div class="componentHeader">Usage</div>
-                  <p>Include the following HTML in your main application to use the element:</p>
-                  <px-clipboard copy-from="#usage2">
-                    <figure class="code u-mr-">
-                      <code id="usage2">
-                        <template is="dom-repeat" items="{{usageHtml}}">
-                          {{item}} <br/>
-                        </template>
-                      </code>
-                    </figure>
-                  </px-clipboard>
-
-                  <template is="dom-if" if="{{styleVariables}}">
-                    <div class="componentHeader">Customization</div>
-                    <p>The following variables are available to customize the style of this element:</p>
-                    <px-clipboard copy-from="#customize">
+            </section>
+          </template>
+          <template is="dom-if" if="[[_has(_sassdocStyleVariables)]]">
+            <ul class="list-ui list-ui--small u-m++">
+              <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
+                <li class="list-ui__item">
+                  <h4 class="u-mv--">
+                    <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
+                    ${{item.context.name}}
+                    <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
+                    <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
+                  </h4>
+                  <iron-collapse id="{{item.context.name}}-container" no-animation>
+                    <p class="u-mt++">{{item.description}}</p>
+                    <px-clipboard copy-from="#{{item.context.name}}-code">
                       <figure class="code u-mr-">
-                        <code id="customize">
-                          <template is="dom-repeat" items="{{styleVariables}}">
-                            {{item}} <br/>
-                          </template>
+                        <code id="{{item.context.name}}-code">
+                          ${{item.context.name}} : {{item.context.value}};<br />
+                          {{_importCode}}
                         </code>
                       </figure>
                     </px-clipboard>
-                  </template>
+                  </iron-collapse>
+                </li>
+              </template>
+            </ul>
+          </template>
+          <!-- END 2.2 CUSTOMIZE MODULE -->
 
-                  <template is="dom-if" if="{{dependencies}}">
-                    <div class="componentHeader">Dependencies</div>
-                    <p>This module depends on the following modules (automatically included with Bower install):
-                      <ul>
-                        <template is="dom-repeat" items="{{dependencies}}">
-                          <li><a href="{{item}}" target="_blank">{{item}}</a></li>
-                        </template>
-                      </ul>
-                    </p>
-                  </template>
+          <!-- 2.3 IMPORT SASS -->
+          <h3>3. Import Sass File</h3>
+          <p>Import the module by placing this code into the <strong>{{layer}}</strong> layer of your project Sass file: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
+          <px-clipboard copy-from="#import2">
+            <figure class="code u-mr-">
+              <code id="import2">
+                {{_importCode}}
+              </code>
+            </figure>
+          </px-clipboard>
+        <!-- END 2.3 IMPORT SASS -->
 
-            </div>
-          </div>
+      </section>
+      <!-- END 2. IMPORT SASS INSTRUCTIONS -->
+
+        <!-- USAGE -->
+        <section class="u-mb++">
+          <div class="componentHeader">Use it in your project</div>
+
+          <template is="dom-if" if="[[_has(_usageMarkdown)]]">
+            <marked-element markdown="{{_usageMarkdown}}">
+              <div class="markdown-html"></div>
+            </marked-element>
+          </template>
+
+          <px-highlighter highlight-target="#usageHTML">
+            <content select="[data-slot=usageHTML]"></content>
+          </px-highlighter>
+          <template is="dom-if" if="[[!_has(_usageMarkdown)]]">
+            <p>Include the following HTML in your project to use the module:</p>
+            <px-clipboard copy-from="#usageHTML">
+              <pre class="code u-mr- u-mb">
+                <code id="usageHTML" class="import-code"></code>
+              </pre>
+            </px-clipboard>
+          </template>
         </section>
+
+        <!-- DEPENDENCIES -->
+        <section class="u-mb++">
+          <div class="componentHeader">Dependencies</div>
+          <template is="dom-if" if="[[_has(dependencies)]]">
+            <p>This module depends on the following modules (automatically included with Bower install):
+              <ul>
+                <template is="dom-repeat" items="{{dependencies}}">
+                  <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
+                </template>
+              </ul>
+            </p>
+          </template>
+          <template is="dom-if" if="[[!_has(dependencies)]]">
+            <p>This module doesn't have any dependencies.</p>
+          </template>
+        </section>
+
       </div>
-
-
+    </div>
 
   </template>
 </dom-module>
@@ -183,6 +263,7 @@ Element providing documentation for a requested Predix UI Sass component (design
      * @type Object
      */
     properties: {
+
       /**
       * Name of the overall sass repository.
       *
@@ -193,6 +274,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: String,
         value: ''
       },
+
       /**
       * Inuit flags that are used to enable features and functionality, represented as an array of strings, which will display with line breaks between each.
       *
@@ -203,6 +285,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: Array,
         value: function() { return []; }
       },
+
       /**
       *  ITCSS layer that this component belongs in, e.g. generic, objects, trumps, etc.
       *
@@ -213,6 +296,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: String,
         value: ''
       },
+
       /**
       * Base name of the component in the file path, e.g. _objects.BASENAME.scss.
       *
@@ -223,6 +307,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: String,
         value: ''
       },
+
       /**
       * The HTML code snippet to actually use the component, represented as an array of strings. A newline will appear between each string in the array. Include an empty string to result in an extra line break.
       *
@@ -233,6 +318,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: Array,
         value: function() { return []; }
       },
+
       /**
       * The SASS variables available for customizing the appearance of the component, represented as an array of strings, which will display with line breaks between each.
       *
@@ -243,6 +329,7 @@ Element providing documentation for a requested Predix UI Sass component (design
         type: Array,
         value: function() { return []; }
       },
+
       /**
       * Any dependencies that exist for this component, represented as an array of strings, which will display in a list. Each string item should be the fully qualified URL of the repo.
       *
@@ -251,39 +338,31 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       dependencies: {
         type: Array,
-        value: function() { return [];}
-      },
-      /**
-      * Array of objects describing the HTML structure of the component.
-      * Each object should contain:
-      * - elem (the HTML tag for the element)
-      * - id (for the element)
-      * - class (one or more classes)
-      * - extra (any additional HTML to include in the element, e.g. "checked")
-      *
-      * @property demoConfig
-      * @type Array
-      */
-      demoConfig: {
-        type: Array,
-        value: function() { return [];}
-      },
-      /**
-      * Array of objects representing the options to populate on the left side of the mega demo.
-      * Each object should contain:
-      * - label (to place above or next to the option)
-      * - type ("dropdown" or "boolean")
-      * - id (for the selector)
-      * - dropdownItems (only applies for type dropdown)
-      * - displayValue (only applies for type dropdown)
-      *
-      * @property styleOptionsArray
-      * @type Array
-      */
-      styleOptionsArray: {
-        type: Array,
         value: function() { return []; }
       },
+
+      /**
+      * A string of markdown-styled text passed in through the data-slot intro. Automatically set by a function on attached().
+      *
+      * @property _introMarkdown
+      * @type String
+      */
+      _introMarkdown: {
+        type: String,
+        value: ''
+      },
+
+      /**
+      * A string of markdown-styled text passed in through the data-slot usage. Automatically set by a function on attached().
+      *
+      * @property _usageMarkdown
+      * @type String
+      */
+      _usageMarkdown: {
+        type: String,
+        value: ''
+      },
+
       /**
       * Composed string that represents the import statement of the sass component.
       *
@@ -292,96 +371,201 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _importCode: {
         type: String,
-        computed: '_calculateImportCode(libraryName,layer,baseName)'
+        computed: '_computeImportCode(libraryName,layer,baseName)'
+      },
+
+      /**
+      * Path to a generated Sassdoc JSON file.
+      *
+      * @property sassdocPath
+      * @type String
+      */
+      sassdocPath: {
+        type: String
+      },
+
+      /**
+      * The raw Sassdoc JSON, automatically loaded by iron-ajax if `sassdocPath` is defined.
+      *
+      * @property _sassdocJson
+      * @type String
+      */
+      _sassdocJson: {
+        type: Array,
+        value: function(){ []; }
+      },
+
+      /**
+      * Style variables computed from the raw Sassdoc JSON.
+      *
+      * @property _sassdocStyleVariables
+      * @type String
+      */
+      _sassdocStyleVariables: {
+        type: Array,
+        value: function(){ []; },
+        computed: '_computeSassdocStyleVariables(_sassdocJson)'
+      },
+
+      /**
+      * Inuit flags computed from the raw Sassdoc JSON.
+      *
+      * @property _sassdocInuitFlags
+      * @type String
+      */
+      _sassdocInuitFlags: {
+        type: Array,
+        value: function(){ []; },
+        computed: '_computeSassdocInuitFlags(_sassdocJson)'
+      },
+
+      /**
+      * True if either `inuitFlags` or `_sassdocInuitFlags` are defined. Computed automatically by an observer.
+      *
+      * @property _hasAnyInuitFlags
+      * @type Boolean
+      */
+      _hasAnyInuitFlags: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+      * True if either `styleVariables` or `_sassdocStyleVariables` are defined. Computed automatically by an observer.
+      *
+      * @property _hasAnyStyleVariables
+      * @type Boolean
+      */
+      _hasAnyStyleVariables: {
+        type: Boolean,
+        value: false
       }
     },
+
+    observers: [
+      '_computeHasAnyFlags(inuitFlags)',
+      '_computeHasAnyFlags(_sassdocInuitFlags)',
+      '_computeHasAnyStyleVariables(styleVariables)',
+      '_computeHasAnyStyleVariables(_sassdocStyleVariables)'
+    ],
+
+    attached: function() {
+      // Watch for new nodes (i.e. markdown slots) and process them
+      this._observer = Polymer.dom(this.$.incomingMarkdown).observeNodes(function(info) {
+        this._processNewNodes(info.addedNodes);
+      }.bind(this));
+    },
+
+
     /**
-    * Method that composes the import statement from the constituent parts.
+    * Process added markdown nodes and place the resulting text into the appropriate property.
     *
-    * @method _calculateImportCode
+    * @method _processNewNodes
+    */
+    _processNewNodes: function(addedNodes) {
+      addedNodes.filter(function(node){ return node.nodeType === Node.ELEMENT_NODE;  })
+        .forEach(function(n) {
+          var slot = n.getAttribute('data-slot') || null;
+          if (slot === "intro") this._introMarkdown = n.innerHTML;
+          if (slot === "usage") this._usageMarkdown = n.innerHTML;
+        }.bind(this));
+    },
+
+    /**
+    * Checks to see if any inuit flags are defined (passed in through a property or pulled from Sassdoc) and puts the result in _hasAnyInuitFlags
+    *
+    * @method _computeHasAnyFlags
+    */
+    _computeHasAnyFlags: function() {
+      var fromProp = this.inuitFlags || [],
+          fromSassdoc = this._sassdocInuitFlags || [];
+      this._hasAnyInuitFlags = fromProp.length > 0 || fromSassdoc.length > 0;
+    },
+
+    /**
+    * Checks to see if any style variables are defined (passed in through a property or pulled from Sassdoc) and puts the result in _hasAnyStyleVariables
+    *
+    * @method _computeHasAnyStyleVariables
+    */
+    _computeHasAnyStyleVariables: function() {
+      var fromProp = this.styleVariables || [],
+          fromSassdoc = this._sassdocStyleVariables || [];
+      this._hasAnyStyleVariables = fromProp.length > 0 || fromSassdoc.length > 0;
+    },
+
+    /**
+    * Takes Sassdoc raw data, computes it into available inuit flags, and puts the result in _sassdocInuitFlags
+    *
+    * @method _computeSassdocInuitFlags
+    * @return {Array}
+    */
+    _computeSassdocInuitFlags: function() {
+      if (this._sassdocJson) {
+        return this._sassdocJson.filter(function(docItem){
+          return docItem.group && docItem.group.indexOf('px-toggle-design:variables:flag') > -1;
+        });
+      }
+    },
+
+    /**
+    * Takes Sassdoc raw data, computes it into available style variables, and puts the result in _sassdocStyleVariables
+    *
+    * @method _computeHasAnyStyleVariables
+    * @return {Array}
+    */
+    _computeSassdocStyleVariables: function() {
+      if (this._sassdocJson) {
+        return this._sassdocJson.filter(function(docItem){
+          return docItem.group && docItem.group.indexOf('px-toggle-design:variables:style') > -1;
+        });
+      }
+    },
+
+    /**
+    * Computes the import statement from the constituent parts.
+    *
+    * @method _computeImportCode
     * @param library
     * @param layer
     * @param base
+    * @return {String}
     */
-    _calculateImportCode: function(library,layer,base) {
+    _computeImportCode: function(library, layer, base) {
       return '@import "' + library + '/_' + layer + '.' + base + '.scss";';
     },
+
     /**
-    * Compares strings for dom-if logic.
+    * Takes an array and checks if it has any items. Useful for checking length inside dom-if's.
     *
-    * @method _isEqual
-    * @param a
-    * @param b
+    * @method _has
+    * @param {Array} thing - The array we want to check for length
+    * @return {Boolean}
     */
-    _isEqual: function(a, b) {
-      return a === b ? true : false;
+    _has: function(thing) {
+      return thing.length > 0;
     },
+
     /**
-    * TODO
+    * Called when an arrow button is tapped. Handles the event and toggles the requested element.
     *
-    * @method attached
+    * @method _toggle
+    * @param {Object} evt - The on-tap event data from the tapped arrow button.
     */
-    attached: function() {
-      var that = this;
-
-      setTimeout(function() {
-        var styleOptionsArray = that.styleOptionsArray;
-        for(i=0; i<styleOptionsArray.length; i++) {
-          var id = styleOptionsArray[i].id,
-              element = document.querySelector('#'+id);
-          if(styleOptionsArray[i].type === 'dropdown') {
-            element.addEventListener('dropdown_content_value_changed', function(evt) {
-              var classArray = evt.detail.key;
-              for(i=0; i<classArray.length; i++) {
-                that.demoConfig[i].class = classArray[i];
-              }
-              that._updateCode();
-            });
-          }
-          else if(styleOptionsArray[i].type === 'boolean') {
-            element.addEventListener('change', function(evt) {
-              var attribute = evt.target.id,
-                  value = evt.target.checked;
-              if(value === true) {
-                // add class to demoConfig[0].class
-              }
-              else {
-                // look for class in demoConfig[0].class and remove it if found
-              }
-            });
-          }
-        }
-      }, 500);
-
-      this._updateCode();
+    _toggle: function(evt) {
+      var source = evt.target,
+          target = '#' + evt.target.dataToggle + '-container';
+      this.$$(target).toggle();
+      this._toggleArrow(source);
     },
-    _updateCode: function() {
-      var demoConfig = this.demoConfig,
-          htmlCode = '',
-          demoCode = document.querySelector('#demoCode'),
-          usageDemo = document.querySelector('#usageDemo');
 
-      demoCode.innerHTML = "";
-      usageDemo.innerHTML = "";
-
-      for(i=0; i<demoConfig.length; i++) {
-        htmlCode = '<' + demoConfig[i].elem;
-        if(demoConfig[i].id) {
-          htmlCode += ' id="' + demoConfig[i].id + '"';
-        }
-        htmlCode += ' class="' + demoConfig[i].class + '"';
-        if(demoConfig[i].extra) {
-          htmlCode += ' ' + demoConfig[i].extra;
-        }
-        htmlCode+= '>';
-        if(demoConfig[i].elemContent) {
-          htmlCode += demoConfig[i].elemContent;
-        }
-        htmlCode += '</' + demoConfig[i].elem + '>';
-        demoCode.innerHTML += htmlCode;
-        usageDemo.innerHTML += htmlCode.split("<").join("&lt;").split(">").join("&gt;") + '<br/>';
-      }
+    /**
+    * Toggles the appropriate class to set an arrow button as active (i.e. rotates the arrow).
+    *
+    * @method _toggleArrow
+    * @param {Object} el - The arrow element to toggle a class on.
+    */
+    _toggleArrow: function(el) {
+      el.classList.toggle('arrow--inactive');
     }
-
   });
 </script>

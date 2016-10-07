@@ -1,0 +1,192 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+
+<!--
+Element that provides a dropdown or toggle and notifies on change.
+
+##### Usage
+
+      <px-sass-doc-option
+        option-name="Type"
+        choose-with="dropdown"
+        choices='[
+          "primary",
+          "secondary (default)",
+          "tertiary"
+        ]'
+        default-choice="secondary (default)">
+      </px-sass-doc-option>
+
+@element px-sass-doc-option
+@blurb Element that provides a dropdown or toggle and notifies on change.
+-->
+
+<dom-module id="px-sass-doc-option">
+  <template>
+    <style include="px-sass-doc-viewer-styles"></style>
+
+    <template is="dom-if" if="{{_isDropdown}}">
+      <div class="u-mb-">{{optionName}}:
+        <div style="width: 100%;">
+          <px-dropdown id="{{optionName}}" display-value="{{selectedChoice}}">
+            <px-dropdown-content items="{{choices}}">
+            </px-dropdown-content>
+          </px-dropdown>
+        </div>
+      </div>
+    </template>
+    <template is="dom-if" if="{{_isBoolean}}">
+      <div class="flex u-mb-">
+        <input id="{{optionName}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{selectedChoice::change}}">
+        <label for$="{{optionName}}" class="toggle__label toggle__label--small"></label>
+        <div class="u-ml-">{{optionName}}</div>
+      </div>
+    </template>
+  </template>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'px-sass-doc-option',
+
+    /**
+     * Properties block, expose attribute values to the DOM via 'notify'
+     *
+     * @property properties
+     * @type Object
+     */
+    properties: {
+
+      /**
+      * Name of the option.
+      *
+      * @property optionName
+      * @type String
+      **/
+      optionName: {
+        type: String,
+        value: ''
+      },
+
+      /**
+      * The form element that is used to set the option. Either 'dropdown' or 'boolean'.
+      *
+      * @property chooseWith
+      * @type String
+      **/
+      chooseWith: {
+        type: String,
+        value: '',
+        observer: '_setInputType'
+      },
+
+      /**
+      * The choices that can be set for this option.
+      *
+      * @property choices
+      * @type Array
+      **/
+      choices: {
+        type: Array,
+        value: function(){ return []; }
+      },
+
+      /**
+      * The default choice to set when first attached.
+      *
+      * @property defaultChoice
+      * @type String
+      **/
+      defaultChoice: {
+        type: String,
+        value: '',
+        observer: '_setSelectedFirstTime'
+      },
+
+      /**
+      * The currently selected choice. Notifies the parent.
+      *
+      * @property selectedChoice
+      * @type String
+      **/
+      selectedChoice: {
+        type: String,
+        notify: true,
+        value: '',
+        observer: '_notifySelectedOptionChanged'
+      },
+
+      /**
+      * PRIVATE. True if this is a dropdown.
+      *
+      * @property _isDropdown
+      * @type Boolean
+      **/
+      _isDropdown: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+      * PRIVATE. True if this is a boolean.
+      *
+      * @property _isBoolean
+      * @type Boolean
+      **/
+      _isBoolean: {
+        type: Boolean,
+        value: false
+      }
+    },
+
+    ready: function() {
+      this.async(this._notifySelectedOptionChanged, 50);
+    },
+
+    /**
+    * Sets the input type for use in dom-ifs.
+    *
+    * @method _setInputType
+    */
+    _setInputType: function() {
+      if (this.chooseWith && this.chooseWith === "dropdown") {
+        this._isDropdown = true;
+        this._isBoolean = false;
+      }
+      if (this.chooseWith && this.chooseWith === "boolean") {
+        this._isBoolean = true;
+        this._isDropdown = false;
+      }
+    },
+
+    /**
+    * Sets the selectedChoice to the defaultChoice on the first run.
+    *
+    * @method _setSelectedFirstTime
+    */
+    _setSelectedFirstTime: function() {
+      if (this.defaultChoice && this.chooseWith == "dropdown") {
+        this.selectedChoice = this.defaultChoice;
+      }
+      if (this.defaultChoice && this.chooseWith == "boolean") {
+        this.selectedChoice = this.defaultChoice == "true" ? true : false;
+      }
+    },
+
+    /**
+    * Send a custom event notifying the new selectedChoice for this option.
+    *
+    * @method _notifySelectedOptionChanged
+    */
+    _notifySelectedOptionChanged: function() {
+      this.fire('px-sass-doc-option-selected', { option: this.optionName, selected: this.selectedChoice });
+    }
+  });
+</script>

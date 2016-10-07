@@ -1,0 +1,44 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+
+<!--
+Element providing the boilerplate footer information for Sass modules. Is used inside px-sass-doc container element.
+
+##### Usage
+
+      <px-sass-doc-footer>
+      </px-sass-doc-footer>
+      Element providing the boilerplate footer information for Sass modules.
+
+@element px-sass-doc-footer
+@blurb Element providing the boilerplate footer information for Sass modules.
+-->
+
+<dom-module id="px-sass-doc-footer">
+  <template>
+    <style include="px-sass-doc-viewer-styles"></style>
+    <footer class="footer flex flex--center">
+      <div class="footer__container u-pv++">
+        <div>
+          <a href="https://ge.com/digital"><img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img"></a>
+        </div>
+        <div class="footer__list">
+          <ul class="list-inline list-inline--delimited">
+            <li><a href="http://predix.io/legal" class="footer__list--lnk">Legal</a></li>
+            <li><a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a></li>
+            <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({ is: 'px-sass-doc-footer' });
+</script>

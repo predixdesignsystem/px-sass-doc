@@ -1,0 +1,128 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+
+<link rel="import" href="../px-clipboard/px-clipboard.html"/>
+<link rel="import" href="../prism-element/prism-highlighter.html"/>
+<link rel="import" href="../px-dropdown/px-dropdown.html"/>
+
+<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+<link rel="import" href="px-highlighter.html"/>
+<link rel="import" href="px-sass-doc-option.html"/>
+
+<!--
+Element wrapping the demo code inside px-sass-doc.
+
+Pass content into its light DOM by using data-slot="slotName" attributes.
+
+##### Usage
+
+      <px-sass-doc-demo selected-options="{{selectedOptions}}">
+        <content select="px-sass-doc-option"></content>
+        <content select="[data-slot=htmlDemo]"></content>
+        <content select="[data-slot=importDemo]"></content>
+      </px-sass-doc-demo>
+
+@element px-sass-doc-demo
+@blurb Element wrapping the demo code inside px-sass-doc.
+-->
+
+<dom-module id="px-sass-doc-demo">
+  <template>
+  <style include="px-sass-doc-viewer-styles"></style>
+  <prism-highlighter></prism-highlighter>
+
+  <section style="position: relative;" class="u-pb++ flex flex--col">
+    <div class="mega-demo flex u-ph++ u-pb++">
+      <!-- Style Options Sidebar -->
+      <div class="properties u-ph+ u-pb+ u-mt+">
+        <p class="epsilon">Style Options</p>
+        <content id="options" select="px-sass-doc-option"></content>
+      </div>
+
+      <!-- Demo Container -->
+      <div class="demoContainer u-mt+">
+        <div class="flex flex--col">
+          <div class="demo u-p+">
+            <div class="flex u-mb-">
+              <px-highlighter highlight-target="#htmlDemoUsage" raw-target="#htmlDemo">
+                <content select="[data-slot=htmlDemo]"></content>
+              </px-highlighter>
+              <section id="htmlDemo"></section>
+            </div>
+            <h4>Sass Import:</h4>
+            <px-clipboard copy-from="#importDemo">
+              <px-highlighter highlight-target="#importDemo">
+                <content select="[data-slot=importDemo]"></content>
+              </px-highlighter>
+              <pre class="code u-mr-">
+                <code id="importDemo" class="import-code"></code>
+              </pre>
+            </px-clipboard>
+            <h4>HTML Usage:</h4>
+            <px-clipboard copy-from="#htmlDemoUsage">
+              <pre class="code u-mr-">
+                <code id="htmlDemoUsage"></code>
+              </pre>
+            </px-clipboard>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'px-sass-doc-demo',
+
+    /**
+     * Properties block, expose attribute values to the DOM via 'notify'
+     *
+     * @property properties
+     * @type Object
+     */
+    properties: {
+
+      /**
+      * Represents the options that are selected at the time. Used by external components to update themselves based on what options are selected.
+      *
+      * @property selectedOptions
+      * @type Object
+      */
+      selectedOptions: {
+        type: Object,
+        notify: true,
+        value: function() { return {}; }
+      }
+    },
+
+    /**
+    * On ready, wait 50 miliseconds then update the selected options
+    */
+    ready: function() {
+      this.addEventListener('px-sass-doc-option-selected', this._handleUpdatedOptions);
+    },
+
+    /**
+    * Respond to updated options event by changing selectedOptions to match the
+    * new option.
+    *
+    * @method createInsert
+    * @param name
+    * @returns {Insert}
+    */
+    _handleUpdatedOptions: function(evt) {
+      var opts = this.get('selectedOptions') || {};
+      opts[evt.detail.option] = evt.detail.selected;
+      this.set('selectedOptions',{});
+      this.set('selectedOptions',opts);
+      this.fire('px-sass-doc-options-updated', { options: opts });
+    }
+  });
+  </script>

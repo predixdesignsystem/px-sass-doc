@@ -1,3 +1,7 @@
+v0.1.0
+==================
+* Redesigned for dynamic demos, etc.
+
 v0.0.4
 ==================
 * Added functionality for mega demo
