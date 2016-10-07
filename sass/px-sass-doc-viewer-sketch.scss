@@ -87,6 +87,11 @@ $inuit-enable-btn--icon : true;
   @extend %code;
   font-size: 0rem;
 }
+.markdown-html p > code {
+  @extend %code;
+  @extend %code--inline;
+  font-size: 0rem;
+}
 
 .mega-demo{
   background: $gray1;

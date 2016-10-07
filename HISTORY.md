@@ -1,3 +1,7 @@
+v0.1.2
+==================
+* Add styles for inline code inside markdown
+
 v0.1.1
 ==================
 * Remove README build tag
