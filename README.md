@@ -1,6 +1,4 @@
-#px-sass-doc [![Build Status](https://travis-ci.org/PredixDev/px-sass-doc.svg?branch=master)](https://travis-ci.org/PredixDev/px-sass-doc)
-
-[![px-sass-doc demo](px-sass-doc.png?raw=true)](https://github.com/PredixDev/px-sass-doc)
+#px-sass-doc
 
 ## Overview
 

@@ -1,3 +1,8 @@
+v0.1.1
+==================
+* Remove README build tag
+* Remove build tag from header
+
 v0.1.0
 ==================
 * Redesigned for dynamic demos, etc.
