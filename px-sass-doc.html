@@ -49,12 +49,17 @@ Pass additional content into its light DOM to pass down to its children.
     module-description="[[description]]">
   </px-sass-doc-header>
 
-  <!-- Demo -->
-  <px-sass-doc-demo selected-options="{{selectedOptions}}">
-    <content select="px-sass-doc-option"></content>
-    <content select="[data-slot=demoHTML]"></content>
-    <content select="[data-slot=import]"></content>
-  </px-sass-doc-demo>
+  <template is="dom-if" if="[[!hideDemoContainer]]">
+    <!-- Demo -->
+    <px-sass-doc-demo selected-options="{{selectedOptions}}">
+      <content select="px-sass-doc-option"></content>
+      <content select="[data-slot=demoHTML]"></content>
+      <content select="[data-slot=import]"></content>
+    </px-sass-doc-demo>
+  </template>
+  <template is="dom-if" if="[[hideDemoContainer]]">
+    <hr class="u-mb" />
+  </template>
 
   <!-- Viewer -->
   <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] style-variables=[[styleVariables]] dependencies=[[dependencies]] sassdoc-path=[[sassdocPath]]>
@@ -158,6 +163,17 @@ Pass additional content into its light DOM to pass down to its children.
         type: String,
         value: '',
         computed: '_computeBaseName(moduleName)'
+      },
+
+      /**
+      * Set to `true` to hide the demo container (i.e. if you just have simple API docs.)
+      *
+      * @property hideDemoContainer
+      * @type Boolean
+      */
+      hideDemoContainer: {
+        type: Boolean,
+        value: false
       },
 
       /**
