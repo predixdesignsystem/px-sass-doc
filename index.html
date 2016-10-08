@@ -104,7 +104,7 @@
       Define your HTML inside the <section></section>. Only indent code that you
       want to appear indented (i.e. for style). Indentation will be rendered in
       the demo (it's in a `pre` that keeps whitespace). -->
-<section data-slot="htmlDemo">
+<section data-slot="demoHTML" id="demoContainer">
 <button class$="{{buttonClasses}}">Example button</button>
 </section>
 
@@ -113,7 +113,7 @@
       Your import code will automatically be built and made available to data-bind
       with the `importCode` property by editing the JavaScript below. You likely
       don't need to touch the code in this slot. -->
-<section data-slot="importDemo">
+<section data-slot="import">
 {{importCode}}
 </section>
 
@@ -125,7 +125,9 @@
       Define your HTML inside the <section></section>. Only indent code that you
       want to appear indented (i.e. for style). Indentation will be rendered in
       the demo (it's in a `pre` that keeps whitespace). -->
-<section data-slot="usageHTML">
+<section data-slot="usage">
+You can use the following HTML in your project:
+```
 <button class="btn">...</button>
 <button class="btn btn--primary">...</button>
 <button class="btn btn--tertiary">...</button>
@@ -135,6 +137,7 @@
 <button class="btn btn--disabled">...</button>
 <button class="btn btn--icon">...</button>
 <button class="btn btn--bare">...</button>
+```
 </section>
   </px-sass-doc>
   </template>

@@ -15,7 +15,6 @@
 <link rel="import" href="../marked-element/marked-element.html"/>
 
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
-<link rel="import" href="px-highlighter.html" />
 
 <!--
 Element providing documentation for a requested Predix UI Sass component (design library).
@@ -74,7 +73,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
         <!-- 1. INSTALLATION INSTRUCTIONS -->
         <section class="u-mb++">
-          <div class="componentHeader">Install the module</div>
+          <div class="componentHeader u-mb">Install the module</div>
           <p>To use the {{baseName}} module, you need to install it in your project using Bower. Run this task on the command line from inside your project folder:</p>
           <px-clipboard copy-from="#install">
             <figure class="code u-mr-">
@@ -88,7 +87,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
         <!-- 2. IMPORT SASS INSTRUCTIONS -->
         <section class="u-mb++">
-          <div class="componentHeader">Import it in your Sass</div>
+          <div class="componentHeader u-mb">Import it in your Sass</div>
           <p>The {{baseName}} module won't do anything until you import and configure it in your project Sass file. Follow these steps to import it:</p>
 
           <!-- 2.1 ENABLE FLAGS -->
@@ -205,45 +204,36 @@ Element providing documentation for a requested Predix UI Sass component (design
       </section>
       <!-- END 2. IMPORT SASS INSTRUCTIONS -->
 
-        <!-- USAGE -->
+      <!-- 3. USAGE -->
+      <template is="dom-if" if="[[_has(_usageMarkdown)]]">
         <section class="u-mb++">
-          <div class="componentHeader">Use it in your project</div>
+          <div class="componentHeader u-mb">Use it in your project</div>
 
-          <template is="dom-if" if="[[_has(_usageMarkdown)]]">
-            <marked-element markdown="{{_usageMarkdown}}">
-              <div class="markdown-html"></div>
-            </marked-element>
-          </template>
-
-          <px-highlighter highlight-target="#usageHTML">
-            <content select="[data-slot=usageHTML]"></content>
-          </px-highlighter>
-          <template is="dom-if" if="[[!_has(_usageMarkdown)]]">
-            <p>Include the following HTML in your project to use the module:</p>
-            <px-clipboard copy-from="#usageHTML">
-              <pre class="code u-mr- u-mb">
-                <code id="usageHTML" class="import-code"></code>
-              </pre>
-            </px-clipboard>
-          </template>
+          <marked-element markdown="{{_usageMarkdown}}">
+            <div class="markdown-html"></div>
+          </marked-element>
         </section>
+      </template>
+      <!-- END 3. USAGE -->
 
-        <!-- DEPENDENCIES -->
-        <section class="u-mb++">
-          <div class="componentHeader">Dependencies</div>
-          <template is="dom-if" if="[[_has(dependencies)]]">
-            <p>This module depends on the following modules (automatically included with Bower install):
-              <ul>
-                <template is="dom-repeat" items="{{dependencies}}">
-                  <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
-                </template>
-              </ul>
-            </p>
-          </template>
-          <template is="dom-if" if="[[!_has(dependencies)]]">
-            <p>This module doesn't have any dependencies.</p>
-          </template>
-        </section>
+
+      <!-- 4. DEPENDENCIES -->
+      <section class="u-mb++">
+        <div class="componentHeader u-mb">Dependencies</div>
+        <template is="dom-if" if="[[_has(dependencies)]]">
+          <p>This module depends on the following modules (automatically included with Bower install):
+            <ul>
+              <template is="dom-repeat" items="{{dependencies}}">
+                <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
+              </template>
+            </ul>
+          </p>
+        </template>
+        <template is="dom-if" if="[[!_has(dependencies)]]">
+          <p>This module doesn't have any dependencies.</p>
+        </template>
+      </section>
+      <!-- END 4. DEPENDENCIES -->
 
       </div>
     </div>

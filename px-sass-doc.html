@@ -6,7 +6,6 @@
 <link rel="import" href="../polymer/polymer.html"/>
 
 <link rel="import" href="../px-clipboard/px-clipboard.html"/>
-<link rel="import" href="../prism-element/prism-highlighter.html"/>
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
 
 <link rel="import" href="css/px-sass-doc-viewer-styles.html">
@@ -53,8 +52,8 @@ Pass additional content into its light DOM to pass down to its children.
   <!-- Demo -->
   <px-sass-doc-demo selected-options="{{selectedOptions}}">
     <content select="px-sass-doc-option"></content>
-    <content select="[data-slot=htmlDemo]"></content>
-    <content select="[data-slot=importDemo]"></content>
+    <content select="[data-slot=demoHTML]"></content>
+    <content select="[data-slot=import]"></content>
   </px-sass-doc-demo>
 
   <!-- Viewer -->
