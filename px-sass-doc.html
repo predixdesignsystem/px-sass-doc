@@ -51,7 +51,7 @@ Pass additional content into its light DOM to pass down to its children.
 
   <template is="dom-if" if="[[!hideDemoContainer]]">
     <!-- Demo -->
-    <px-sass-doc-demo selected-options="{{selectedOptions}}">
+    <px-sass-doc-demo selected-options="{{selectedOptions}}" selected-tab="{{selectedTab}}" tabs="[[tabs]]">
       <content select="px-sass-doc-option"></content>
       <content select="[data-slot=demoHTML]"></content>
       <content select="[data-slot=import]"></content>
@@ -166,6 +166,17 @@ Pass additional content into its light DOM to pass down to its children.
       },
 
       /**
+      * A list of tabs that will change our demo container.
+      *
+      * @property tabs
+      * @type Array
+      */
+      tabs: {
+        type: Array,
+        value: function() { return []; }
+      },
+
+      /**
       * Set to `true` to hide the demo container (i.e. if you just have simple API docs.)
       *
       * @property hideDemoContainer
@@ -186,6 +197,18 @@ Pass additional content into its light DOM to pass down to its children.
         type: Object,
         notify: true,
         value: function(){ return {}; },
+      },
+
+      /**
+      * The currently selected tab, passed up from px-sass-doc-demo.
+      *
+      * @property selectedTab
+      * @type String
+      */
+      selectedTab: {
+        type: String,
+        notify: true,
+        value: ''
       }
     },
 

@@ -492,7 +492,7 @@ Element providing documentation for a requested Predix UI Sass component (design
     _computeSassdocInuitFlags: function() {
       if (this._sassdocJson) {
         return this._sassdocJson.filter(function(docItem){
-          return docItem.group && docItem.group.indexOf('variables:flag') > -1;
+          return docItem.group && docItem.group.length && docItem.group[0].indexOf('variables:flag') > -1;
         });
       }
     },
@@ -506,7 +506,7 @@ Element providing documentation for a requested Predix UI Sass component (design
     _computeSassdocStyleVariables: function() {
       if (this._sassdocJson) {
         return this._sassdocJson.filter(function(docItem){
-          return docItem.group && docItem.group.indexOf('variables:style') > -1;
+          return docItem.group && docItem.group.length && docItem.group[0].indexOf('variables:style') > -1;
         });
       }
     },

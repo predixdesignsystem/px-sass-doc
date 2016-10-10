@@ -9,6 +9,7 @@
 <link rel="import" href="../prism-element/prism-highlighter.html"/>
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
 <link rel="import" href="../marked-element/marked-element.html"/>
+<link rel="import" href="../px-tabs/px-tab-set.html"/>
 
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
 <link rel="import" href="px-sass-doc-option.html"/>
@@ -34,6 +35,18 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
   <template>
   <style include="px-sass-doc-viewer-styles"></style>
   <prism-highlighter></prism-highlighter>
+
+  <template is="dom-if" if="[[_hasTabs]]">
+    <div style="position: relative;" class="flex flex--col" id="defaultTab">
+      <div class="tabContainer u-pt++ u-pl++">
+        <px-tab-set selected="{{_selectedTabIndex}}" bare no-bottom-border>
+          <template is="dom-repeat" items="{{tabs}}">
+            <px-tab>{{item}}</px-tab>
+          </template>
+        </px-tab-set>
+      </div>
+    </div>
+  </template>
 
   <section style="position: relative;" class="u-pb++ flex flex--col">
     <div class="mega-demo flex u-ph++ u-pb++">
@@ -89,6 +102,52 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
     properties: {
 
       /**
+      * A list of tabs that will change our demo container.
+      *
+      * @property tabs
+      * @type Array
+      */
+      tabs: {
+        type: Array,
+        value: function() { return []; }
+      },
+
+      /**
+      * Computed and set to `true` if we have tabs.
+      *
+      * @property _hasTabs
+      * @type Boolean
+      */
+      _hasTabs: {
+        type: Boolean,
+        computed: '_computeHasTabs(tabs)'
+      },
+
+      /**
+      * The index of the selected tab, if we have tabs.
+      *
+      * @property _selectedTabIndex
+      * @type Number
+      */
+      _selectedTabIndex: {
+        type: Number,
+        value: 0
+      },
+
+      /**
+      * The name of the selected tab, if we have tabs.
+      *
+      * @property selectedTab
+      * @type String
+      */
+      selectedTab: {
+        type: String,
+        notify: true,
+        computed: '_computeSelectedTab(_selectedTabIndex)',
+        observer: '_tabChanged'
+      },
+
+      /**
       * Represents the options that are selected at the time. Used by external components to update themselves based on what options are selected.
       *
       * @property selectedOptions
@@ -97,7 +156,8 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
       selectedOptions: {
         type: Object,
         notify: true,
-        value: function() { return {}; }
+        value: function() { return {}; },
+        observer: '_syncSelectedOptions'
       },
 
       /**
@@ -142,8 +202,8 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
         this._sendCodeToHighlighter();
       }.bind(this))
 
-      // Listen for changes to options and handle them
-      this.addEventListener('px-sass-doc-option-selected', this._handleUpdatedOptions);
+      // Listen for changes from options and handle them
+      document.addEventListener('px-sass-doc-option-selected', this._handleUpdatedOptions.bind(this));
     },
 
     /**
@@ -159,14 +219,42 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
       if (importEl) this._importCode = '```\n' + importEl.innerHTML.trim() + '\n```';
     },
 
+    /**
+    * Checks if we have tabs and returns the result as a boolean. Used to compute `_hasTabs`.
+    *
+    * @method _computeHasTabs
+    */
+    _computeHasTabs: function() {
+      var tabs = this.tabs || [];
+      return !!tabs.length;
+    },
+
+    /**
+    * Returns the name of the selected tab (based on its index).
+    *
+    * @method _computeSelectedTab
+    */
+    _computeSelectedTab: function() {
+      if (typeof this._selectedTabIndex === "number" && this.tabs.length) {
+        return this.tabs[this._selectedTabIndex];
+      }
+    },
+
+    /**
+    * When the tab changes, re-highlight and pull our code.
+    *
+    * @method _tabChanged
+    */
+    _tabChanged: function() {
+      this.async(this._sendCodeToHighlighter,20);
+    },
 
     /**
     * Respond to updated options event by changing selectedOptions to match the
     * new option.
     *
-    * @method createInsert
-    * @param name
-    * @returns {Insert}
+    * @method _handleUpdatedOptions
+    * @param evt
     */
     _handleUpdatedOptions: function(evt) {
       var opts = this.get('selectedOptions') || {};
@@ -174,6 +262,25 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
       this.set('selectedOptions',{});
       this.set('selectedOptions',opts);
       this.fire('px-sass-doc-options-updated', { options: opts });
+    },
+
+    /**
+    * If we receive a selectedOptions change from the outside, sync it with the
+    * options in our light DOM.
+    *
+    * @method _syncSelectedOptions
+    * @param evt
+    */
+    _syncSelectedOptions: function(evt) {
+      var opts = this.get('selectedOptions') || {},
+          optEls = this.queryAllEffectiveChildren('px-sass-doc-option');
+      if (optEls.length) {
+        optEls.forEach(function(opt) {
+          if (typeof opts[opt.optionName] !== "undefined" && opt.selectedChoice !== opts[opt.optionName]) {
+            opt.selectedChoice = opts[opt.optionName];
+          }
+        }.bind(this))
+      }
     }
   });
   </script>
