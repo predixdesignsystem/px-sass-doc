@@ -1,3 +1,7 @@
+v0.1.5
+==================
+* Move px-tabs package to full dependency (not dev dependency)
+
 v0.1.4
 ==================
 * Added ability to pass in `tabs` to the px-sass-doc element for multiple demos
