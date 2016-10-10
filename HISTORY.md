@@ -1,6 +1,13 @@
 v0.1.6
 ==================
-* Merged in Martin's PR that: clean up bower.json. Remove '#', remove resolutions, remove urls. Ran ncu over it to pick up latest components deps. Moved '-design' repos to dev dependencies.
+* Changed px-theme to load via. style modules
+* Regenerated demo css
+
+v0.1.6
+==================
+* Cleaned up bower.json: remove '#', remove resolutions, remove urls
+* Picked up latest components dependencies
+* Moved '-design' repos to dev dependencies
 
 v0.1.5
 ==================
