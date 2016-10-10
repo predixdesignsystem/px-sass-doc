@@ -1,6 +1,6 @@
 {
   "name": "px-sass-doc",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": [
     "px-sass-doc.html"
   ],
@@ -22,25 +22,25 @@
   ],
   "dependencies": {
     "polymer": "^1.6.0",
-    "px-theme": "~0.8.0",
+    "px-tabs": "~0.5.2",
+    "px-theme": "~1.1.2",
     "px-clipboard": "~0.1.3",
-    "px-dropdown": "^0.11.2",
-    "px-toggle-design": "^0.2.12",
+    "px-dropdown": "^0.12.2",
     "prism-element": "^1.1.1",
-    "iron-ajax": "PolymerElements/iron-ajax#^1.4.3",
-    "px-list-ui-design": "https://github.com/PredixDev/px-list-ui-design.git#^0.3.11",
+    "iron-ajax": "^1.4.3",
     "polymer-font-awesome": "^0.1.5",
     "iron-collapse": "^1.2.1",
     "iron-icon": "^1.0.11",
-    "marked-element": "PolymerElements/marked-element#^1.2.0"
+    "marked-element": "^1.2.0"
   },
   "devDependencies": {
-    "px-forms-design": "#~0.3.15",
-    "px-tables-design": "#~0.3.12",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.3",
+    "px-toggle-design": "^0.2.12",
+    "px-list-ui-design": "^0.3.11",
+    "px-forms-design": "~0.3.15",
+    "px-tables-design": "~0.3.12",
+    "iron-demo-helpers": "^1.2.3",
     "px-polymer-font-awesome": "^0.1.8",
-    "px-tabs": "~0.4.0",
-    "px-api-viewer": "^0.0.5",
+    "px-api-viewer": "^0.1.0",
     "px-demo-snippet": "^0.6.4",
     "px-list-inline-design": "^0.2.11",
     "px-headings-design": "^0.2.14",
@@ -48,12 +48,7 @@
     "px-code-design": "^0.2.11",
     "px-list-bare-design": "^0.2.13",
     "px-meta-lists-design": "^0.3.4",
-    "px-starter-kit-design": "~0.5.5",
+    "px-starter-kit-design": "~0.6.0",
     "px-buttons-design": "~0.4.12"
-  },
-  "resolutions": {
-    "px-clipboard": "~0.1.3",
-    "px-theme": "~1.1.2",
-    "px-typography-design": "^1.1.0"
   }
 }
