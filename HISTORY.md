@@ -1,3 +1,7 @@
+v0.1.6
+==================
+* Merged in Martin's PR that: clean up bower.json. Remove '#', remove resolutions, remove urls. Ran ncu over it to pick up latest components deps. Moved '-design' repos to dev dependencies.
+
 v0.1.5
 ==================
 * Move px-tabs package to full dependency (not dev dependency)
