@@ -24,7 +24,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
       <px-sass-doc-demo selected-options="{{selectedOptions}}">
         <content select="px-sass-doc-option"></content>
         <content select="[data-slot=demoHTML]"></content>
-        <content select="[data-slot=importDemo]"></content>
+        <content select="[data-slot=import]"></content>
       </px-sass-doc-demo>
 
 @element px-sass-doc-demo
@@ -68,7 +68,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
             <h4>Sass Import:</h4>
             <px-clipboard copy-from="#importCodeSource">
               <section class="watch-slot" style="display:none;">
-                <content select="[data-slot=importDemo]"></content>
+                <content select="[data-slot=import]"></content>
               </section>
               <marked-element markdown="{{_importCode}}">
                 <div class="markdown-html u-mr-" id="importCodeSource"></div>

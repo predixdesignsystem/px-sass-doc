@@ -34,9 +34,7 @@ Finally, use the component in your application:
 <px-sass-doc
   library-name="px-toggle-design"
   layer="objects"
-  base-name="toggle"
   inuit-flags='["$inuit-enable-toggle--small","$inuit-enable-toggle--large","$inuit-enable-toggle--huge"]'
-  usage-html='["<input id=\"toggle1\" class=\"toggle__input\" type=\"checkbox\">","<label for=\"toggle1\" class=\"toggle__label\"></label>"]'
   style-variables='["$inuit-toggle-color","$inuit-toggle-background","$inuit-toggle-border"]'
   dependencies='["https://github.com/PredixDev/px-colors-design","https://github.com/PredixDev/px-defaults-design","https://github.com/PredixDev/px-helpers-design"]'>
 </px-sass-doc>
