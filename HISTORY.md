@@ -1,3 +1,11 @@
+v0.1.4
+==================
+* Added ability to pass in `tabs` to the px-sass-doc element for multiple demos
+* Added ability to hide demo by setting `hide-demo-container` to `true` on px-sass-doc
+* Removed custom highlighter in favor of marked-element
+* Fixed Sassdoc comment finder to work for all modules
+* Fixed bug where undefined slots caused JavaScript execution to fail
+
 v0.1.3
 ==================
 * Fix font-size in inline code
