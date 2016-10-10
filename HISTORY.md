@@ -1,4 +1,4 @@
-v0.1.6
+v0.1.7
 ==================
 * Changed px-theme to load via. style modules
 * Regenerated demo css
