@@ -1,3 +1,7 @@
+v0.1.8
+==================
+* Fixed slot naming convention
+
 v0.1.7
 ==================
 * Changed px-theme to load via. style modules
