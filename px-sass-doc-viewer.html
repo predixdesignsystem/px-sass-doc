@@ -116,21 +116,27 @@ Element providing documentation for a requested Predix UI Sass component (design
               <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
                 <li class="list-ui__item">
                   <h4 class="u-mv--">
-                    <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
-                    <span on-tap="_toggle" data-toggle="{{item.context.name}}" class="clickable">${{item.context.name}}</span>
-                    <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
-                    <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
+                    <span class="actionable">
+                      <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
+                      <span on-tap="_toggle" data-toggle="{{item.context.name}}" class="clickable">${{item.context.name}}</span>
+                    </span>
                   </h4>
                   <iron-collapse id="{{item.context.name}}-container" no-animation>
-                    <p class="u-mt++">{{item.description}}</p>
-                    <px-clipboard copy-from="#{{item.context.name}}-code">
-                      <figure class="code u-mr-">
-                        <code id="{{item.context.name}}-code">
-                          ${{item.context.name}} : true;<br />
-                          {{_importCode}}
-                        </code>
-                      </figure>
-                    </px-clipboard>
+                    <div class="sass-variable-details">
+                      <p class="u-mt">{{item.description}}</p>
+                      <p>
+                        <small class="caps muted weight--light">Type: {{item.type}}</small>
+                        <br /><small class="caps muted weight--light">Default Value: {{item.context.value}}</small>
+                      </p>
+                      <px-clipboard copy-from="#{{item.context.name}}-code">
+                        <figure class="code u-mr-">
+                          <code id="{{item.context.name}}-code">
+                            ${{item.context.name}} : true;<br />
+                            {{_importCode}}
+                          </code>
+                        </figure>
+                      </px-clipboard>
+                    </div>
                   </iron-collapse>
                 </li>
               </template>
@@ -165,21 +171,27 @@ Element providing documentation for a requested Predix UI Sass component (design
               <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
                 <li class="list-ui__item">
                   <h4 class="u-mv--">
+                    <span class="actionable">
                     <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
                     <span data-toggle="{{item.context.name}}" on-tap="_toggle" class="clickable">${{item.context.name}}</span>
-                    <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
-                    <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
+                    </span>
                   </h4>
                   <iron-collapse id="{{item.context.name}}-container" no-animation>
-                    <p class="u-mt++">{{item.description}}</p>
-                    <px-clipboard copy-from="#{{item.context.name}}-code">
-                      <figure class="code u-mr-">
-                        <code id="{{item.context.name}}-code">
-                          ${{item.context.name}} : {{item.context.value}};<br />
-                          {{_importCode}}
-                        </code>
-                      </figure>
-                    </px-clipboard>
+                    <div class="sass-variable-details">
+                      <p class="u-mt">{{item.description}}</p>
+                      <p>
+                        <small class="caps muted weight--light">Type: {{item.type}}</small>
+                        <br /><small class="caps muted weight--light">Default Value: {{item.context.value}}</small>
+                      </p>
+                      <px-clipboard copy-from="#{{item.context.name}}-code">
+                        <figure class="code u-mr-">
+                          <code id="{{item.context.name}}-code">
+                            ${{item.context.name}} : {{item.context.value}};<br />
+                            {{_importCode}}
+                          </code>
+                        </figure>
+                      </px-clipboard>
+                    </div>
                   </iron-collapse>
                 </li>
               </template>

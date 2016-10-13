@@ -1,6 +1,10 @@
+v0.2.1
+==================
+* Improved the visual style and usability of Sass variable lists
+
 v0.2.0
 ==================
-* added functionality to hide the style options section if there are no style options. 
+* added functionality to hide the style options section if there are no style options.
 
 v0.1.9
 ==================
