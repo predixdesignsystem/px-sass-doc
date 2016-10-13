@@ -51,9 +51,9 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
   <section style="position: relative;" class="u-pb++ flex flex--col">
     <div class="mega-demo flex u-ph++ u-pb++">
       <!-- Style Options Sidebar -->
-      <div class="properties u-ph+ u-pb+ u-mt+">
+      <div class$="[[_getOptionsClass(_showIfHasOptions)]]">x
         <p class="epsilon">Style Options</p>
-        <content id="options" select="px-sass-doc-option"></content>
+        <content id="docOption" select="px-sass-doc-option"></content>
       </div>
 
       <!-- Demo Container -->
@@ -180,6 +180,28 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
       _importCode: {
         type: String,
         value: ''
+      },
+
+      /**
+      * PRIVATE. Hides if has no options.
+      *
+      * @property _showIfHasOptions
+      * @type String
+      */
+      _showIfHasOptions: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+      * PRIVATE. Keeps count of the number of 'px-sass-doc-option' elements
+      *
+      * @property _currentOptionsChildrenCount
+      * @type Number
+      */
+      _currentOptionsChildrenCount: {
+        type: Number,
+        value: 0
       }
     },
 
@@ -197,6 +219,11 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
         });
       }
 
+      // observe nodes on '<content id="docOption" select="px-sass-doc-option"></content>'
+      var boundStyleOptionsAdded = this._calcOptionClass.bind(this);
+      this._observeStyleOptions = Polymer.dom(this.$.docOption).observeNodes(boundStyleOptionsAdded);
+
+
       // For deep changes we can't observe, listen for an event
       document.addEventListener('px-sass-doc-demo-updated', function(evt) {
         this._sendCodeToHighlighter();
@@ -204,6 +231,25 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
 
       // Listen for changes from options and handle them
       document.addEventListener('px-sass-doc-option-selected', this._handleUpdatedOptions.bind(this));
+    },
+
+    _calcOptionClass: function(evt) {
+      this._currentOptionsChildrenCount += evt.addedNodes.length;
+      this._currentOptionsChildrenCount -= evt.removedNodes.length;
+      if(this._currentOptionsChildrenCount > 0) {
+        this.set('_showIfHasOptions', true);
+      } else {
+        this.set('_showIfHasOptions', false);
+      }
+
+    },
+    _getOptionsClass: function() {
+      var base = 'properties u-ph+ u-pb+ u-mt+ ';
+
+      if(!this._showIfHasOptions) {
+        base += 'hidden';
+      }
+      return base;
     },
 
     /**
