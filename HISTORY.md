@@ -1,3 +1,7 @@
+v0.1.9
+==================
+* gave the arrows a pointer cursor, and made the whole text clickable.
+
 v0.1.8
 ==================
 * Fixed slot naming convention

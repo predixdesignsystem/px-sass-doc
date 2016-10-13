@@ -116,8 +116,8 @@ Element providing documentation for a requested Predix UI Sass component (design
               <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
                 <li class="list-ui__item">
                   <h4 class="u-mv--">
-                    <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
-                    ${{item.context.name}}
+                    <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
+                    <span on-tap="_toggle" data-toggle="{{item.context.name}}" class="clickable">${{item.context.name}}</span>
                     <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
                     <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
                   </h4>
@@ -165,8 +165,8 @@ Element providing documentation for a requested Predix UI Sass component (design
               <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
                 <li class="list-ui__item">
                   <h4 class="u-mv--">
-                    <a on-tap="_toggle"><iron-icon class="arrow--small arrow--inactive" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}"></iron-icon></a>
-                    ${{item.context.name}}
+                    <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
+                    <span data-toggle="{{item.context.name}}" on-tap="_toggle" class="clickable">${{item.context.name}}</span>
                     <small class="caps muted weight--light u-ml">Type: {{item.type}}</small>
                     <small class="caps muted weight--light u-ml">Default Value: {{item.context.value}}</small>
                   </h4>
@@ -443,8 +443,8 @@ Element providing documentation for a requested Predix UI Sass component (design
       addedNodes.filter(function(node){ return node.nodeType === Node.ELEMENT_NODE;  })
         .forEach(function(n) {
           var slot = n.getAttribute('data-slot') || null;
-          if (slot === "intro") this._introMarkdown = n.innerHTML;
-          if (slot === "usage") this._usageMarkdown = n.innerHTML;
+          this._introMarkdown = (slot === "intro") ? n.innerHTML : '';
+          this._usageMarkdown = (slot === "usage")  ? n.innerHTML : '';
         }.bind(this));
     },
 
@@ -542,6 +542,9 @@ Element providing documentation for a requested Predix UI Sass component (design
     * @param {Object} el - The arrow element to toggle a class on.
     */
     _toggleArrow: function(el) {
+      //check if the iron icon itself was clicked, or the span. if ths span was clicked,
+      //we point el to iron-icon, where the arrow actually is.
+      el = (el.is !== 'iron-icon') ? el.previousElementSibling : el;
       el.classList.toggle('arrow--inactive');
     }
   });

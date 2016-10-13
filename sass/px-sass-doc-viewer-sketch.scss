@@ -150,6 +150,10 @@ $inuit-enable-btn--icon : true;
   margin: 0 auto;
   background-color: $white;
 }
+
+.clickable {
+  cursor: pointer;
+}
 .tabContainer {
   height:auto;
   background: $gray1;
