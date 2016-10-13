@@ -1,3 +1,7 @@
+v0.2.0
+==================
+* added functionality to hide the style options section if there are no style options. 
+
 v0.1.9
 ==================
 * gave the arrows a pointer cursor, and made the whole text clickable.
