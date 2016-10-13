@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>px-sass-doc-viewer Demo</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Boilerplate: Import Libraries -->
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../px-theme/px-theme-styles.html">
+  <style include="px-theme-styles" is="custom-style"></style>
+
+  <!-- Boilerplate: Import Sass Doc Component -->
+  <link rel="stylesheet" type="text/css" href="css/px-sass-doc-viewer-demo.css" />
+  <link rel="import" type="text/css" href="css/px-sass-doc-viewer-styles.html" />
+  <link rel="import" href="px-sass-doc.html" />
+
+  <!-- Import styles for your module -->
+  <!-- <link rel="stylesheet" type="text/css" href="css/px-toggle-design-demo.css"/> -->
+</head>
+<body>
+<template id="just-for-demo" is="dom-bind">
+
+  <px-sass-doc
+    module-name="px-buttons-design"
+    description="Element providing styles for buttons."
+    layer="objects"
+    sassdoc-path="sassdoc.json"
+    dependencies='[
+      "https://github.com/PredixDev/px-colors-design",
+      "https://github.com/PredixDev/px-defaults-design",
+      "https://github.com/PredixDev/px-helpers-design"
+    ]'
+    selected-options="{{selectedOptions}}"
+    tabs='["Default","Other"]' selected-tab="{{selectedTab}}">
+
+    <!-- FOR 'DEFAULT' TAB -->
+    <template is="dom-if" if="[[_tabIs('Default',selectedTab)]]" restamp="true">
+
+      <section data-slot="demoHTML" id="demoContainer">
+<button class="btn">Example button</button>
+      </section>
+
+      <section data-slot="import">
+@import 'px-buttons-design/_objects.buttons.scss';
+      </section>
+    </template>
+
+    <!-- FOR 'OTHER' TAB -->
+    <template is="dom-if" if="[[_tabIs('Other',selectedTab)]]" restamp="true">
+
+      <section data-slot="demoHTML" id="demoContainer">
+<h1>Bar</h1>
+      </section>
+
+      <section data-slot="import">
+$foo: bar;
+      </section>
+    </template>
+
+    <section data-slot="usage">
+You can use the following HTML in your project:
+```
+<button class="btn">...</button>
+<button class="btn btn--primary">...</button>
+<button class="btn btn--tertiary">...</button>
+<button class="btn btn--small">...</button>
+<button class="btn btn--large">...</button>
+<button class="btn btn--huge">...</button>
+<button class="btn btn--disabled">...</button>
+<button class="btn btn--icon">...</button>
+<button class="btn btn--bare">...</button>
+```
+    </section>
+  </px-sass-doc>
+</template>
+
+<script>
+  var template = document.querySelector('template[is=dom-bind]');
+
+  document.addEventListener('px-sass-doc-options-updated', function(evt) {
+    template.buttonClasses = template._buttonClasses();
+    template.importCode = template._importCode();
+  });
+
+  template._buttonClasses = function() {
+    var opts = template.selectedOptions || {}, strings = [];
+
+
+    return ("btn " + strings.join(" ")).trim();
+  };
+
+  template._importCode = function() {
+    var opts = template.selectedOptions || {}, strings = [];
+
+
+    return (strings.join("\n") + "\n@import 'px-buttons-design/_objects.buttons.scss';").trim();
+  };
+
+  template._tabIs = function(tabName) {
+    var selected = template.selectedTab || "";
+    return selected === tabName;
+  }
+</script>
+</body>
+</html>
