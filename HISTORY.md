@@ -1,3 +1,7 @@
+v0.2.2
+==================
+* Fixed bug that caused component to only render usage or intro slot, not both
+
 v0.2.1
 ==================
 * Improved the visual style and usability of Sass variable lists
