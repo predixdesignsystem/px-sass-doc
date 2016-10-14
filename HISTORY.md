@@ -1,3 +1,7 @@
+v0.2.3
+==================
+* Removed flex basis on mega demo & reordered the bower install line in viewer 
+
 v0.2.2
 ==================
 * Fixed bug that caused component to only render usage or intro slot, not both
