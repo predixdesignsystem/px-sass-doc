@@ -1,6 +1,10 @@
+v0.2.4
+==================
+* Made the demo a flex__item
+
 v0.2.3
 ==================
-* Removed flex basis on mega demo & reordered the bower install line in viewer 
+* Removed flex basis on mega demo & reordered the bower install line in viewer
 
 v0.2.2
 ==================
