@@ -1,6 +1,6 @@
 {
   "name": "px-sass-doc",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": [
     "px-sass-doc.html"
   ],
@@ -44,7 +44,7 @@
     "px-demo-snippet": "^0.6.4",
     "px-list-inline-design": "^0.2.11",
     "px-headings-design": "^0.2.14",
-    "px-actionable-text-icons-design": "^0.0.3",
+    "px-actionable-text-icons-design": "^0.1.0",
     "px-code-design": "^0.2.11",
     "px-list-bare-design": "^0.2.13",
     "px-meta-lists-design": "^0.3.4",

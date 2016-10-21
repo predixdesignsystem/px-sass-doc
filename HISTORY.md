@@ -1,3 +1,7 @@
+v0.2.4
+==================
+* bumped actionable text & icons to 0.1.0 to fix bower issues
+
 v0.2.5
 ==================
 * Added full-height class to mega demo divs so that style options and the demo will always be the same height.
