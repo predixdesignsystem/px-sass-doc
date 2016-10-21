@@ -1,3 +1,7 @@
+v0.2.5
+==================
+* Added full-height class to mega demo divs so that style options and the demo will always be the same height.
+
 v0.2.4
 ==================
 * Made the demo a flex__item
