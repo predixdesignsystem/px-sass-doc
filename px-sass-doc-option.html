@@ -31,7 +31,7 @@ Element that provides a dropdown or toggle and notifies on change.
     <style include="px-sass-doc-viewer-styles"></style>
 
     <template is="dom-if" if="{{_isDropdown}}">
-      <div class="u-mb-">{{optionName}}:
+      <div class="u-mb">{{optionName}}:
         <div style="width: 100%;">
           <px-dropdown id="{{optionName}}" display-value="{{selectedChoice}}">
             <px-dropdown-content items="{{choices}}">
@@ -41,7 +41,7 @@ Element that provides a dropdown or toggle and notifies on change.
       </div>
     </template>
     <template is="dom-if" if="{{_isBoolean}}">
-      <div class="flex u-mb-">
+      <div class="flex u-mb">
         <input id="{{optionName}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{selectedChoice::change}}">
         <label for$="{{optionName}}" class="toggle__label toggle__label--small"></label>
         <div class="u-ml-">{{optionName}}</div>

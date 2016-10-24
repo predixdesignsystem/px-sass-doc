@@ -59,7 +59,7 @@ Element providing documentation for a requested Predix UI Sass component (design
     </div>
 
     <div class="apiContainer">
-      <div class="flex flex--col api u-mt++">
+      <div class="flex flex--col api">
 
         <template is="dom-if" if="[[_has(_introMarkdown)]]">
           <section class="u-mb++">
@@ -70,13 +70,13 @@ Element providing documentation for a requested Predix UI Sass component (design
         </template>
 
         <!-- 1. INSTALLATION INSTRUCTIONS -->
-        <section class="u-mb++">
+        <section>
           <div class="componentHeader u-mb">Install the module</div>
           <p>To use the {{baseName}} module, you need to install it in your project using Bower. Run this task on the command line from inside your project folder:</p>
           <px-clipboard copy-from="#install">
             <figure class="code u-mr-">
               <code id="install">
-                bower install {{libraryName}} --save 
+                bower install {{libraryName}} --save
               </code>
             </figure>
           </px-clipboard>
@@ -84,17 +84,17 @@ Element providing documentation for a requested Predix UI Sass component (design
         <!-- 1. END INSTALLATION INSTRUCTIONS -->
 
         <!-- 2. IMPORT SASS INSTRUCTIONS -->
-        <section class="u-mb++">
+        <section>
           <div class="componentHeader u-mb">Import it in your Sass</div>
           <p>The {{baseName}} module won't do anything until you import and configure it in your project Sass file. Follow these steps to import it:</p>
 
           <!-- 2.1 ENABLE FLAGS -->
-          <h3>1. Enable Flags</h3>
+          <h4 class="u-pt-">1. Enable Flags</h4>
           <template is="dom-if" if="[[_hasAnyInuitFlags]]">
-            <p>You can turn on flags to generate additional styles defined in the {{baseName}} module. To generate new styles, set any of these flags to true above the module's @import statement in your project Sass file:</p>
+            <p>You can turn on flags to generate additional styles defined in the {{baseName}} module. To generate new styles, set any of these flags to true above the module's <code class="code code--inline">@import</code> statement in your project Sass file:</p>
           </template>
           <template is="dom-if" if="[[!_hasAnyInuitFlags]]">
-            <p>There are no flags to set before importing this module in your project Sass file.</p>
+            <p>No flags to set</p>
           </template>
 
           <!-- If an array of inuit flags were passed in directly, parse and display here -->
@@ -112,7 +112,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
           <!-- If an array of inuit flags were generated from Sassdoc, parse and display here -->
           <template is="dom-if" if="[[_has(_sassdocInuitFlags)]]">
-            <ul class="list-ui list-ui--small u-m++">
+            <ul class="list-ui list-ui--small u-mv+">
               <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
                 <li class="list-ui__item">
                   <h4 class="u-mv--">
@@ -144,64 +144,11 @@ Element providing documentation for a requested Predix UI Sass component (design
           </template>
           <!-- END 2.1 ENABLE FLAGS -->
 
-          <!-- 2.2 CUSTOMIZE MODULE -->
-          <h3>2. Customize Styles</h3>
-          <template is="dom-if" if="[[_hasAnyStyleVariables]]">
-            <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any the variables below to a new value above the module's @import statement in your project Sass file: </p>
-          </template>
-          <template is="dom-if" if="[[!_hasAnyStyleVariables]]">
-            <p>There are no style variables to set before importing this module in your project Sass file.</p>
-          </template>
 
-          <template is="dom-if" if="[[_has(styleVariables)]]">
-            <section class="u-mb++">
-              <px-clipboard copy-from="#customize">
-                <figure class="code u-mr-">
-                  <code id="customize">
-                    <template is="dom-repeat" items="{{styleVariables}}">
-                      {{item}} <br/>
-                    </template>
-                  </code>
-                </figure>
-              </px-clipboard>
-            </section>
-          </template>
-          <template is="dom-if" if="[[_has(_sassdocStyleVariables)]]">
-            <ul class="list-ui list-ui--small u-m++">
-              <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
-                <li class="list-ui__item">
-                  <h4 class="u-mv--">
-                    <span class="actionable">
-                    <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
-                    <span data-toggle="{{item.context.name}}" on-tap="_toggle" class="clickable">${{item.context.name}}</span>
-                    </span>
-                  </h4>
-                  <iron-collapse id="{{item.context.name}}-container" no-animation>
-                    <div class="sass-variable-details">
-                      <p class="u-mt">{{item.description}}</p>
-                      <p>
-                        <small class="caps muted weight--light">Type: {{item.type}}</small>
-                        <br /><small class="caps muted weight--light">Default Value: {{item.context.value}}</small>
-                      </p>
-                      <px-clipboard copy-from="#{{item.context.name}}-code">
-                        <figure class="code u-mr-">
-                          <code id="{{item.context.name}}-code">
-                            ${{item.context.name}} : {{item.context.value}};<br />
-                            {{_importCode}}
-                          </code>
-                        </figure>
-                      </px-clipboard>
-                    </div>
-                  </iron-collapse>
-                </li>
-              </template>
-            </ul>
-          </template>
-          <!-- END 2.2 CUSTOMIZE MODULE -->
 
           <!-- 2.3 IMPORT SASS -->
-          <h3>3. Import Sass File</h3>
-          <p>Import the module by placing this code into the <strong>{{layer}}</strong> layer of your project Sass file: <a href="https://github.com/PredixDev/px-getting-started#import-order" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
+          <h4 class="u-pt-">2. Import Sass File</h4>
+          <p>Import the module by placing this code into the <strong>{{layer}}</strong> layer of your project Sass file: <a href="https://github.com/PredixDev/px-getting-started#import-order" class="actionable actionable--action" target="_blank"><iron-icon icon="fa:fa-question-circle" class="u-mh--"></iron-icon>What's this?</a></p>
           <px-clipboard copy-from="#import2">
             <figure class="code u-mr-">
               <code id="import2">
@@ -216,7 +163,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
       <!-- 3. USAGE -->
       <template is="dom-if" if="[[_has(_usageMarkdown)]]">
-        <section class="u-mb++">
+        <section>
           <div class="componentHeader u-mb">Use it in your project</div>
 
           <marked-element markdown="{{_usageMarkdown}}">
@@ -227,12 +174,69 @@ Element providing documentation for a requested Predix UI Sass component (design
       <!-- END 3. USAGE -->
 
 
-      <!-- 4. DEPENDENCIES -->
+      <!-- 4. CUSTOMIZE MODULE -->
+      <section>
+        <div class="componentHeader u-mb">Customize Styles</div>
+        <template is="dom-if" if="[[_hasAnyStyleVariables]]">
+          <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any the variables below to a new value above the module's <code class="code code--inline">@import</code> statement in your project Sass file: </p>
+        </template>
+        <template is="dom-if" if="[[!_hasAnyStyleVariables]]">
+          <p class="u-mb0">No customizable variables</p>
+        </template>
+
+        <template is="dom-if" if="[[_has(styleVariables)]]">
+          <section class="u-mb++">
+            <px-clipboard copy-from="#customize">
+              <figure class="code u-mr-">
+                <code id="customize">
+                  <template is="dom-repeat" items="{{styleVariables}}">
+                    {{item}} <br/>
+                  </template>
+                </code>
+              </figure>
+            </px-clipboard>
+          </section>
+        </template>
+        <template is="dom-if" if="[[_has(_sassdocStyleVariables)]]">
+          <ul class="list-ui list-ui--small u-mt+">
+            <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
+              <li class="list-ui__item">
+                <h4 class="u-mv--">
+                  <span class="actionable">
+                  <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
+                  <span data-toggle="{{item.context.name}}" on-tap="_toggle" class="clickable">${{item.context.name}}</span>
+                  </span>
+                </h4>
+                <iron-collapse id="{{item.context.name}}-container" no-animation>
+                  <div class="sass-variable-details">
+                    <p class="u-mt">{{item.description}}</p>
+                    <p>
+                      <small class="caps muted weight--light">Type: {{item.type}}</small>
+                      <br /><small class="caps muted weight--light">Default Value: {{item.context.value}}</small>
+                    </p>
+                    <px-clipboard copy-from="#{{item.context.name}}-code">
+                      <figure class="code u-mr-">
+                        <code id="{{item.context.name}}-code">
+                          ${{item.context.name}} : {{item.context.value}};<br />
+                          {{_importCode}}
+                        </code>
+                      </figure>
+                    </px-clipboard>
+                  </div>
+                </iron-collapse>
+              </li>
+            </template>
+          </ul>
+        </template>
+      </section>
+      <!-- END 4. CUSTOMIZE MODULE -->
+
+      <!-- 5. DEPENDENCIES -->
       <section class="u-mb++">
         <div class="componentHeader u-mb">Dependencies</div>
         <template is="dom-if" if="[[_has(dependencies)]]">
           <p>This module depends on the following modules (automatically included with Bower install):
-            <ul>
+            <ul class="list-bare">
               <template is="dom-repeat" items="{{dependencies}}">
                 <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
               </template>
@@ -243,8 +247,7 @@ Element providing documentation for a requested Predix UI Sass component (design
           <p>This module doesn't have any dependencies.</p>
         </template>
       </section>
-      <!-- END 4. DEPENDENCIES -->
-
+      <!-- END 5. DEPENDENCIES -->
       </div>
     </div>
 

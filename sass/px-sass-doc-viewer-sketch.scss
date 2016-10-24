@@ -57,6 +57,8 @@ $inuit-enable-list-ui--small : true;
 $inuit-enable-list-ui--large : true;
 @import "px-list-ui-design/_objects.list-ui.scss";
 
+@import "px-list-bare-design/_objects.list-bare.scss";
+
 $inuit-enable-btn--small : true;
 $inuit-enable-btn--large : true;
 $inuit-enable-btn--huge : true;
@@ -74,6 +76,12 @@ $inuit-enable-btn--icon : true;
   white-space: pre;
   margin: 0;
   font-size: 0rem;
+}
+pre{
+  margin: 0;
+}
+figure{
+  margin-bottom: 0;
 }
 .markdown-html h1 {
   border-bottom: 1px solid $gray4;
@@ -102,7 +110,7 @@ $inuit-enable-btn--icon : true;
   width: 100%;
 }
 .description-text{
-  max-width: calculateRem(700px);
+  max-width: calculateRem(800px);
 }
 .properties{
   flex: 0 0 calculateRem(250px);
@@ -122,6 +130,7 @@ $inuit-enable-btn--icon : true;
 .componentHeader {
   border-bottom: 1px solid $gray4;
   font-size: calculateRem(25px);
+  margin-top: calculateRem(50px)
 }
 .childrenAssociated {
   :first-of-type {
@@ -214,6 +223,7 @@ $inuit-enable-margins--tiny : true;
 $inuit-enable-margins--small : true;
 $inuit-enable-margins--large : true;
 $inuit-enable-margins--huge : true;
+$inuit-enable-margins--none : true;
 $inuit-enable-paddings : true;
 $inuit-enable-paddings--tiny : true;
 $inuit-enable-paddings--small : true;

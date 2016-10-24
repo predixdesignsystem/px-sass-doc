@@ -1,4 +1,10 @@
-v0.2.4
+v0.2.7
+==================
+* small changes to Sass
+* Moved 'Customize Styles' below 'use it in your project'
+* Minor style changes to doc-viewer.html
+
+v0.2.6
 ==================
 * bumped actionable text & icons to 0.1.0 to fix bower issues
 

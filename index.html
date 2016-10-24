@@ -127,15 +127,27 @@
 <section data-slot="usage">
 You can use the following HTML in your project:
 ```
-<button class="btn">...</button>
-<button class="btn btn--primary">...</button>
-<button class="btn btn--tertiary">...</button>
-<button class="btn btn--small">...</button>
-<button class="btn btn--large">...</button>
-<button class="btn btn--huge">...</button>
-<button class="btn btn--disabled">...</button>
-<button class="btn btn--icon">...</button>
-<button class="btn btn--bare">...</button>
+<!-- Default Button: -->
+<button class="btn">Button</button>
+
+
+<!-- Sizes of Buttons: -->
+<button class="btn btn--small">Small</button>
+<button class="btn btn--large">Large</button>
+<button class="btn btn--huge">Huge</button>
+<button class="btn btn--full">Full</button>
+
+
+<!-- Types of Buttons: -->
+<button class="btn btn--primary">Primary</button>
+<button class="btn btn--tertiary">Tertiary</button>
+<button class="btn btn--disabled">Disabled</button>
+<button class="btn btn--bare">Bare</button>
+<button class="btn btn--bare--primary">Bare Primary</button>
+
+
+<!-- Iconic Buttons: -->
+<button class="btn btn--icon">Icon</button>
 ```
 </section>
   </px-sass-doc>
@@ -204,6 +216,9 @@ You can use the following HTML in your project:
     document.addEventListener('px-sass-doc-options-updated', function(evt) {
       template.buttonClasses = template._buttonClasses();
       template.importCode = template._importCode();
+
+      // Wait, then tell the highlighter to run after dom-if restamps
+    template.async(function(){ template.fire('px-sass-doc-demo-updated', {}) }, 10);
     });
 
     template._buttonClasses = function() {
