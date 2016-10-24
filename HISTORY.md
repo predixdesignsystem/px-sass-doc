@@ -1,3 +1,7 @@
+v0.2.8
+==================
+*  added new styles to markdown-html too
+
 v0.2.7
 ==================
 * small changes to Sass
