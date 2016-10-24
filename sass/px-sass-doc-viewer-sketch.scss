@@ -77,16 +77,11 @@ $inuit-enable-btn--icon : true;
   margin: 0;
   font-size: 0rem;
 }
-pre{
-  margin: 0;
-}
-figure{
-  margin-bottom: 0;
-}
 .markdown-html h1 {
   border-bottom: 1px solid $gray4;
   font-size: calculateRem(25px);
   font-weight: 400;
+  margin-top: calculateRem(50px);
 }
 .markdown-html h3 {
   margin-top: 2rem;

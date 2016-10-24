@@ -62,7 +62,7 @@ Element providing documentation for a requested Predix UI Sass component (design
       <div class="flex flex--col api">
 
         <template is="dom-if" if="[[_has(_introMarkdown)]]">
-          <section class="u-mb++">
+          <section>
             <marked-element markdown="{{_introMarkdown}}">
               <div class="markdown-html"></div>
             </marked-element>
@@ -181,7 +181,7 @@ Element providing documentation for a requested Predix UI Sass component (design
           <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any the variables below to a new value above the module's <code class="code code--inline">@import</code> statement in your project Sass file: </p>
         </template>
         <template is="dom-if" if="[[!_hasAnyStyleVariables]]">
-          <p class="u-mb0">No customizable variables</p>
+          <p>No customizable variables</p>
         </template>
 
         <template is="dom-if" if="[[_has(styleVariables)]]">
