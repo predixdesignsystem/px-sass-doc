@@ -1,3 +1,7 @@
+v0.2.9
+==================
+*  fixed safari bug with demo height only being 42px height by removing the full-height class
+
 v0.2.8
 ==================
 *  added new styles to markdown-html too
