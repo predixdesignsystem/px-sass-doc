@@ -1,3 +1,8 @@
+
+v0.2.10
+==================
+* bumping px-clipboard to fill container
+
 v0.2.9
 ==================
 *  fixed safari bug with demo height only being 42px height by removing the full-height class
