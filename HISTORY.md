@@ -1,4 +1,9 @@
 
+v0.2.11
+==================
+* bower updating px-demo-snippet
+
+
 v0.2.10
 ==================
 * bumping px-clipboard to fill container
