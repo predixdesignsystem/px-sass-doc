@@ -1,6 +1,6 @@
 {
     "name": "px-sass-doc",
-    "version": "0.2.11",
+    "version": "0.2.12",
     "main": [
         "px-sass-doc.html"
     ],
@@ -25,7 +25,7 @@
         "px-tabs": "~0.5.2",
         "px-theme": "~1.1.2",
         "px-clipboard": "~0.1.9",
-        "px-dropdown": "^0.12.2",
+        "px-dropdown": "~2.0.0",
         "prism-element": "^1.1.1",
         "iron-ajax": "^1.4.3",
         "polymer-font-awesome": "^0.1.5",
