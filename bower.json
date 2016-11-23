@@ -1,6 +1,6 @@
 {
     "name": "px-sass-doc",
-    "version": "0.2.12",
+    "version": "0.2.13",
     "main": [
         "px-sass-doc.html"
     ],
@@ -23,7 +23,7 @@
     "dependencies": {
         "polymer": "^1.6.0",
         "px-tabs": "~0.5.2",
-        "px-theme": "~1.1.2",
+        "px-theme": "^2.0.1",
         "px-clipboard": "~0.1.9",
         "px-dropdown": "~2.0.0",
         "prism-element": "^1.1.1",
