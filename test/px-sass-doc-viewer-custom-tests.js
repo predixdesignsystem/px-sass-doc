@@ -5,18 +5,26 @@ function runCustomTests() {
   // This is the placeholder suite to place custom tests in
   // Use testCase(options) for a more convenient setup of the test cases
   suite('Custom Automation Tests for px-sass-doc-viewer', function() {
-    test('Check install statement', function(done){
-      var sassEl = Polymer.dom(document).querySelector('px-sass-doc-viewer'),
-          installEl = Polymer.dom(sassEl.root).querySelector('#install');
-      assert.equal(installEl.textContent.trim(), 'bower install --save test');
-      done();
+    suiteSetup(function(done) {
+      setTimeout(function(){ done() }, 100);
     });
-    test('Check import statement', function(done){
-      var sassEl = Polymer.dom(document).querySelector('px-sass-doc-viewer'),
-          importEl = Polymer.dom(sassEl.root).querySelector('#import2');
-      assert.equal(importEl.textContent.trim(), '@import "test/_objects.test.scss";');
+
+    test('Check install statement', function(done) {
+      var sassDocEl = document.getElementById('fixture1');
+      var viewerEl  = Polymer.dom(sassDocEl.root).querySelector('px-sass-doc-viewer');
+      var installEl = Polymer.dom(viewerEl.root).querySelector('#install');
+
+      assert.equal(installEl.textContent.trim(), 'bower install px-test-design --save');
       done();
     });
 
+    test('Check import statement', function(done) {
+      var sassDocEl = document.getElementById('fixture1');
+      var viewerEl  = Polymer.dom(sassDocEl.root).querySelector('px-sass-doc-viewer');
+      var importEl = Polymer.dom(viewerEl.root).querySelector('#import2');
+
+      assert.equal(importEl.textContent.trim(), '@import "px-test-design/_objects.test.scss";');
+      done();
+    });
   });
 };

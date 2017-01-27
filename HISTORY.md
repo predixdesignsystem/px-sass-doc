@@ -1,3 +1,36 @@
+v0.3.2
+==================
+* Update colors design to pick up new colors
+
+v0.3.1
+==================
+* changing ghp.sh to account for Alpha releases
+
+v0.3.0
+==================
+* Updated dependencies
+
+v0.2.15
+==================
+* changing browser in wct testing from safari 8 to safari 10 on elcapitan
+
+v0.2.14
+==================
+* changing all devDeps to ^
+
+v0.2.13
+==================
+* Update px-theme to 2.0.1 and update test fixtures
+
+v0.2.12
+==================
+* update dependencies for dropdown
+
+
+v0.2.11
+==================
+* bower updating px-demo-snippet
+
 
 v0.2.10
 ==================
