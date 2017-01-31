@@ -45,26 +45,26 @@ $inuit-enable-code--inline : true;
   margin: 0;
   font-size: 0rem;
 }
-.sass-doc-markdown-html h1 {
+.markdown-html h1 {
   border-bottom: 1px solid $gray4;
-  font-size: calculateRem(25px);
+  font-size: calculateRem(25px); 
   font-weight: 400;
   margin-top: calculateRem(50px);
 }
-.sass-doc-markdown-html h3 {
+.markdown-html h3 {
   margin-top: 2rem; 
 }
-.sass-doc-markdown-html pre {
+.markdown-html pre {
   @extend %code;
   font-size: 0rem;
 }
-.sass-doc-markdown-html p > code {
+.markdown-html p > code {
   @extend %code;
   @extend %code--inline;
   font-size: 0.9rem;
 }
 
-.sass-doc-sass-variable-details {
+.sass-variable-details {
   margin-left: 20px;
 }
 
