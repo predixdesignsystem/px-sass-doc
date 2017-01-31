@@ -11,6 +11,7 @@
 <link rel="import" href="../marked-element/marked-element.html"/>
 <link rel="import" href="../px-tabs/px-tab-set.html"/>
 
+<link rel="import" href="../px-demo/css/px-demo-styles.html" />
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
 <link rel="import" href="px-sass-doc-option.html"/>
 
@@ -33,12 +34,13 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
 
 <dom-module id="px-sass-doc-demo">
   <template>
+  <style include="px-demo-styles" is="custom-style"></style>
   <style include="px-sass-doc-viewer-styles"></style>
   <prism-highlighter></prism-highlighter>
 
   <template is="dom-if" if="[[_hasTabs]]">
     <div style="position: relative;" class="flex flex--col" id="defaultTab">
-      <div class="tabContainer u-pt++ u-pl++">
+      <div class="demo-background--interactive u-pt++ u-pl++">
         <px-tab-set selected="{{_selectedTabIndex}}" bare no-bottom-border>
           <template is="dom-repeat" items="{{tabs}}">
             <px-tab>{{item}}</px-tab>
@@ -49,7 +51,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
   </template>
 
   <section style="position: relative;" class="u-pb++ flex flex--col">
-    <div class="mega-demo flex u-ph++ u-pb++">
+    <div class="demo-background--interactive flex u-ph++ u-pb++">
       <!-- Style Options Sidebar -->
       <div class$="[[_getOptionsClass(_showIfHasOptions)]]">
         <p class="epsilon">Style Options</p>
@@ -57,9 +59,9 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
       </div>
 
       <!-- Demo Container -->
-      <div class="demoContainer u-mt+">
+      <div class="demo-component-code-container u-mt+">
         <div class="flex flex--col">
-          <div class="demo u-p+">
+          <div class="demo-component-container u-p+">
             <div class="flex u-mb-">
               <section class="flex__item watch-slot">
                 <content select="[data-slot=demoHTML]"></content>
@@ -71,13 +73,13 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
                 <content select="[data-slot=import]"></content>
               </section>
               <marked-element markdown="{{_importCode}}">
-                <div class="markdown-html u-mr-" id="importCodeSource"></div>
+                <div class="sass-doc-markdown-html u-mr-" id="importCodeSource"></div>
               </marked-element>
             </px-clipboard>
             <h4>HTML Usage:</h4>
             <px-clipboard copy-from="#demoHTMLSource">
               <marked-element markdown="{{_demoHTMLCode}}">
-                <div class="markdown-html u-mr-" id="demoHTMLSource"></div>
+                <div class="sass-doc-markdown-html u-mr-" id="demoHTMLSource"></div>
               </marked-element>
             </px-clipboard>
           </div>
@@ -339,7 +341,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
     * @method _getOptionsClass
     */
     _getOptionsClass: function() {
-      var base = 'properties u-ph+ u-pb+ u-mt+ ';
+      var base = 'demo-properties-container u-ph+ u-pb+ u-mt+ ';
 
       if(!this._showIfHasOptions) {
         base += 'hidden';

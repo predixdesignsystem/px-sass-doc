@@ -5,6 +5,7 @@
 -->
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+<link rel="import" href="../px-demo/css/px-demo-styles.html"/>
 
 <!--
 Element providing the introductory header information for Sass modules. Is used inside px-sass-doc container element.
@@ -25,20 +26,23 @@ Element providing the introductory header information for Sass modules. Is used 
 <dom-module id="px-sass-doc-header">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
+    <style include="px-demo-styles" is="custom-style"></style>
 
-    <div class="hero u-p++ text--shadow">
-      <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/{{moduleName}}" target="_blank">
-        <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
-      </a>
-      <h1 class="delta">{{moduleName}}</h1>
-      <p class="description-text">
-        {{moduleDescription}}
-      </p>
-      <div class="flex">
-        <img class="u-mr--" src="https://img.shields.io/bower/v/{{moduleName}}.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
-        <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/{{moduleName}}.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+    <section class="demo-background--base">
+      <div class="demo-layout--center demo-u-pb+++ u-pt++ text--shadow">
+        <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/{{moduleName}}" target="_new">
+          <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
+        </a>
+        <h1 class="delta">{{moduleName}}</h1>
+        <p class="demo-text-width--max">
+          {{moduleDescription}}
+        </p>
+        <div class="flex">
+          <img class="u-mr--" src="https://img.shields.io/bower/v/{{moduleName}}/master.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
+          <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/{{moduleName}}/master.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+        </div>
       </div>
-    </div>
+    </section>
 
   </template>
 </dom-module>

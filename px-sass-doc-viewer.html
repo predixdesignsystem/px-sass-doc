@@ -15,6 +15,7 @@
 <link rel="import" href="../marked-element/marked-element.html"/>
 
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+<link rel="import" href="../px-demo/css/px-demo-styles.html"/>
 
 <!--
 Element providing documentation for a requested Predix UI Sass component (design library).
@@ -36,6 +37,8 @@ Element providing documentation for a requested Predix UI Sass component (design
 <dom-module id="px-sass-doc-viewer">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
+    <style include="px-demo-styles" is="custom-style"></style>
+
     <style is="custom-style">
       .arrow--small {
         --iron-icon-height: 16px;
@@ -58,20 +61,20 @@ Element providing documentation for a requested Predix UI Sass component (design
       <content select="[data-slot=usage]" class="data-slot"></content>
     </div>
 
-    <div class="apiContainer">
+    <div class="demo-background--api">
       <div class="flex flex--col api">
 
         <template is="dom-if" if="[[_has(_introMarkdown)]]">
           <section>
             <marked-element markdown="{{_introMarkdown}}">
-              <div class="markdown-html"></div>
+              <div class="sass-doc-markdown-html"></div>
             </marked-element>
           </section>
         </template>
 
         <!-- 1. INSTALLATION INSTRUCTIONS -->
         <section>
-          <div class="componentHeader u-mb">Install the module</div>
+          <div class="demo-associated-header u-mb">Install the module</div>
           <p>To use the {{baseName}} module, you need to install it in your project using Bower. Run this task on the command line from inside your project folder:</p>
           <px-clipboard copy-from="#install">
             <figure class="code u-mr-">
@@ -85,7 +88,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
         <!-- 2. IMPORT SASS INSTRUCTIONS -->
         <section>
-          <div class="componentHeader u-mb">Import it in your Sass</div>
+          <div class="demo-associated-header u-mb">Import it in your Sass</div>
           <p>The {{baseName}} module won't do anything until you import and configure it in your project Sass file. Follow these steps to import it:</p>
 
           <!-- 2.1 ENABLE FLAGS -->
@@ -164,10 +167,10 @@ Element providing documentation for a requested Predix UI Sass component (design
       <!-- 3. USAGE -->
       <template is="dom-if" if="[[_has(_usageMarkdown)]]">
         <section>
-          <div class="componentHeader u-mb">Use it in your project</div>
+          <div class="demo-associated-header u-mb">Use it in your project</div>
 
           <marked-element markdown="{{_usageMarkdown}}">
-            <div class="markdown-html"></div>
+            <div class="sass-doc-markdown-html"></div>
           </marked-element>
         </section>
       </template>
@@ -176,7 +179,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
       <!-- 4. CUSTOMIZE MODULE -->
       <section>
-        <div class="componentHeader u-mb">Customize Styles</div>
+        <div class="demo-associated-header u-mb">Customize Styles</div>
         <template is="dom-if" if="[[_hasAnyStyleVariables]]">
           <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any the variables below to a new value above the module's <code class="code code--inline">@import</code> statement in your project Sass file: </p>
         </template>
@@ -233,7 +236,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
       <!-- 5. DEPENDENCIES -->
       <section class="u-mb++">
-        <div class="componentHeader u-mb">Dependencies</div>
+        <div class="demo-associated-header u-mb">Dependencies</div>
         <template is="dom-if" if="[[_has(dependencies)]]">
           <p>This module depends on the following modules (automatically included with Bower install):
             <ul class="list-bare">

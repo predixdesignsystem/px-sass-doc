@@ -5,6 +5,7 @@
 -->
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
+<link rel="import" href="../px-demo/css/px-demo-styles.html"/>
 
 <!--
 Element that provides a dropdown or toggle and notifies on change.
@@ -29,6 +30,7 @@ Element that provides a dropdown or toggle and notifies on change.
 <dom-module id="px-sass-doc-option">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
+    <style include="px-demo-styles" is="custom-style"></style>
 
     <template is="dom-if" if="{{_isDropdown}}">
       <div class="u-mb">{{optionName}}:
@@ -41,10 +43,10 @@ Element that provides a dropdown or toggle and notifies on change.
       </div>
     </template>
     <template is="dom-if" if="{{_isBoolean}}">
-      <div class="flex u-mb">
+      <div class="flex flex--justify u-mb-">
+        <div>{{optionName}}</div>
         <input id="{{optionName}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{selectedChoice::change}}">
         <label for$="{{optionName}}" class="toggle__label toggle__label--small"></label>
-        <div class="u-ml-">{{optionName}}</div>
       </div>
     </template>
   </template>
