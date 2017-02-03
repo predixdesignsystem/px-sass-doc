@@ -243,7 +243,16 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
     */
     _sendCodeToHighlighter: function() {
       var htmlEl = this.queryEffectiveChildren('[data-slot=demoHTML]');
-      if (htmlEl) this._demoHTMLCode = '```\n' + htmlEl.innerHTML.trim() + '\n```';
+      if (htmlEl) {
+        this._demoHTMLCode = 
+          // Remove newlines and trim out whitespace at beginning and end
+          ('```\n' + htmlEl.innerHTML.trim() + '\n```')
+          // Remove any instance of `class="style-scope local-element-demo"`
+          .replace(/class\=\"style\-scope local\-element\-demo\"/g,'')
+          // Strip `style-scope` and  `local-element-demo` from and `class=".*"` attribute
+          .replace(/class\=\"(.*) style-scope local-element-demo\"/g,'class="$1"')
+          // debugger;
+      };
 
       var importEl = this.queryEffectiveChildren('[data-slot=import]');
       if (importEl) this._importCode = '```\n' + importEl.innerHTML.trim() + '\n```';
