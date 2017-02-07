@@ -1,3 +1,7 @@
+v0.4.2
+==================
+* updated "polymer-font-awesome" to "px-polymer-font-awesome" in doc-viewer
+
 v0.4.1
 ==================
 * fixed doc-viewer background in dark-theme
