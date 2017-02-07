@@ -1,6 +1,6 @@
 v0.4.0
 ==================
-* Updated to px-demo
+* Updated to px-demo for theming 
 
 v0.3.2
 ==================
