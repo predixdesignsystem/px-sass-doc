@@ -1,3 +1,7 @@
+v0.4.1
+==================
+* fixed doc-viewer background in dark-theme
+
 v0.4.0
 ==================
 * Updated to px-demo for theming 

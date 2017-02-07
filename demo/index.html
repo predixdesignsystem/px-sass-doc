@@ -220,14 +220,12 @@ You can use the following HTML in your project:
     },
 
     _handleOptionsUpdated : function(evt) {
-        
-        this.buttonClasses = this._buttonClasses();
-        this.importCode = this._importCode();
+      this.buttonClasses = this._buttonClasses();
+      this.importCode = this._importCode();
 
-
-        // Wait, then tell the highlighter to run after dom-if restamps
-        this.async(function(){ this.fire('px-sass-doc-demo-updated', {}) }, 10);
-      },
+      // Wait, then tell the highlighter to run after dom-if restamps
+      this.async(function(){ this.fire('px-sass-doc-demo-updated', {}) }, 10);
+    },
 
     _buttonClasses : function() {
       var opts = this.selectedOptions || {}, strings = [];
