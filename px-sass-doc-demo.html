@@ -51,41 +51,45 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
   </template>
 
   <section style="position: relative;" class="u-pb++ flex flex--col">
-    <div class="demo-background--interactive flex u-ph++ u-pb++">
-      <!-- Style Options Sidebar -->
-      <div class$="[[_getOptionsClass(_showIfHasOptions)]]">
-        <p class="epsilon">Style Options</p>
-        <content id="docOption" select="px-sass-doc-option"></content>
-      </div>
+    <section class="demo-background--interactive">
 
-      <!-- Demo Container -->
-      <div class="demo-component-code-container u-mt+">
-        <div class="flex flex--col">
-          <div class="demo-component-container u-p+">
-            <div class="flex u-mb-">
-              <section class="flex__item watch-slot">
-                <content select="[data-slot=demoHTML]"></content>
-              </section>
+      <article class="demo-container-flex [ u-ph++ u-pb++ ]">
+        <!-- Style Options Sidebar -->
+        <div class$="[[_getOptionsClass(_showIfHasOptions)]]">
+          <p class="epsilon">Style Options</p>
+          <content id="docOption" select="px-sass-doc-option"></content>
+        </div>
+
+        <!-- Demo Container -->
+        <div class="demo-component-code-container u-mt+">
+          <div class="flex flex--col">
+            <div class="demo-component-container u-p+">
+              <div class="flex u-mb-">
+                <section class="flex__item watch-slot">
+                  <content select="[data-slot=demoHTML]"></content>
+                </section>
+              </div>
+              <h4>Sass Import:</h4>
+              <px-clipboard copy-from="#importCodeSource">
+                <section class="watch-slot" style="display:none;">
+                  <content select="[data-slot=import]"></content>
+                </section>
+                <marked-element markdown="{{_importCode}}">
+                  <div class="markdown-html u-mr-" id="importCodeSource"></div>
+                </marked-element>
+              </px-clipboard>
+              <h4>HTML Usage:</h4>
+              <px-clipboard copy-from="#demoHTMLSource">
+                <marked-element markdown="{{_demoHTMLCode}}">
+                  <div class="markdown-html u-mr-" id="demoHTMLSource"></div>
+                </marked-element>
+              </px-clipboard>
             </div>
-            <h4>Sass Import:</h4>
-            <px-clipboard copy-from="#importCodeSource">
-              <section class="watch-slot" style="display:none;">
-                <content select="[data-slot=import]"></content>
-              </section>
-              <marked-element markdown="{{_importCode}}">
-                <div class="markdown-html u-mr-" id="importCodeSource"></div>
-              </marked-element>
-            </px-clipboard>
-            <h4>HTML Usage:</h4>
-            <px-clipboard copy-from="#demoHTMLSource">
-              <marked-element markdown="{{_demoHTMLCode}}">
-                <div class="markdown-html u-mr-" id="demoHTMLSource"></div>
-              </marked-element>
-            </px-clipboard>
           </div>
         </div>
-      </div>
-    </div>
+      </article>
+      
+    </section>
   </section>
 
   </template>
