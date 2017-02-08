@@ -1,3 +1,7 @@
+v0.4.3
+==================
+* added styling to the <hr> if there no demo
+
 v0.4.2
 ==================
 * updated "polymer-font-awesome" to "px-polymer-font-awesome" in doc-viewer
