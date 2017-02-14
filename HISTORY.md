@@ -1,3 +1,7 @@
+v0.4.4
+==================
+* updated demo container so that it grows to full height as style options 
+
 v0.4.3
 ==================
 * added styling to the <hr> if there no demo
