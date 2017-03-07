@@ -1,6 +1,10 @@
+v0.4.5
+==================
+* override prism style for token entity class
+
 v0.4.4
 ==================
-* updated demo container so that it grows to full height as style options 
+* updated demo container so that it grows to full height as style options
 
 v0.4.3
 ==================
@@ -16,7 +20,7 @@ v0.4.1
 
 v0.4.0
 ==================
-* Updated to px-demo for theming 
+* Updated to px-demo for theming
 
 v0.3.2
 ==================
