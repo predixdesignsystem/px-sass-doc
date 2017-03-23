@@ -1,3 +1,7 @@
+v0.4.6
+==================
+* bump dependencies
+
 v0.4.5
 ==================
 * override prism style for token entity class

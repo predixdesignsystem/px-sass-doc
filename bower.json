@@ -1,6 +1,6 @@
 {
   "name": "px-sass-doc",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "main": [
     "px-sass-doc.html"
   ],
@@ -24,10 +24,10 @@
     "polymer": "^1.6.0",
     "px-theme": "^2.0.3",
     "px-clipboard": "^0.2.3",
-    "px-dropdown": "^2.2.6",
+    "px-dropdown": "^3.0.0",
     "prism-element": "^1.1.1",
     "marked-element": "^1.2.0",
-    "px-tabs": "^0.6.3",
+    "px-tabs": "^0.7.0",
     "iron-collapse": "^1.2.1",
     "iron-icon": "^1.0.11",
     "px-polymer-font-awesome": "^1.1.2",
