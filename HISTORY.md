@@ -1,3 +1,7 @@
+v1.0.0
+==================
+* Major bump to pick up new design refresh dependencies. Temporary resolutions to break up redesign work
+
 v0.4.6
 ==================
 * bump dependencies
