@@ -44,13 +44,11 @@ $inuit-enable-btn--small : true;
 $inuit-enable-btn--tertiary : true;
 @import 'px-buttons-design/_objects.buttons.scss';
 
-@import "px-input-group-design/_objects.input-group.scss";
-
 // Component
 @import "px-demo-design/_component.demo.scss";
 
 .demo-collection__header {
-  border-bottom: 1px solid var(--px-demo-collection-bottom-border-color, $gray3); 
+  border-bottom: 1px solid var(--px-demo-collection-bottom-border-color, $gray3);
 }
 .demo-collection__header__text {
   @extend .caps;
