@@ -1,3 +1,7 @@
+v1.0.2
+==================
+* Pick up latest dependencies
+
 v1.0.1
 ==================
 * Remove bower resolutions
