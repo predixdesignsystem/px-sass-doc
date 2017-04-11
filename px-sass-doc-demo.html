@@ -11,7 +11,7 @@
 <link rel="import" href="../marked-element/marked-element.html"/>
 <link rel="import" href="../px-tabs/px-tab-set.html"/>
 
-<link rel="import" href="../px-demo/css/px-demo-styles.html" />
+<link rel="import" href="css/px-demo-styles.html" />
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
 <link rel="import" href="px-sass-doc-option.html"/>
 
@@ -88,7 +88,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
           </div>
         </div>
       </article>
-      
+
     </section>
   </section>
 
@@ -248,7 +248,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
     _sendCodeToHighlighter: function() {
       var htmlEl = this.queryEffectiveChildren('[data-slot=demoHTML]');
       if (htmlEl) {
-        this._demoHTMLCode = 
+        this._demoHTMLCode =
           // Remove newlines and trim out whitespace at beginning and end
           ('```\n' + htmlEl.innerHTML.trim() + '\n```')
           // Remove any instance of `class="style-scope local-element-demo"`
