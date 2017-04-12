@@ -33,13 +33,13 @@
     "px-polymer-font-awesome": "^2.0.0"
   },
   "devDependencies": {
-    "px-starter-kit-design": "^1.0.1",
+    "px-starter-kit-design": "^1.0.0",
     "px-forms-design": "^2.0.0",
     "px-list-inline-design": "^0.3.3",
     "px-toggle-design": "^2.0.0",
     "px-headings-design": "^0.3.5",
     "px-actionable-text-icons-design": "^2.0.0",
-    "px-code-design": "^2.0.1",
+    "px-code-design": "^2.0.0",
     "px-list-bare-design": "^0.3.5",
     "iron-demo-helpers": "^1.2.5",
     "px-buttons-design": "^2.0.0",
