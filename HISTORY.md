@@ -1,3 +1,7 @@
+v1.0.3
+==================
+* recompile sass
+
 v1.0.2
 ==================
 * Pick up latest dependencies
