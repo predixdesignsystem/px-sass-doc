@@ -1,16 +1,12 @@
-v1.0.3
+v1.0.0-prerelease-2
 ==================
-* recompile sass
+* rebuild sass to pick up toggle changes
 
-v1.0.2
+v1.0.0-prerelease-1
 ==================
-* Pick up latest dependencies
+* update dependencies and rebuild
 
-v1.0.1
-==================
-* Remove bower resolutions
-
-v1.0.0
+v1.0.0-prerelease
 ==================
 * Major bump to pick up new design refresh dependencies. Temporary resolutions to break up redesign work
 
