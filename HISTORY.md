@@ -1,4 +1,4 @@
-v1.0.0-prerelease-3
+v1.0.0-prerelease-4
 ==================
 * fix small typo
 
