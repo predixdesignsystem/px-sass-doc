@@ -1,3 +1,7 @@
+v1.0.0-prerelease-3
+==================
+* fix small typo
+
 v1.0.0-prerelease-2
 ==================
 * rebuild sass to pick up toggle changes
