@@ -5,6 +5,7 @@
     "px-sass-doc.html"
   ],
   "ignore": [
+    "*.enc",
     ".*",
     "npm-debug.log",
     "gulpfile.js",
