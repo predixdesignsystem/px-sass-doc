@@ -24,7 +24,7 @@ common/abstract rules go in px-sass-doc-viewer-sketch.scss, not in this file.
 
 @import 'px-sass-doc-viewer-sketch.scss';
 
-.token.entity {
+.token.entity, .token.operator {
   background-color: transparent;
   cursor: auto;
 }

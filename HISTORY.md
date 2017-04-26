@@ -1,3 +1,7 @@
+v1.0.0-prerelease-6
+==================
+* remove background for operators
+
 v1.0.0-prerelease-4
 ==================
 * fix small typo
