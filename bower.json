@@ -46,6 +46,7 @@
     "iron-demo-helpers": "^1.2.5",
     "px-buttons-design": "^2.0.0",
     "px-list-ui-design": "^2.0.0",
-    "px-demo-design": "^2.0.0"
+    "px-demo-design": "^2.0.0",
+    "px-layout-design": "^0.4.6"
   }
 }

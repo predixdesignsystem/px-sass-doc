@@ -49,16 +49,17 @@ $inuit-enable-code--inline : true;
 }
 .markdown-html h1 {
   border-bottom: 1px solid $gray4;
-  font-size: calculateRem(25px); 
+  font-size: calculateRem(25px);
   font-weight: 400;
   margin-top: calculateRem(50px);
 }
 .markdown-html h3 {
-  margin-top: 2rem; 
+  margin-top: 2rem;
 }
 .markdown-html pre {
   @extend %code;
   font-size: 0rem;
+  margin-bottom: 0rem;
 }
 .markdown-html p > code {
   @extend %code;
