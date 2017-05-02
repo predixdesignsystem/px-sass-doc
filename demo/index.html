@@ -8,7 +8,7 @@
 
 <!-- Demo DOM module -->
 <dom-module id="local-element-demo">
-  <template>  
+  <template>
 <!--  ========================================================================
       [STEP 0]
       Import the styles for your module here. -->
@@ -79,9 +79,9 @@
     </px-sass-doc-option>
 
     <px-sass-doc-option
-    option-name="Disabled"
-    choose-with="boolean"
-    default-choice="false">
+      option-name="Disabled"
+      choose-with="boolean"
+      default-choice="false">
     </px-sass-doc-option>
 
 <!--  ==========================================================================
@@ -201,20 +201,20 @@ You can use the following HTML in your project:
           });
 
       And you can use the resulting {{activeClasses}} in your demo HTML. -->
-  
+
 
   </template>
 </dom-module>
-  
+
 <script>
   Polymer({
     is: 'local-element-demo',
 
     attached : function(){
-      var boundHandler = this._handleOptionsUpdated.bind(this); 
+      var boundHandler = this._handleOptionsUpdated.bind(this);
       this.addEventListener('px-sass-doc-options-updated', boundHandler)
     },
-    
+
     detached : function(){
       this.removeEventListener('px-sass-doc-options-updated', boundHandler);
     },
@@ -236,8 +236,7 @@ You can use the following HTML in your project:
       if (opts.Type === "primary")  strings.push("btn--primary");
       if (opts.Type === "tertiary") strings.push("btn--tertiary");
       if (opts.Disabled === true)   strings.push("btn--disabled");
-      
-      // debugger;
+
       return ("btn " + strings.join(" ")).trim();
     },
 

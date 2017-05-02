@@ -33,18 +33,14 @@ Element that provides a dropdown or toggle and notifies on change.
     <style include="px-demo-styles" is="custom-style"></style>
 
     <template is="dom-if" if="{{_isDropdown}}">
-      <div class="u-mb">{{optionName}}:
-        <div class="u-mt--" style="width: 100%;">
-          <px-dropdown id="{{optionName}}" display-value="{{selectedChoice}}">
-            <px-dropdown-content items="{{choices}}">
-            </px-dropdown-content>
-          </px-dropdown>
+      <label class="">{{optionName}}:</label>
+        <div class="u-mt-- u-mb" style="width: 100%;">
+          <px-dropdown items="{{choices}}" id="{{optionName}}" selected="{{selectedChoice}}" select-by="val"></px-dropdown>
         </div>
-      </div>
     </template>
     <template is="dom-if" if="{{_isBoolean}}">
-      <div class="flex flex--justify u-mb-">
-        <div>{{optionName}}</div>
+      <div class="flex flex--justify flex--middle u-mb-">
+        <label>{{optionName}}</label>
         <input id="{{optionName}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{selectedChoice::change}}">
         <label for$="{{optionName}}" class="toggle__label toggle__label--small"></label>
       </div>
@@ -146,7 +142,13 @@ Element that provides a dropdown or toggle and notifies on change.
         type: Boolean,
         value: false
       }
+
     },
+
+    listeners: {
+      'px-dropdown-selection-changed' : '_dropdownSelectionChanged'
+    },
+
 
     ready: function() {
       this.async(this._notifySelectedOptionChanged, 50);
@@ -179,6 +181,16 @@ Element that provides a dropdown or toggle and notifies on change.
       }
       if (this.defaultChoice && this.chooseWith == "boolean") {
         this.selectedChoice = this.defaultChoice == "true" ? true : false;
+      }
+    },
+
+    /**
+    * forcing update of selectedChoice when dropdown is changed
+    *
+    */
+    _dropdownSelectionChanged: function(evt){
+      if(evt.detail.selected){
+        this.set('selectedChoice', evt.detail.val);
       }
     },
 

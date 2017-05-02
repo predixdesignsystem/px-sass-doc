@@ -120,12 +120,10 @@ Element providing documentation for a requested Predix UI Sass component (design
                 <ul class="list-ui list-ui--small u-mv+">
                   <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
                     <li class="list-ui__item">
-                      <h4 class="u-mv--">
-                        <span class="actionable">
-                          <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
-                          <span on-tap="_toggle" data-toggle="{{item.context.name}}" class="clickable">${{item.context.name}}</span>
-                        </span>
-                      </h4>
+                      <span class="actionable">
+                        <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
+                        <span on-tap="_toggle" data-toggle="{{item.context.name}}" class="clickable">${{item.context.name}}</span>
+                      </span>
                       <iron-collapse id="{{item.context.name}}-container" no-animation>
                         <div class="sass-variable-details">
                           <p class="u-mt">{{item.description}}</p>
@@ -206,12 +204,10 @@ Element providing documentation for a requested Predix UI Sass component (design
               <ul class="list-ui list-ui--small u-mt+">
                 <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
                   <li class="list-ui__item">
-                    <h4 class="u-mv--">
-                      <span class="actionable">
+                    <span class="actionable">
                       <iron-icon class="arrow--small arrow--inactive clickable" icon="fa:fa-angle-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
                       <span data-toggle="{{item.context.name}}" on-tap="_toggle" class="clickable">${{item.context.name}}</span>
-                      </span>
-                    </h4>
+                    </span>
                     <iron-collapse id="{{item.context.name}}-container" no-animation>
                       <div class="sass-variable-details">
                         <p class="u-mt">{{item.description}}</p>

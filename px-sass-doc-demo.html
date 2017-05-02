@@ -40,7 +40,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
 
   <template is="dom-if" if="[[_hasTabs]]">
     <div style="position: relative;" class="flex flex--col" id="defaultTab">
-      <div class="demo-background--interactive u-pt++ u-pl++">
+      <div class="demo-background--interactive u-pt++ u-ph++">
         <px-tab-set selected="{{_selectedTabIndex}}" bare no-bottom-border>
           <template is="dom-repeat" items="{{tabs}}">
             <px-tab>{{item}}</px-tab>
