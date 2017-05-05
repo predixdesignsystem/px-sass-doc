@@ -27,7 +27,9 @@
     "https://github.com/PredixDev/px-defaults-design",
     "https://github.com/PredixDev/px-helpers-design"
   ]'
-  selected-options="{{selectedOptions}}">
+  selected-options="{{selectedOptions}}"
+  tabs='["Text","Text & icon"]'
+  selected-tab="{{selectedTab}}">
 
 <!--  ========================================================================
       [STEP 2]
@@ -84,6 +86,7 @@
       default-choice="false">
     </px-sass-doc-option>
 
+
 <!--  ==========================================================================
       [STEP 3]
       Define your HTML demo: Add some HTML that should be rendered to show how
@@ -94,9 +97,20 @@
       Define your HTML inside the <section></section>. Only indent code that you
       want to appear indented (i.e. for style). Indentation will be rendered in
       the demo (it's in a `pre` that keeps whitespace). -->
-<section data-slot="demoHTML" id="demoContainer">
-<button class$="{{buttonClasses}}">Example button</button>
+
+<template is="dom-if" if="{{_tabIs('Text',selectedTab)}}" restamp>
+<section data-slot="demoHTML">
+<button class$="{{buttonClasses}}">Label</button>
 </section>
+</template>
+
+<template is="dom-if" if="{{_tabIs('Text & icon',selectedTab)}}" restamp>
+<section data-slot="demoHTML">
+<button class$="{{buttonClasses}}">
+  <i class="fa fa-briefcase u-mr--"></i>Label
+</button>
+</section>
+</template>
 
 <!--  ==========================================================================
       [STEP 4]
@@ -252,6 +266,13 @@ You can use the following HTML in your project:
 
       return (strings.join("\n") + "\n@import 'px-buttons-design/_objects.buttons.scss';").trim();
     },
+
+    _tabIs : function(tabName) {
+      var selected = this.selectedTab || '';
+      this.selectedOptions.Icon = (this.selectedTab === 'Icon');
+      this.fire('px-sass-doc-options-updated', {});
+      return selected === tabName;
+    }
 
   });
 </script>

@@ -33,14 +33,14 @@ Element that provides a dropdown or toggle and notifies on change.
     <style include="px-demo-styles" is="custom-style"></style>
 
     <template is="dom-if" if="{{_isDropdown}}">
-      <label class="">{{optionName}}:</label>
-        <div class="u-mt-- u-mb" style="width: 100%;">
-          <px-dropdown items="{{choices}}" id="{{optionName}}" selected="{{selectedChoice}}" select-by="val"></px-dropdown>
+      <label>{{optionName}}:</label>
+        <div class="u-mt-- u-mb" >
+          <px-dropdown style="width: 100%;" items="{{choices}}" id="{{optionName}}" selected="[[defaultChoice]]" select-by="val"></px-dropdown>
         </div>
     </template>
     <template is="dom-if" if="{{_isBoolean}}">
       <div class="flex flex--justify flex--middle u-mb-">
-        <label>{{optionName}}</label>
+        <div class="label u-ml--">{{optionName}}</div>
         <input id="{{optionName}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{selectedChoice::change}}">
         <label for$="{{optionName}}" class="toggle__label toggle__label--small"></label>
       </div>

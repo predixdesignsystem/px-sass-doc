@@ -1,22 +1,9 @@
-v1.0.0-prerelease-6
-==================
-* remove background for operators
-
-v1.0.0-prerelease-4
-==================
-* fix small typo
-
-v1.0.0-prerelease-2
-==================
-* rebuild sass to pick up toggle changes
-
-v1.0.0-prerelease-1
-==================
-* update dependencies and rebuild
-
-v1.0.0-prerelease
+v1.0.0
 ==================
 * Major bump to pick up new design refresh dependencies. Temporary resolutions to break up redesign work
+* update dependencies and rebuild
+* remove background for operators
+* updated design
 
 v0.4.6
 ==================
