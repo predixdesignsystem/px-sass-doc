@@ -1,3 +1,7 @@
+v1.0.1
+==================
+* update module installation to --save-dev
+
 v1.0.0
 ==================
 * Major bump to pick up new design refresh dependencies. Temporary resolutions to break up redesign work
