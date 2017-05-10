@@ -1,9 +1,6 @@
-v1.0.1
-==================
-* update module installation to --save-dev
-
 v1.0.0
 ==================
+* Update module installation to --save-dev
 * Major bump to pick up new design refresh dependencies. Temporary resolutions to break up redesign work
 * update dependencies and rebuild
 * remove background for operators
