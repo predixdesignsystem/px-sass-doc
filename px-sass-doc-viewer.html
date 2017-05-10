@@ -89,18 +89,19 @@ Element providing documentation for a requested Predix UI Sass component (design
             <!-- 1. END INSTALLATION INSTRUCTIONS -->
 
             <!-- 2. IMPORT SASS INSTRUCTIONS -->
-            <section>
-              <div class="delta u-mt++ u-mb">Import it in your Sass</div>
-              <p>The {{baseName}} module won't do anything until you import and configure it in your project Sass file. Follow these steps to import it:</p>
+            <template is="dom-if" if="{{!hideImportSass}}">
+              <section>
+                <div class="delta u-mt++ u-mb">Import it in your Sass</div>
+                <p>The {{baseName}} module won't do anything until you import and configure it in your project Sass file. Follow these steps to import it:</p>
 
-              <!-- 2.1 ENABLE FLAGS -->
-              <h4 class="epsilon u-pt-">1. Enable Flags</h4>
-              <template is="dom-if" if="[[_hasAnyInuitFlags]]">
-                <p>You can turn on flags to generate additional styles defined in the {{baseName}} module. To generate new styles, set any of these flags to true above the module's <code class="code code--inline">@import</code> statement in your project Sass file:</p>
-              </template>
-              <template is="dom-if" if="[[!_hasAnyInuitFlags]]">
-                <p>No flags to set</p>
-              </template>
+                <!-- 2.1 ENABLE FLAGS -->
+                <h4 class="epsilon u-pt-">1. Enable Flags</h4>
+                <template is="dom-if" if="[[_hasAnyInuitFlags]]">
+                  <p>You can turn on flags to generate additional styles defined in the {{baseName}} module. To generate new styles, set any of these flags to true above the module's <code class="code code--inline">@import</code> statement in your project Sass file:</p>
+                </template>
+                <template is="dom-if" if="[[!_hasAnyInuitFlags]]">
+                  <p>No flags to set</p>
+                </template>
 
               <!-- If an array of inuit flags were passed in directly, parse and display here -->
               <template is="dom-if" if="[[_has(inuitFlags)]]">
@@ -161,7 +162,8 @@ Element providing documentation for a requested Predix UI Sass component (design
               </px-clipboard>
             <!-- END 2.3 IMPORT SASS -->
 
-          </section>
+            </section>
+          </template>
           <!-- END 2. IMPORT SASS INSTRUCTIONS -->
 
           <!-- 3. USAGE -->
@@ -433,7 +435,18 @@ Element providing documentation for a requested Predix UI Sass component (design
       _hasAnyStyleVariables: {
         type: Boolean,
         value: false
-      }
+      },
+
+      /**
+      * Set to true in order to hide the "Import in your Sass" instructions
+      *
+      * @property hideImportSass
+      * @type Boolean
+      */
+      hideImportSass: {
+        type: Boolean,
+        value: false
+      },
     },
 
     observers: [

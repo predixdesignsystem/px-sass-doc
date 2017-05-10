@@ -62,7 +62,7 @@ Pass additional content into its light DOM to pass down to its children.
   </template>
 
   <!-- Viewer -->
-  <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] style-variables=[[styleVariables]] dependencies=[[dependencies]] sassdoc-path=[[sassdocPath]]>
+  <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] style-variables=[[styleVariables]] dependencies=[[dependencies]] hide-import-sass=[[hideImportSass]] sassdoc-path=[[sassdocPath]]>
     <content select="[data-slot=intro]"></content>
     <content select="[data-slot=usage]"></content>
   </px-sass-doc-viewer>
@@ -182,6 +182,16 @@ Pass additional content into its light DOM to pass down to its children.
       * @type Boolean
       */
       hideDemoContainer: {
+        type: Boolean,
+        value: false
+      },
+      /**
+      * Set to `true` to hide the instructions to "Import in your Sass"
+      *
+      * @property hideImportSass
+      * @type Boolean
+      */
+      hideImportSass: {
         type: Boolean,
         value: false
       },
