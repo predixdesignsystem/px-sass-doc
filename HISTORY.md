@@ -5,6 +5,7 @@ v1.0.0
 * update dependencies and rebuild
 * remove background for operators
 * updated design
+* cutover from px-toggle-design to px-toggle
 
 v0.4.6
 ==================
