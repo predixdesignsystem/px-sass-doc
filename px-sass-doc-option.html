@@ -42,9 +42,7 @@ Element that provides a dropdown or toggle and notifies on change.
     <template is="dom-if" if="{{_isBoolean}}">
       <div class="flex flex--justify flex--middle u-mb-">
         <div class="label u-ml--">{{optionName}}</div>
-        <px-toggle id="toggle" size="small" on-checked-changed="_toggleSelectionChanged"></px-toggle>
-        <!--<input id="{{optionName}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{selectedChoice::change}}">
-        <label for$="{{optionName}}" class="toggle__label toggle__label--small"></label>-->
+        <px-toggle id="{{optionName}}" size="small" checked$="{{selectedChoice::change}}" on-checked-changed="_toggleSelectionChanged"></px-toggle>
       </div>
     </template>
   </template>
@@ -119,7 +117,8 @@ Element that provides a dropdown or toggle and notifies on change.
       selectedChoice: {
         type: String,
         notify: true,
-        value: ''
+        value: '',
+        observer: '_notifySelectedOptionChanged'
       },
 
       /**
@@ -150,6 +149,11 @@ Element that provides a dropdown or toggle and notifies on change.
       'px-dropdown-selection-changed' : '_dropdownSelectionChanged'
     },
 
+
+    ready: function() {
+      this.async(this._notifySelectedOptionChanged, 50);
+    },
+
     /**
     * Sets the input type for use in dom-ifs.
     *
@@ -176,10 +180,7 @@ Element that provides a dropdown or toggle and notifies on change.
         this.selectedChoice = this.defaultChoice;
       }
       if (this.defaultChoice && this.chooseWith == "boolean") {
-        this.async(function() {
-          this.selectedChoice = this.defaultChoice == "true" ? true : false;
-          this.$$('#toggle').checked = this.selectedChoice;
-        },50);
+        this.selectedChoice = this.defaultChoice == "true" ? true : false;
       }
     },
 
@@ -190,17 +191,23 @@ Element that provides a dropdown or toggle and notifies on change.
     _dropdownSelectionChanged: function(evt){
       if(evt.detail.selected){
         this.set('selectedChoice', evt.detail.val);
-        this.fire('px-sass-doc-option-selected', { option: this.optionName, selected: this.selectedChoice });
       }
+    },
+
+    /**
+    * forcing update of selectedChoice when toggle is changed
+    *
+    */
+    _toggleSelectionChanged: function(evt){
+      this.set('selectedChoice', evt.detail.value);
     },
 
     /**
     * Send a custom event notifying the new selectedChoice for this option.
     *
-    * @method _toggleSelectionChanged
+    * @method _notifySelectedOptionChanged
     */
-    _toggleSelectionChanged: function(evt) {
-      this.selectedChoice = evt.detail.value;
+    _notifySelectedOptionChanged: function() {
       this.fire('px-sass-doc-option-selected', { option: this.optionName, selected: this.selectedChoice });
     }
   });
