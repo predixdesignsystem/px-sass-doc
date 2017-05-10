@@ -14,7 +14,7 @@ function runCustomTests() {
       var viewerEl  = Polymer.dom(sassDocEl.root).querySelector('px-sass-doc-viewer');
       var installEl = Polymer.dom(viewerEl.root).querySelector('#install');
 
-      assert.equal(installEl.textContent.trim(), 'bower install px-test-design --save');
+      assert.equal(installEl.textContent.trim(), 'bower install px-test-design --save-dev');
       done();
     });
 
