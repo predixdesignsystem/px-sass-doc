@@ -6,6 +6,7 @@ v1.0.0
 * remove background for operators
 * updated design
 * cutover from px-toggle-design to px-toggle
+* added new icons
 
 v0.4.6
 ==================
