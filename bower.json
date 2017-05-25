@@ -48,6 +48,7 @@
     "px-buttons-design": "^2.0.0",
     "px-list-ui-design": "^2.0.0",
     "px-demo-design": "^2.0.0",
-    "px-layout-design": "^1.0.0"
+    "px-layout-design": "^1.0.0",
+    "px-shadows-design": "^1.0.0"
   }
 }
