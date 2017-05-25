@@ -182,7 +182,7 @@ Element providing documentation for a requested Predix UI Sass component (design
           <section class="u-mb">
             <div class="delta u-mt++ u-mb">Customize Styles</div>
             <template is="dom-if" if="[[_hasAnyStyleVariables]]">
-              <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any of the variables below to a new value above the module's <code class="code code--inline">@import</code> statement in your project Sass file: </p>
+              <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any of the variables below to a new value above the module's <code class="code code--inline">@import</code> statement in your project's Sass file. Note that if you have set a CSS and a Sass variable for the same attribute, the CSS variable will take precedence over the Sass variable. </p>
             </template>
             <template is="dom-if" if="[[!_hasAnyStyleVariables]]">
               <p>No customizable variables</p>
