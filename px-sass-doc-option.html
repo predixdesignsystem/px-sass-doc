@@ -11,7 +11,7 @@
 <!--
 Element that provides a dropdown or toggle and notifies on change.
 
-##### Usage
+### Usage
 
       <px-sass-doc-option
         option-name="Type"
@@ -44,6 +44,12 @@ Element that provides a dropdown or toggle and notifies on change.
         <div class="label u-ml--">{{optionName}}</div>
         <px-toggle id="{{optionName}}" size="small" checked$="{{selectedChoice::change}}" on-checked-changed="_toggleSelectionChanged"></px-toggle>
       </div>
+    </template>
+    <template is="dom-if" if="{{_isInput}}">
+      <label>{{optionName}}:</label>
+        <div class="u-mt-- u-mb">
+            <input id="{{optionName}}" placeholder="Type something..." class="text-input" type="text" value="{{optionValue::input}}"></input>
+        </div>
     </template>
   </template>
 
@@ -122,6 +128,18 @@ Element that provides a dropdown or toggle and notifies on change.
       },
 
       /**
+      * The current input value. Notifies the parent.
+      * Note: This option is not reflected in selectedOptions
+      *
+      * @property optionValue
+      * @type String
+      **/
+      optionValue: {
+        type: String,
+        notify: true
+      },
+
+      /**
       * PRIVATE. True if this is a dropdown.
       *
       * @property _isDropdown
@@ -139,6 +157,17 @@ Element that provides a dropdown or toggle and notifies on change.
       * @type Boolean
       **/
       _isBoolean: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+      * PRIVATE. True if this is an input.
+      *
+      * @property _isInput
+      * @type Boolean
+      **/
+      _isInput: {
         type: Boolean,
         value: false
       }
@@ -163,9 +192,16 @@ Element that provides a dropdown or toggle and notifies on change.
       if (this.chooseWith && this.chooseWith === "dropdown") {
         this._isDropdown = true;
         this._isBoolean = false;
+        this._isInput = false;
       }
       if (this.chooseWith && this.chooseWith === "boolean") {
         this._isBoolean = true;
+        this._isDropdown = false;
+        this._isInput = false;
+      }
+      if (this.chooseWith && this.chooseWith === "input") {
+        this._isInput = true;
+        this._isBoolean = false;
         this._isDropdown = false;
       }
     },
