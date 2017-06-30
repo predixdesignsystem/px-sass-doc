@@ -31,6 +31,7 @@ Predix branding rules go in px-sass-doc-viewer-predix.scss, not in this file.
 @import "px-flexbox-design/_base.flexbox.scss";
 @import "px-viewport-design/_base.viewport.scss";
 @import "px-headings-design/_base.headings.scss";
+@import 'px-tables-design/_base.tables.scss';
 
 $inuit-enable-code--inline : true;
 @import "px-code-design/_base.code.scss";

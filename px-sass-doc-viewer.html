@@ -181,52 +181,26 @@ Element providing documentation for a requested Predix UI Sass component (design
           <!-- 4. CUSTOMIZE MODULE -->
           <section class="u-mb">
             <div class="delta u-mt++ u-mb">Customize Styles</div>
-            <template is="dom-if" if="[[_hasAnyStyleVariables]]">
-              <p>You can change style variables to customize the design of the {{baseName}} module. To change styles, set any of the variables below to a new value above the module's <code class="code code--inline">@import</code> statement in your project's Sass file. Note that if you have set a CSS and a Sass variable for the same attribute, the CSS variable will take precedence over the Sass variable. </p>
-            </template>
-            <template is="dom-if" if="[[!_hasAnyStyleVariables]]">
+            <template is="dom-if" if="[[!_has(_sassdocStyleVariables)]]">
               <p>No customizable variables</p>
             </template>
-
-            <template is="dom-if" if="[[_has(styleVariables)]]">
-              <section class="u-mb++">
-                <px-clipboard copy-from="#customize">
-                  <figure class="code u-mr-">
-                    <code id="customize">
-                      <template is="dom-repeat" items="{{styleVariables}}">
-                        {{item}} <br/>
-                      </template>
-                    </code>
-                  </figure>
-                </px-clipboard>
-              </section>
-            </template>
             <template is="dom-if" if="[[_has(_sassdocStyleVariables)]]">
-              <ul class="list-ui list-ui--small u-mt+">
+              <p>You can change style variables to customize the design of the {{baseName}} module. To change styles directly in Sass,
+                 set any of the Sass variables below to a new value <strong>above</strong> the module's <code class="code code--inline">@import</code>
+                 statement in your project's Sass file. To change the style in your application's CSS, use the CSS variables instead.
+                 Note that if you have set both a CSS and a Sass variable for the same attribute, the CSS variable will take precedence over the Sass variable. </p>
+              <table class="table">
+                <tr>
+                  <th>Sass Variable</th>
+                  <th>CSS Variable</th>
+                  <th>Description</th>
+                </tr>
                 <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
-                  <li class="list-ui__item">
-                    <span class="actionable">
-                      <iron-icon class="arrow--small arrow--inactive clickable" icon="px:chevron-down" data-toggle="{{item.context.name}}" on-tap="_toggle"></iron-icon>
-                      <span data-toggle="{{item.context.name}}" on-tap="_toggle" class="clickable">${{item.context.name}}</span>
-                    </span>
-                    <iron-collapse id="{{item.context.name}}-container" no-animation>
-                      <div class="sass-variable-details">
-                        <p class="u-mt">{{item.description}}</p>
-                        <p>
-                          <small class="caps muted weight--light">Type: {{item.type}}</small>
-                          <br /><small class="caps muted weight--light">Default Value: {{item.context.value}}</small>
-                        </p>
-                        <px-clipboard copy-from="#{{item.context.name}}-code">
-                          <figure class="code u-mr-">
-                            <code id="{{item.context.name}}-code">
-                              ${{item.context.name}} : {{item.context.value}};<br />
-                              {{_importCode}}
-                            </code>
-                          </figure>
-                        </px-clipboard>
-                      </div>
-                    </iron-collapse>
-                  </li>
+                  <tr>
+                    <td>$[[item.context.name]]</td>
+                    <td>{{item.todo}}</td>
+                    <td>{{item.description}}</td>
+                  </tr>
                 </template>
               </ul>
             </template>
@@ -312,17 +286,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       baseName: {
         type: String,
         value: ''
-      },
-
-      /**
-      * The SASS variables available for customizing the appearance of the component, represented as an array of strings, which will display with line breaks between each.
-      *
-      * @property styleVariables
-      * @type Array
-      */
-      styleVariables: {
-        type: Array,
-        value: function() { return []; }
       },
 
       /**
@@ -426,17 +389,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       },
 
       /**
-      * True if either `styleVariables` or `_sassdocStyleVariables` are defined. Computed automatically by an observer.
-      *
-      * @property _hasAnyStyleVariables
-      * @type Boolean
-      */
-      _hasAnyStyleVariables: {
-        type: Boolean,
-        value: false
-      },
-
-      /**
       * Set to true in order to hide the "Import in your Sass" instructions
       *
       * @property hideImportSass
@@ -450,9 +402,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
     observers: [
       '_computeHasAnyFlags(inuitFlags)',
-      '_computeHasAnyFlags(_sassdocInuitFlags)',
-      '_computeHasAnyStyleVariables(styleVariables)',
-      '_computeHasAnyStyleVariables(_sassdocStyleVariables)'
+      '_computeHasAnyFlags(_sassdocInuitFlags)'
     ],
 
     attached: function() {
@@ -486,17 +436,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       var fromProp = this.inuitFlags || [],
           fromSassdoc = this._sassdocInuitFlags || [];
       this._hasAnyInuitFlags = fromProp.length > 0 || fromSassdoc.length > 0;
-    },
-
-    /**
-    * Checks to see if any style variables are defined (passed in through a property or pulled from Sassdoc) and puts the result in _hasAnyStyleVariables
-    *
-    * @method _computeHasAnyStyleVariables
-    */
-    _computeHasAnyStyleVariables: function() {
-      var fromProp = this.styleVariables || [],
-          fromSassdoc = this._sassdocStyleVariables || [];
-      this._hasAnyStyleVariables = fromProp.length > 0 || fromSassdoc.length > 0;
     },
 
     /**

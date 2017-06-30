@@ -1,314 +1,292 @@
 [
     {
-        "description": "Generates the CSS for small toggles if enabled.\n\n",
+        "description": "Text color\n\n",
         "commentRange": {
-            "start": 66,
-            "end": 69
-        },
-        "context": {
-            "type": "variable",
-            "name": "inuit-enable-toggle--small",
-            "value": "false",
-            "scope": "default",
-            "line": {
-                "start": 70,
-                "end": 70
-            }
-        },
-        "group": [
-            "px-toggle-design:variables:flag"
-        ],
-        "type": "Boolean [default]",
-        "access": "public",
-        "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
-        }
-    },
-    {
-        "description": "Generates the CSS for large toggles if enabled.\n\n",
-        "commentRange": {
-            "start": 72,
-            "end": 75
-        },
-        "context": {
-            "type": "variable",
-            "name": "inuit-enable-toggle--large",
-            "value": "false",
-            "scope": "default",
-            "line": {
-                "start": 76,
-                "end": 76
-            }
-        },
-        "group": [
-            "px-toggle-design:variables:flag"
-        ],
-        "type": "Boolean [default]",
-        "access": "public",
-        "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
-        }
-    },
-    {
-        "description": "Generates the CSS for huge toggles if enabled.\n\n",
-        "commentRange": {
-            "start": 78,
-            "end": 81
-        },
-        "context": {
-            "type": "variable",
-            "name": "inuit-enable-toggle--huge",
-            "value": "false",
-            "scope": "default",
-            "line": {
-                "start": 82,
-                "end": 82
-            }
-        },
-        "group": [
-            "px-toggle-design:variables:flag"
-        ],
-        "type": "Boolean [default]",
-        "access": "public",
-        "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
-        }
-    },
-    {
-        "description": "Sets a prepended namespace for all generated classes.\n\n",
-        "commentRange": {
-            "start": 11,
+            "start": 10,
             "end": 14
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-namespace",
-            "value": "$inuit-namespace",
-            "scope": "default",
+            "name": "inuit-actionable-text-color",
+            "value": "var(--px-actionable-text-color, $primary-default)",
+            "scope": "private",
             "line": {
                 "start": 15,
                 "end": 15
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
-        "type": "String [default]",
+        "type": "Color [default]",
+        "todo": [
+            "--px-actionable-text-color"
+        ],
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     },
     {
-        "description": "Sets the toggle foreground color.\n\n",
+        "description": "Hover text color\n\n",
         "commentRange": {
             "start": 17,
-            "end": 20
+            "end": 21
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-color",
-            "value": "$gray9",
-            "scope": "default",
+            "name": "inuit-actionable-text-color--hover",
+            "value": "var(--px-actionable-text-color--hover, $primary-hover)",
+            "scope": "private",
             "line": {
-                "start": 21,
-                "end": 21
+                "start": 22,
+                "end": 22
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
         "type": "Color [default]",
+        "todo": [
+            "--px-actionable-text-color--hover"
+        ],
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     },
     {
-        "description": "Sets the toggle switch color.\n\n",
+        "description": "Pressed text color\n\n",
         "commentRange": {
-            "start": 23,
-            "end": 26
+            "start": 24,
+            "end": 28
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-switch",
-            "value": "$white",
-            "scope": "default",
+            "name": "inuit-actionable-text-color--active",
+            "value": "var(--px-actionable-text-color--active, $primary-pressed)",
+            "scope": "private",
             "line": {
-                "start": 27,
-                "end": 27
+                "start": 29,
+                "end": 29
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
         "type": "Color [default]",
+        "todo": [
+            "--px-actionable-text-color--active"
+        ],
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     },
     {
-        "description": "Sets the toggle switch border color.\n\n",
+        "description": "Select text color\n\n",
         "commentRange": {
-            "start": 29,
-            "end": 32
+            "start": 31,
+            "end": 35
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-switch-border",
-            "value": "$gray2",
-            "scope": "default",
+            "name": "inuit-selectable-text-color",
+            "value": "var(--px-selectable-text-color, $select-default)",
+            "scope": "private",
             "line": {
-                "start": 33,
-                "end": 33
+                "start": 36,
+                "end": 36
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
         "type": "Color [default]",
-        "access": "public",
-        "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
-        }
-    },
-    {
-        "description": "Sets the toggle switch shadow color.\n\n",
-        "commentRange": {
-            "start": 35,
-            "end": 38
-        },
-        "context": {
-            "type": "variable",
-            "name": "inuit-toggle-switch-shadow",
-            "value": "0px 1px 0px rgba($black, .15)",
-            "scope": "default",
-            "line": {
-                "start": 39,
-                "end": 39
-            }
-        },
-        "group": [
-            "px-toggle-design:variables:style"
+        "todo": [
+            "--px-selectable-text-color"
         ],
-        "type": "Color | String [default]",
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     },
     {
-        "description": "Sets the toggle background color. This color is in use when the toggle is off/deactivated.\n\n",
+        "description": "Select hover text color\n\n",
         "commentRange": {
-            "start": 41,
-            "end": 44
+            "start": 38,
+            "end": 42
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-background",
-            "value": "$gray4",
-            "scope": "default",
+            "name": "inuit-selectable-text-color--hover",
+            "value": "var(--px-selectable-text-color--hover, $select-hover)",
+            "scope": "private",
             "line": {
-                "start": 45,
-                "end": 45
+                "start": 43,
+                "end": 43
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
         "type": "Color [default]",
+        "todo": [
+            "--px-selectable-text-color--hover"
+        ],
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     },
     {
-        "description": "Sets the toggle border color. This color is in use when the toggle is off/deactivated.\n\n",
+        "description": "Select pressed text color\n\n",
         "commentRange": {
-            "start": 47,
-            "end": 50
+            "start": 45,
+            "end": 49
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-border",
-            "value": "$gray5",
-            "scope": "default",
+            "name": "inuit-selectable-text-color--active",
+            "value": "var(--px-selectable-text-color--active, $select-pressed)",
+            "scope": "private",
             "line": {
-                "start": 51,
-                "end": 51
+                "start": 50,
+                "end": 50
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
         "type": "Color [default]",
+        "todo": [
+            "--px-selectable-text-color--active"
+        ],
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     },
     {
-        "description": "Sets the toggle background color. This color is in use when the toggle is on/activated.\n\n",
+        "description": "Secondary text color\n\n",
         "commentRange": {
-            "start": 53,
+            "start": 52,
             "end": 56
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-background--on",
-            "value": "$select-blue-default",
-            "scope": "default",
+            "name": "inuit-actionable-alt-text-color",
+            "value": "var(--px-actionable-alt-text-color, $gray15)",
+            "scope": "private",
             "line": {
                 "start": 57,
                 "end": 57
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
-        "type": "Color [default]]",
+        "type": "Color [default]",
+        "todo": [
+            "--px-actionable-alt-text-color"
+        ],
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     },
     {
-        "description": "Sets the toggle border color. This color is in use when the toggle is on/activated.\n\n",
+        "description": "Secondary hover text color\n\n",
         "commentRange": {
             "start": 59,
-            "end": 62
+            "end": 63
         },
         "context": {
             "type": "variable",
-            "name": "inuit-toggle-border--on",
-            "value": "$select-blue-hover",
-            "scope": "default",
+            "name": "inuit-actionable-alt-text-color--hover",
+            "value": "var(--px-actionable-alt-text-color--hover, $primary-default)",
+            "scope": "private",
             "line": {
-                "start": 63,
-                "end": 63
+                "start": 64,
+                "end": 64
             }
         },
         "group": [
-            "px-toggle-design:variables:style"
+            "px-actionable-design:variables:style"
         ],
-        "type": "Color [default]]",
+        "type": "Color [default]",
+        "todo": [
+            "--px-actionable-alt-text-color--hover"
+        ],
         "access": "public",
         "file": {
-            "path": "_objects.toggle.scss",
-            "name": "_objects.toggle.scss"
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
+        }
+    },
+    {
+        "description": "Secondary pressed text color\n\n",
+        "commentRange": {
+            "start": 66,
+            "end": 70
+        },
+        "context": {
+            "type": "variable",
+            "name": "inuit-actionable-alt-text-color--active",
+            "value": "var(--px-actionable-alt-text-color--active, $primary-pressed)",
+            "scope": "private",
+            "line": {
+                "start": 71,
+                "end": 71
+            }
+        },
+        "group": [
+            "px-actionable-design:variables:style"
+        ],
+        "type": "Color [default]",
+        "todo": [
+            "--px-actionable-alt-text-color--active"
+        ],
+        "access": "public",
+        "file": {
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
+        }
+    },
+    {
+        "description": "Disabled text color\n\n",
+        "commentRange": {
+            "start": 73,
+            "end": 77
+        },
+        "context": {
+            "type": "variable",
+            "name": "inuit-actionable-disabled-text-color",
+            "value": "var(--px-actionable-disabled-text-color, rgba($black, 0.3))",
+            "scope": "private",
+            "line": {
+                "start": 78,
+                "end": 78
+            }
+        },
+        "group": [
+            "px-actionable-design:variables:style"
+        ],
+        "type": "Color [default]",
+        "todo": [
+            "--px-actionable-disabled-text-color"
+        ],
+        "access": "public",
+        "file": {
+            "path": "_objects.actionable.scss",
+            "name": "_objects.actionable.scss"
         }
     }
 ]
