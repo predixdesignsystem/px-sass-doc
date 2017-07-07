@@ -22,7 +22,7 @@
     "HISTORY.md"
   ],
   "dependencies": {
-    "polymer": "^1.8.1",
+    "polymer": "^1.9.0",
     "px-theme": "^3.0.0",
     "px-clipboard": "^1.0.0",
     "px-dropdown": "^4.0.0",
