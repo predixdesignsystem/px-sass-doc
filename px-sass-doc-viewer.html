@@ -363,6 +363,7 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _sassdocStyleVariables: {
         type: Array,
+        value: function() { return []; },
         computed: '_computeSassdocStyleVariables(_sassdocJson)'
       },
 
@@ -374,6 +375,7 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _sassdocInuitFlags: {
         type: Array,
+        value: function() { return []; },
         computed: '_computeSassdocInuitFlags(_sassdocJson)'
       },
 
