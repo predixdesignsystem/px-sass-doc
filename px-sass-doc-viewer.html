@@ -204,7 +204,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <td>{{item.description}}</td>
                   </tr>
                 </template>
-              </ul>
+              </table>
             </template>
           </section>
           <!-- END 4. CUSTOMIZE MODULE -->
@@ -352,7 +352,7 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _sassdocJson: {
         type: Array,
-        value: function(){ []; }
+        value: function(){ return []; }
       },
 
       /**
@@ -363,7 +363,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _sassdocStyleVariables: {
         type: Array,
-        value: function(){ []; },
         computed: '_computeSassdocStyleVariables(_sassdocJson)'
       },
 
@@ -375,7 +374,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _sassdocInuitFlags: {
         type: Array,
-        value: function(){ []; },
         computed: '_computeSassdocInuitFlags(_sassdocJson)'
       },
 
