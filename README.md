@@ -1,8 +1,8 @@
-#px-sass-doc
+# px-sass-doc
 
 ## Overview
 
-px-sass-doc is a Predix UI component for displaying the Sass documentation for one of our Px design repositories.
+Px-sass-doc is a Predix UI component used to display the Sass documentation for our Px design repositories.
 
 ## Usage
 
