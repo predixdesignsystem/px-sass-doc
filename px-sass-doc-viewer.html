@@ -123,7 +123,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                   <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
                     <li class="list-ui__item">
                       <span class="actionable">
-                        <px-icon class="arrow--small arrow--inactive clickable" icon="pxs:chevron" data-toggle="{{item.context.name}}" on-tap="_toggle"></px-icon>
+                        <px-icon class="arrow--small arrow--inactive clickable" icon="px-utl:chevron" data-toggle="{{item.context.name}}" on-tap="_toggle"></px-icon>
                         <span on-tap="_toggle" data-toggle="{{item.context.name}}" class="clickable">${{item.context.name}}</span>
                       </span>
                       <iron-collapse id="{{item.context.name}}-container" no-animation>
@@ -153,7 +153,7 @@ Element providing documentation for a requested Predix UI Sass component (design
 
               <!-- 2.3 IMPORT SASS -->
               <h4 class="epsilon u-pt-">2. Import Sass File</h4>
-              <p>Import the module by placing this code into the <strong>{{layer}}</strong> layer of your project Sass file: <a href="https://github.com/PredixDev/px-getting-started#import-order" class="actionable actionable--action" target="_blank"><px-icon icon="pxs:help" class="u-mh--" style="width:1rem"></px-icon>What's this?</a></p>
+              <p>Import the module by placing this code into the <strong>{{layer}}</strong> layer of your project Sass file: <a href="https://github.com/PredixDev/px-getting-started#import-order" class="actionable actionable--action" target="_blank"><px-icon icon="px-utl:help" class="u-mh--" style="width:1rem"></px-icon>What's this?</a></p>
               <px-clipboard copy-from="#import2">
                 <figure class="code u-mr-">
                   <code id="import2">
@@ -204,7 +204,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                     <td>{{item.description}}</td>
                   </tr>
                 </template>
-              </ul>
+              </table>
             </template>
           </section>
           <!-- END 4. CUSTOMIZE MODULE -->
@@ -351,8 +351,7 @@ Element providing documentation for a requested Predix UI Sass component (design
       * @type String
       */
       _sassdocJson: {
-        type: Array,
-        value: function(){ []; }
+        type: Array
       },
 
       /**
@@ -363,7 +362,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _sassdocStyleVariables: {
         type: Array,
-        value: function(){ []; },
         computed: '_computeSassdocStyleVariables(_sassdocJson)'
       },
 
@@ -375,7 +373,6 @@ Element providing documentation for a requested Predix UI Sass component (design
       */
       _sassdocInuitFlags: {
         type: Array,
-        value: function(){ []; },
         computed: '_computeSassdocInuitFlags(_sassdocJson)'
       },
 
