@@ -2,7 +2,7 @@
 
 ## Overview
 
-Px-sass-doc is a Predix UI component used to display the Sass documentation for our Px design repositories.
+`Px-sass-doc` is a Predix UI component used to display the Sass documentation for our Px design repositories.
 
 ## Usage
 
@@ -12,17 +12,17 @@ Px-sass-doc is a Predix UI component used to display the Sass documentation for 
 3. bower
 4. [webcomponents-lite.js polyfill](https://github.com/webcomponents/webcomponentsjs)
 
-Node, npm and bower are necessary to install the component and dependencies. webcomponents.js adds support for web components and custom elements to your application.
+Node, npmn and bower are necessary to install the component and dependencies. webcomponents.js adds support for web components and custom elements to your application.
 
 ## Getting Started
 
-First, install the component via bower on the command line.
+First, install the component via bower on the command line:
 
 ```
 bower install px-sass-doc --save
 ```
 
-Second, import the component to your application with the following tag in your head.
+Second, import the component in your application with the following tag in your head:
 
 ```
 <link rel="import" href="/bower_components/px-sass-doc/px-sass-doc.html"/>
