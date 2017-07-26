@@ -71,6 +71,14 @@ $inuit-enable-code--inline : true;
   margin-left: 20px;
 }
 
+.demo-properties-container {
+  flex-basis: auto;
+  min-width: calculateRem(200px);
+}
+px-dropdown {
+  --px-dropdown-max-width: infinity;
+}
+
 
 // Trumps
 $inuit-enable-margins--huge   : true;

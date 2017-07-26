@@ -1,3 +1,7 @@
+v1.0.1
+==================
+* fix layout for demo properties contianer / dropdowns
+
 v1.0.0
 ==================
 * Update module installation to --save-dev
