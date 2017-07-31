@@ -259,7 +259,7 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
       };
 
       var importEl = this.queryEffectiveChildren('[data-slot=import]');
-      if (importEl) this._importCode = '```\n' + importEl.innerHTML.trim() + '\n```';
+      if (importEl && importEl.innerHTML.trim() !== '') this._importCode = '```\n' + importEl.innerHTML.trim() + '\n```';
     },
 
     /**

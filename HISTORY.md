@@ -1,3 +1,7 @@
+v1.0.2
+==================
+* empty check for px-forms-design demo error
+
 v1.0.1
 ==================
 * fix layout for demo properties contianer / dropdowns
