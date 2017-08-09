@@ -251,11 +251,13 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
         this._demoHTMLCode =
           // Remove newlines and trim out whitespace at beginning and end
           ('```\n' + htmlEl.innerHTML.trim() + '\n```')
-          // Remove any instance of `class="style-scope local-element-demo"`
-          .replace(/class\=\"style\-scope local\-element\-demo\"/g,'')
-          // Strip `style-scope` and  `local-element-demo` from and `class=".*"` attribute
-          .replace(/class\=\"(.*) style-scope local-element-demo\"/g,'class="$1"')
-          // debugger;
+          // Remove any instance of `class="style-scope *-demo"`
+          .replace(/class\=\"style\-scope .*\-demo\"/g,'')
+          // Strip `style-scope` and  `*-demo` from other `class` attributes
+          .replace(/class\=\"(.*) style-scope .*\-demo\"/g,'class="$1"')
+          // Strip the inserted class attribute and lightDOM content from the px-actionable-design demo
+          .replace(/ class\=\"style-scope px-actionable-design-demo x-scope px-icon-1\"/g,'')
+          .replace(/[\s]*<iron-icon.*[\s]*<\/iron-icon>[\s]*/g,'');
       };
 
       var importEl = this.queryEffectiveChildren('[data-slot=import]');

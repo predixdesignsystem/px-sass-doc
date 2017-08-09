@@ -422,7 +422,14 @@ Element providing documentation for a requested Predix UI Sass component (design
         .forEach(function(n) {
           var slot = n.getAttribute('data-slot') || null;
           if (slot === "intro") this._introMarkdown = n.innerHTML;
-          if (slot === "usage") this._usageMarkdown = n.innerHTML;
+          if (slot === "usage") this._usageMarkdown = n.innerHTML
+          // Remove any instance of `class="style-scope *-demo"`
+          .replace(/class\=\"style\-scope .*\-demo\"/g,'')
+          // Strip `style-scope` and  `*-demo` from other `class` attributes
+          .replace(/class\=\"(.*) style-scope .*\-demo\"/g,'class="$1"')
+          // Strip the inserted class attribute and lightDOM content from the px-actionable-design demo
+          .replace(/ class\=\"style-scope px-actionable-design-demo x-scope px-icon-1\"/g,'')
+          .replace(/[\s]*<iron-icon.*[\s]*<\/iron-icon>[\s]*/g,'');
         }.bind(this));
     },
 
