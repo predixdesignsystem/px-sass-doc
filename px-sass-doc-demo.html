@@ -255,8 +255,9 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
           .replace(/class\=\"style\-scope .*\-demo\"/g,'')
           // Strip `style-scope` and  `*-demo` from other `class` attributes
           .replace(/class\=\"(.*) style-scope .*\-demo\"/g,'class="$1"')
-          // Strip the inserted class attribute and lightDOM content from the px-actionable-design demo
+          // Strip the inserted class attribute and lightDOM content from the px-actionable-design & px-buttons-design demos
           .replace(/ class\=\"style-scope px-actionable-design-demo x-scope px-icon-1\"/g,'')
+          .replace(/ class\=\"style-scope px-buttons-design-demo x-scope px-icon-1\"/g,'')
           .replace(/[\s]*<iron-icon.*[\s]*<\/iron-icon>[\s]*/g,'');
       };
 

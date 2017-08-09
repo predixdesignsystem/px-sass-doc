@@ -1,3 +1,7 @@
+v1.0.4
+==================
+* update regex for filtering out extraneous code
+
 v1.0.3
 ==================
 * update regex for filtering out extraneous code
