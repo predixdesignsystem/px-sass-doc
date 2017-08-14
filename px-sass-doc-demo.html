@@ -9,7 +9,7 @@
 <link rel="import" href="../prism-element/prism-highlighter.html"/>
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
 <link rel="import" href="../marked-element/marked-element.html"/>
-<link rel="import" href="../px-tabs/px-tab-set.html"/>
+<link rel="import" href="../px-tabs/px-tabs.html"/>
 
 <link rel="import" href="css/px-demo-styles.html" />
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
@@ -41,11 +41,11 @@ Pass content into its light DOM by using data-slot="slotName" attributes.
   <template is="dom-if" if="[[_hasTabs]]">
     <div style="position: relative;" class="flex flex--col" id="defaultTab">
       <div class="demo-background--interactive u-pt++ u-ph++">
-        <px-tab-set selected="{{_selectedTabIndex}}" bare no-bottom-border>
+        <px-tabs selected="{{_selectedTabIndex}}" bare no-bottom-border>
           <template is="dom-repeat" items="{{tabs}}">
             <px-tab>{{item}}</px-tab>
           </template>
-        </px-tab-set>
+        </px-tabs>
       </div>
     </div>
   </template>

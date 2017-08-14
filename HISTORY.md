@@ -1,3 +1,7 @@
+v1.0.5
+==================
+* pick up new px-tabs version and API
+
 v1.0.4
 ==================
 * update regex for filtering out extraneous code
