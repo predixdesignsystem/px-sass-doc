@@ -1,3 +1,7 @@
+v1.0.6
+==================
+* sassdoc.json path wrangling to make it more resilient
+
 v1.0.5
 ==================
 * pick up new px-tabs version and API

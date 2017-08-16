@@ -52,7 +52,7 @@ Element providing documentation for a requested Predix UI Sass component (design
     <prism-highlighter></prism-highlighter>
     <iron-ajax
         auto
-        url="[[sassdocPath]]"
+        url="[[_sassdocPath]]"
         handle-as="json"
         last-response="{{_sassdocJson}}">
     </iron-ajax>
@@ -343,7 +343,10 @@ Element providing documentation for a requested Predix UI Sass component (design
       sassdocPath: {
         type: String
       },
-
+      _sassdocPath:{
+        type: String,
+        computed: '_generateSassdocPath(sassdocPath)'
+      },
       /**
       * The raw Sassdoc JSON, automatically loaded by iron-ajax if `sassdocPath` is defined.
       *
@@ -520,6 +523,11 @@ Element providing documentation for a requested Predix UI Sass component (design
       //we point el to px-icon, where the arrow actually is.
       el = (el.is !== 'px-icon') ? el.previousElementSibling : el;
       el.classList.toggle('arrow--inactive');
+    },
+    _generateSassdocPath: function(path){
+      var importPath = this.importPath;
+      importPath = importPath.substr(0,importPath.indexOf('px-sass-doc'));
+      return importPath + this.libraryName + '/' + path;
     }
   });
 </script>
