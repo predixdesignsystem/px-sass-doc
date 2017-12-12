@@ -37,9 +37,9 @@ Element providing the introductory header information for Sass modules. Is used 
         <p class="demo-text-width--max">
           {{moduleDescription}}
         </p>
-        <div class="flex">
-          <img class="u-mr--" src="https://img.shields.io/bower/v/{{moduleName}}.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
-          <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/{{moduleName}}.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+        <div class="flex demo-header__shield-badge-container">
+          <img class="demo-header__badge-container__badge u-mr--" src="https://img.shields.io/bower/v/{{moduleName}}.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" on-load="_shieldImgLoaded"/>
+          <img class="demo-header__badge-container__badge u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/{{moduleName}}.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" on-load="_shieldImgLoaded"/>
         </div>
       </div>
     </section>
@@ -80,6 +80,10 @@ Element providing the introductory header information for Sass modules. Is used 
         type: String,
         value: ''
       }
+    },
+    _shieldImgLoaded: function(evt){
+      evt = Polymer.dom(evt);
+      this.toggleClass('demo-header__badge-container__badge--loaded', true, evt.localTarget);
     }
   });
 </script>
