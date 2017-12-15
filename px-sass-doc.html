@@ -1,19 +1,13 @@
-<!--
-    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
-    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
-    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
--->
-<link rel="import" href="../polymer/polymer.html"/>
-
+<link rel="import" href="../polymer/polymer-element.html"/>
+<link rel="import" href="../polymer/lib/elements/dom-if.html"/>
 <link rel="import" href="../px-clipboard/px-clipboard.html"/>
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
 <link rel="import" href="../px-icon-set/px-icon-set.html"/>
-
-<link rel="import" href="css/px-demo-styles.html" />
 <link rel="import" href="px-sass-doc-header.html"/>
 <link rel="import" href="px-sass-doc-demo.html"/>
 <link rel="import" href="px-sass-doc-viewer.html"/>
 <link rel="import" href="px-sass-doc-footer.html"/>
+<link rel="import" href="css/px-demo-styles.html" />
 
 <!--
 Element providing documentation for a requested Predix UI CSS module.
@@ -42,7 +36,7 @@ Pass additional content into its light DOM to pass down to its children.
 
 <dom-module id="px-sass-doc">
   <template>
-  <style include="px-demo-styles" is="custom-style"></style>
+  <style include="px-demo-styles"></style>
 
   <!-- Header -->
   <px-sass-doc-header
@@ -53,9 +47,12 @@ Pass additional content into its light DOM to pass down to its children.
   <template is="dom-if" if="[[!hideDemoContainer]]">
     <!-- Demo -->
     <px-sass-doc-demo selected-options="{{selectedOptions}}" selected-tab="{{selectedTab}}" tabs="[[tabs]]">
-      <content select="px-sass-doc-option"></content>
-      <content select="[data-slot=demoHTML]"></content>
-      <content select="[data-slot=import]"></content>
+      <!-- Previously: <content select="px-sass-doc-option" ...> -->
+      <slot name="options" slot="options"></slot>
+      <!-- Previously: <content select="[data-slot=demoHTML]" ...> -->
+      <slot name="demo-html" slot="demo-html"></slot>
+      <!-- Previously: <content select="[data-slot=import]" ...> -->
+      <slot name="import" slot="import"></slot>
     </px-sass-doc-demo>
   </template>
   <template is="dom-if" if="[[hideDemoContainer]]">
@@ -64,8 +61,10 @@ Pass additional content into its light DOM to pass down to its children.
 
   <!-- Viewer -->
   <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] dependencies=[[dependencies]] hide-import-sass=[[hideImportSass]] sassdoc-path=[[sassdocPath]]>
-    <content select="[data-slot=intro]"></content>
-    <content select="[data-slot=usage]"></content>
+    <!-- Previously: <content select="[data-slot=intro]" ...> -->
+    <slot name="intro" slot="intro"></slot>
+    <!-- Previously: <content select="[data-slot=usage]" ...> -->
+    <slot name="usage" slot="usage"></slot>
   </px-sass-doc-viewer>
 
   <!-- Footer -->
@@ -75,163 +74,118 @@ Pass additional content into its light DOM to pass down to its children.
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'px-sass-doc',
+  class PxSassDoc extends Polymer.Element {
+    static get is() { return 'px-sass-doc'; }
 
-    /**
-     * Properties block, expose attribute values to the DOM via 'notify'
-     *
-     * @property properties
-     * @type Object
-     */
-    properties: {
+    static get properties() {
+      return {
+        /**
+         * Name of the Sass module.
+         */
+        moduleName: {
+          type: String
+        },
 
-      /**
-      * Name of the Sass module.
-      *
-      * @property moduleName
-      * @type String
-      **/
-      moduleName: {
-        type: String,
-        value: ''
-      },
+        /**
+         * Description of the Sass module.
+         */
+        description: {
+          type: String
+        },
 
-      /**
-      * Description of the Sass module.
-      *
-      * @property description
-      * @type String
-      **/
-      description: {
-        type: String,
-        value: ''
-      },
+        /**
+         * Sass layer that this component belongs in, e.g. generic, objects,
+         * trumps, etc.
+         */
+        layer: {
+          type: String
+        },
 
-      /**
-      * Sass layer that this component belongs in, e.g. generic, objects, trumps, etc.
-      *
-      * @property layer
-      * @type String
-      */
-      layer: {
-        type: String,
-        value: ''
-      },
+        /**
+         * List of modules this module depends on (as Github repository URLs).
+         */
+        dependencies: {
+          type: Array,
+          value: () => []
+        },
 
-      /**
-      * List of modules this module depends on (as Github repository URLs).
-      *
-      * @property dependencies
-      * @type String
-      */
-      dependencies: {
-        type: Array,
-        value: function(){ return []; }
-      },
+        /**
+         * Path to a generated Sassdoc JSON file.
+         */
+        sassdocPath: {
+          type: String
+        },
 
-      /**
-      * Path to a generated Sassdoc JSON file.
-      *
-      * @property sassdocPath
-      * @type String
-      */
-      sassdocPath: {
-        type: String,
-        value: ''
-      },
+        /**
+         * Inuit flags that are used to enable features and functionality,
+         * represented as an array of strings, which will display with line
+         * breaks between each.
+         */
+        inuitFlags: {
+          type: Array,
+          value: () => []
+        },
 
-      /**
-      * Inuit flags that are used to enable features and functionality, represented as an array of strings, which will display with line breaks between each.
-      *
-      * @property inuitFlags
-      * @type Array
-      */
-      inuitFlags: {
-        type: Array,
-        value: function() { return []; }
-      },
+        /**
+         * Base name of the component in the file path, e.g. _objects.BASENAME.scss.
+         * Computed from the moduleName.
+         */
+        baseName: {
+          type: String,
+          computed: '_computeBaseName(moduleName)'
+        },
 
-      /**
-      * Base name of the component in the file path, e.g. _objects.BASENAME.scss.
-      * Computed from the moduleName.
-      *
-      * @property baseName
-      * @type String
-      */
-      baseName: {
-        type: String,
-        value: '',
-        computed: '_computeBaseName(moduleName)'
-      },
+        /**
+         * A list of tabs that will change our demo container.
+         */
+        tabs: {
+          type: Array,
+          value: () => []
+        },
 
-      /**
-      * A list of tabs that will change our demo container.
-      *
-      * @property tabs
-      * @type Array
-      */
-      tabs: {
-        type: Array,
-        value: function() { return []; }
-      },
+        /**
+         * Set to `true` to hide the demo container (i.e. if you just have
+         * simple API docs.)
+         */
+        hideDemoContainer: {
+          type: Boolean,
+          value: false
+        },
 
-      /**
-      * Set to `true` to hide the demo container (i.e. if you just have simple API docs.)
-      *
-      * @property hideDemoContainer
-      * @type Boolean
-      */
-      hideDemoContainer: {
-        type: Boolean,
-        value: false
-      },
-      /**
-      * Set to `true` to hide the instructions to "Import in your Sass"
-      *
-      * @property hideImportSass
-      * @type Boolean
-      */
-      hideImportSass: {
-        type: Boolean,
-        value: false
-      },
+        /**
+         * Set to `true` to hide the instructions to "Import in your Sass".
+         */
+        hideImportSass: {
+          type: Boolean,
+          value: false
+        },
 
-      /**
-      * The currently selected options, passed up from px-sass-doc-demo.
-      *
-      * @property selectedOptions
-      * @type Object
-      */
-      selectedOptions: {
-        type: Object,
-        notify: true,
-        value: function(){ return {}; },
-      },
+        /**
+         * The currently selected options, passed up from px-sass-doc-demo.
+         */
+        selectedOptions: {
+          type: Object,
+          notify: true,
+          value: () => []
+        },
 
-      /**
-      * The currently selected tab, passed up from px-sass-doc-demo.
-      *
-      * @property selectedTab
-      * @type String
-      */
-      selectedTab: {
-        type: String,
-        notify: true,
-        value: ''
-      }
-    },
-
-    /**
-    * Computes the name of the module by parsing the moduleName and removing unnecessary
-    * prefix ('px-') and suffix ('-design') strings.
-    *
-    * @method _computeBaseName
-    */
-    _computeBaseName: function() {
-      if (this.moduleName) {
-        return this.moduleName.replace('px-','').replace('-design','')
-      }
+        /**
+         * The currently selected tab, passed up from px-sass-doc-demo.
+         */
+        selectedTab: {
+          type: String,
+          notify: true,
+          value: ''
+        }
+      };
     }
-  });
+
+    _computeBaseName(moduleName) {
+      if (!moduleName) return;
+      return moduleName.replace('px-','').replace('-design','');
+
+    }
+  }
+
+  customElements.define('px-sass-doc', PxSassDoc);
 </script>

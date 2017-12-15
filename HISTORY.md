@@ -1,3 +1,8 @@
+v2.0.0
+==================
+* Upgrade from Polymer 1.x to Polymer 2.x
+* Rename all content distribution points to slots
+
 v1.0.6
 ==================
 * sassdoc.json path wrangling to make it more resilient

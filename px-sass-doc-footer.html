@@ -1,12 +1,6 @@
-<!--
-    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
-    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
-    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
--->
-<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../polymer/polymer-element.html"/>
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
 <link rel="import" href="css/px-demo-styles.html"/>
-
 
 <!--
 Element providing the boilerplate footer information for Sass modules. Is used inside px-sass-doc container element.
@@ -24,7 +18,7 @@ Element providing the boilerplate footer information for Sass modules. Is used i
 <dom-module id="px-sass-doc-footer">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
-    <style include="px-demo-styles" is="custom-style"></style>
+    <style include="px-demo-styles"></style>
 
     <footer class="demo-background--footer flex flex--center">
       <div class="demo-footer__container u-pv++">
@@ -40,10 +34,12 @@ Element providing the boilerplate footer information for Sass modules. Is used i
         </div>
       </div>
     </footer>
-
   </template>
 </dom-module>
-
 <script>
-  Polymer({ is: 'px-sass-doc-footer' });
+  class PxSassDocFooter extends Polymer.Element {
+    static get is() { return 'px-sass-doc-footer'; }
+  }
+
+  customElements.define('px-sass-doc-footer', PxSassDocFooter);
 </script>

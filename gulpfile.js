@@ -76,7 +76,6 @@ gulp.task('serve', function() {
 
   gulp.watch(['css/*-styles.html', '*.html', '*.js', 'demo/*.html']).on('change', browserSync.reload);
   gulp.watch(['sass/*.scss'], ['sass']);
-
 });
 
 gulp.task('bump:patch', function(){

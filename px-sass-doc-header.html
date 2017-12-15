@@ -1,9 +1,4 @@
-<!--
-    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
-    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
-    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
--->
-<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../polymer/polymer-element.html"/>
 <link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
 <link rel="import" href="css/px-demo-styles.html"/>
 
@@ -26,60 +21,39 @@ Element providing the introductory header information for Sass modules. Is used 
 <dom-module id="px-sass-doc-header">
   <template>
     <style include="px-sass-doc-viewer-styles"></style>
-    <style include="px-demo-styles" is="custom-style"></style>
+    <style include="px-demo-styles"></style>
 
     <section class="demo-background--base">
       <div class="demo-layout--center demo-u-pb+++ u-pt++ text--shadow">
-        <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/{{moduleName}}" target="_new">
+        <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/[[moduleName]]" target="_new">
           <px-icon class="menu__open u-mr--" icon="px-nav:new-window"></px-icon>View on Github
         </a>
-        <h1 class="delta">{{moduleName}}</h1>
+        <h1 class="delta">[[moduleName]]</h1>
         <p class="demo-text-width--max">
-          {{moduleDescription}}
+          [[moduleDescription]]
         </p>
         <div class="flex">
-          <img class="u-mr--" src="https://img.shields.io/bower/v/{{moduleName}}.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
-          <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/{{moduleName}}.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+          <img class="u-mr--" src="https://img.shields.io/bower/v/[[moduleName]].svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
+          <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/[[moduleName]].svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
         </div>
       </div>
     </section>
-
   </template>
 </dom-module>
-
 <script>
-  Polymer({
-    is: 'px-sass-doc-header',
+  class PxSassDocHeader extends Polymer.Element {
+    static get is() { return 'px-sass-doc-header'; }
 
-    /**
-     * Properties block, expose attribute values to the DOM via 'notify'
-     *
-     * @property properties
-     * @type Object
-     */
-    properties: {
+    static get properties() {
+      return {
+        /** Name of the Sass module. */
+        moduleName: String,
 
-      /**
-      * Name of the Sass module.
-      *
-      * @property moduleName
-      * @type String
-      **/
-      moduleName: {
-        type: String,
-        value: ''
-      },
-
-      /**
-      * Description of the Sass module.
-      *
-      * @property moduleDescription
-      * @type String
-      **/
-      moduleDescription: {
-        type: String,
-        value: ''
-      }
+        /** Description of the Sass module. */
+        moduleDescription: String
+      };
     }
-  });
+  }
+
+  customElements.define('px-sass-doc-header', PxSassDocHeader);
 </script>
