@@ -1,3 +1,8 @@
+v2.0.1
+==================
+* Update footer to match new px-demo footer
+* Update monogram image
+
 v2.0.0
 ==================
 * Upgrade from Polymer 1.x to Polymer 2.x
