@@ -1,3 +1,7 @@
+v2.0.2
+==================
+* Bugfix: Demos with no options should always hide their options area
+
 v2.0.1
 ==================
 * Update footer to match new px-demo footer
