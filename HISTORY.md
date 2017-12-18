@@ -1,3 +1,8 @@
+v2.0.4
+===================
+* Add raw slot intro slot for distribution of regular HTML
+* Expose markdown styles for demo pages
+
 v2.0.3
 ===================
 * Bugfix: Remove optionValue property from px-sass-doc-option API,
