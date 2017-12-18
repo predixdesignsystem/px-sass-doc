@@ -1,3 +1,10 @@
+v2.0.3
+===================
+* Bugfix: Remove optionValue property from px-sass-doc-option API,
+  this was little used and the developer should have bound in
+  to `selectedChoice` instead. Already removed from the one
+  caller, px-helpers-design demo.
+
 v2.0.2
 ==================
 * Bugfix: Demos with no options should always hide their options area
