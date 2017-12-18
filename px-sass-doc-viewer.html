@@ -66,6 +66,10 @@ Element providing documentation for a requested Predix UI Sass component (design
         <div class="demo-background--api">
           <div class="flex flex--col api">
 
+            <section>
+              <slot name="intro-raw"></slot>
+            </section>
+
             <template is="dom-if" if="[[_has(_introMarkdown)]]">
               <section>
                 <marked-element markdown="[[_introMarkdown]]">

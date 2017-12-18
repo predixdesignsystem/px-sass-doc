@@ -61,6 +61,7 @@ Pass additional content into its light DOM to pass down to its children.
 
   <!-- Viewer -->
   <px-sass-doc-viewer library-name=[[moduleName]] base-name=[[baseName]] layer=[[layer]] inuit-flags=[[inuitFlags]] dependencies=[[dependencies]] hide-import-sass=[[hideImportSass]] sassdoc-path=[[sassdocPath]]>
+    <slot name="intro-raw" slot="intro-raw"></slot>
     <!-- Previously: <content select="[data-slot=intro]" ...> -->
     <slot name="intro" slot="intro"></slot>
     <!-- Previously: <content select="[data-slot=usage]" ...> -->
