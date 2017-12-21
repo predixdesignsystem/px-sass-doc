@@ -1,3 +1,7 @@
+v2.0.6
+===================
+* Bump to use new px-demo-design with container size fix, re-build sass
+
 v2.0.5
 ===================
 * Use Github tag for latest version shields.io image
