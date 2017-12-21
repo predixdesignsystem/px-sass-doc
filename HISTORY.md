@@ -1,3 +1,7 @@
+v2.0.5
+===================
+* Use Github tag for latest version shields.io image
+
 v2.0.4
 ===================
 * Add raw slot intro slot for distribution of regular HTML
