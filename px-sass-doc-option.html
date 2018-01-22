@@ -33,7 +33,7 @@ Element that provides a dropdown or toggle and notifies on change.
       <label>{{optionName}}</label>
       <div class="u-mt-- u-mb">
         <!-- px-dropdown-selection-changed -->
-        <px-dropdown items="[[choices]]" selected="[[selectedChoice]]" select-by="val" on-selected-changed="_handleDropdown"></px-dropdown>
+        <px-dropdown items="[[choices]]" selected="[[selectedChoice]]" select-by="val" on-selected-changed="_handleDropdown" disable-clear></px-dropdown>
       </div>
     </template>
     <template is="dom-if" if="[[_chooseWithIs(chooseWith, 'boolean')]]">

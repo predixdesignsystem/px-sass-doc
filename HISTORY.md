@@ -1,3 +1,7 @@
+v2.0.7
+===================
+* add disableClear to dropdown
+
 v2.0.6
 ===================
 * Bump to use new px-demo-design with container size fix, re-build sass
