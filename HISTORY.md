@@ -1,3 +1,7 @@
+v2.0.8
+===================
+* reduce icon-set imports
+
 v2.0.7
 ===================
 * add disableClear to dropdown
