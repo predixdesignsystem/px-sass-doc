@@ -1,6 +1,7 @@
-v2.0.8
+v2.0.9
 ===================
 * add default values for properties to fix demos
+* fix history
 
 v2.0.8
 ===================
