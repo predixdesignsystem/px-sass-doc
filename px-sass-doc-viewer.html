@@ -183,7 +183,7 @@ Element providing documentation for a requested Predix UI Sass component (design
           <section class="u-mb">
             <div class="delta u-mt++ u-mb">Customize Styles</div>
             <template is="dom-if" if="[[!_has(_sassdocStyleVariables)]]">
-              <p>No customizable variables</p>
+              <p>No customizable variables.</p>
             </template>
             <template is="dom-if" if="[[_has(_sassdocStyleVariables)]]">
               <p>You can change style variables to customize the design of the {{baseName}} module. To change styles directly in Sass,
@@ -312,6 +312,7 @@ Element providing documentation for a requested Predix UI Sass component (design
          */
         _importCode: {
           type: String,
+          value: '',
           computed: '_computeImportCode(libraryName, layer, baseName)'
         },
 
@@ -319,14 +320,16 @@ Element providing documentation for a requested Predix UI Sass component (design
          * Path to a generated Sassdoc JSON file.
          */
         sassdocPath: {
-          type: String
+          type: String,
+          value: ''
         },
 
         /**
          * Raw Sassdoc JSON, automatically loaded by iron-ajax from `sassdocPath`.
          */
         _sassdocJson: {
-          type: Array
+          type: Array,
+          value: () => []
         },
 
         /**
@@ -334,6 +337,7 @@ Element providing documentation for a requested Predix UI Sass component (design
          */
         _sassdocStyleVariables: {
           type: Array,
+          value: () => [],
           computed: '_computeSassdocStyleVariables(_sassdocJson)'
         },
 
@@ -342,6 +346,7 @@ Element providing documentation for a requested Predix UI Sass component (design
          */
         _sassdocInuitFlags: {
           type: Array,
+          value: () => [],
           computed: '_computeSassdocInuitFlags(_sassdocJson)'
         },
 

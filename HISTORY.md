@@ -1,5 +1,9 @@
 v2.0.8
 ===================
+* add default values for properties to fix demos
+
+v2.0.8
+===================
 * reduce icon-set imports
 
 v2.0.7
