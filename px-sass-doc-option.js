@@ -1,0 +1,180 @@
+/*
+Copyright (c) 2018, General Electric
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+/**
+Element that provides a dropdown or toggle and notifies on change.
+
+### Usage
+
+      <px-sass-doc-option
+        option-name="Type"
+        choose-with="dropdown"
+        choices='[
+          "primary",
+          "secondary (default)",
+          "tertiary"
+        ]'
+        default-choice="secondary (default)">
+      </px-sass-doc-option>
+
+@element px-sass-doc-option
+@blurb Element that provides a dropdown or toggle and notifies on change.
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+
+import '@polymer/polymer/lib/elements/dom-if.js';
+import './css/px-sass-doc-viewer-styles.js';
+import './css/px-demo-styles.js';
+import 'px-toggle/px-toggle.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+class PxSassDocOption extends PolymerElement {
+  static get template() {
+    return html`
+    <style include="px-sass-doc-viewer-styles"></style>
+    <style include="px-demo-styles"></style>
+
+    <template is="dom-if" if="[[_chooseWithIs(chooseWith, 'dropdown')]]">
+      <label>{{optionName}}</label>
+      <div class="u-mt-- u-mb">
+        <!-- px-dropdown-selection-changed -->
+        <px-dropdown items="[[choices]]" selected="[[selectedChoice]]" select-by="val" on-selected-changed="_handleDropdown" disable-clear=""></px-dropdown>
+      </div>
+    </template>
+    <template is="dom-if" if="[[_chooseWithIs(chooseWith, 'boolean')]]">
+      <div class="flex flex--justify flex--middle u-mb-">
+        <div class="label u-ml--">{{optionName}}</div>
+        <px-toggle id="{{optionName}}" size="small" checked\$="[[selectedChoice]]" on-checked-changed="_handleToggle"></px-toggle>
+      </div>
+    </template>
+    <template is="dom-if" if="[[_chooseWithIs(chooseWith, 'input')]]">
+      <label>{{optionName}}</label>
+      <div class="u-mt-- u-mb">
+        <input id="{{optionName}}" placeholder="Type something..." class="text-input" type="text" value="[[selectedChoice]]" on-change="_handleInput">
+      </div>
+    </template>
+`;
+  }
+
+  static get is() { return 'px-sass-doc-option'; }
+
+  static get properties() {
+    return {
+      /**
+       * Name of the option.
+       */
+      optionName: {
+        type: String
+      },
+
+      /**
+       * Type of form element used to set the option.
+       * Choose from: 'dropdown', 'boolean'
+       */
+      chooseWith: {
+        type: String
+      },
+
+      /**
+       * Choices that can be set for this option.
+       */
+      choices: {
+        type: Array,
+        value: () => []
+      },
+
+      /**
+       * Default choice to set for this option when first attached.
+       */
+      defaultChoice: {
+        type: String,
+        value: '',
+        observer: '_useDefaultChoice'
+      },
+
+      /**
+       * Current selected choice.
+       */
+      selectedChoice: {
+        type: String,
+        notify: true
+      }
+    };
+  }
+
+  static get observers() {
+    return [
+      '_selectedChoiceChanged(optionName, selectedChoice)',
+      '_useDefaultChoice(defaultChoice, chooseWith)'
+    ];
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    afterNextRender(this, () => {
+      this._selectedChoiceChanged(this.optionName, this.selectedChoice);
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+  }
+
+  _useDefaultChoice(defaultChoice, chooseWith) {
+    if (!this._defaultChoiceUsed && typeof defaultChoice !== 'undefined' && typeof chooseWith === 'string') {
+      if (chooseWith === 'boolean') {
+        // using double equal `==` on purpose here to coerce 'false' to false
+        this.selectedChoice = (chooseWith == true) ? true : false;
+      }
+      else {
+        this.selectedChoice = defaultChoice;
+      }
+      this._defaultChoiceUsed = true;
+    }
+  }
+
+  _chooseWithIs(chooseWith, inputType) {
+    return typeof chooseWith === 'string' && chooseWith === inputType;
+  }
+
+  _handleDropdown(evt) {
+    this.selectedChoice = evt.detail.value;
+  }
+
+  _handleToggle(evt) {
+    this.selectedChoice = evt.detail.value;
+  }
+
+  _handleInput(evt) {
+    this.selectedChoice = evt.target.value;
+  }
+
+  _selectedChoiceChanged(optionName, selectedChoice) {
+    if (typeof optionName === 'string' && typeof selectedChoice !== 'undefined') {
+      const detail = {
+        option: optionName,
+        selected: selectedChoice
+      };
+      this.dispatchEvent(new CustomEvent('px-sass-doc-option-selected', {detail, bubbles: true, composed: true}));
+    }
+  }
+}
+
+customElements.define('px-sass-doc-option', PxSassDocOption);

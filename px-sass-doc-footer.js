@@ -1,4 +1,4 @@
-<!--
+/*
 Copyright (c) 2018, General Electric
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,13 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-
-<link rel="import" href="../polymer/polymer-element.html"/>
-<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
-<link rel="import" href="css/px-demo-styles.html"/>
-
-<!--
+*/
+/**
 Element providing the boilerplate footer information for Sass modules. Is used inside px-sass-doc container element.
 
 ##### Usage
@@ -29,10 +24,20 @@ Element providing the boilerplate footer information for Sass modules. Is used i
 
 @element px-sass-doc-footer
 @blurb Element providing the boilerplate footer information for Sass modules.
--->
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-<dom-module id="px-sass-doc-footer">
-  <template>
+import './css/px-sass-doc-viewer-styles.js';
+import './css/px-demo-styles.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+class PxSassDocFooter extends PolymerElement {
+  static get template() {
+    return html`
     <style include="px-sass-doc-viewer-styles"></style>
     <style include="px-demo-styles"></style>
 
@@ -45,17 +50,15 @@ Element providing the boilerplate footer information for Sass modules. Is used i
           <ul class="list-inline list-inline--delimited">
             <li><a href="https://predix.io/legal" class="actionable actionable--secondary" target="_blank">Legal</a></li>
             <li><a href="https://www.predix.io/support/article/KB0012081" class="actionable actionable--secondary" target="_blank">Contact Us</a></li>
-            <li>Copyright &copy; General Electric Company. All rights reserved.</li>
+            <li>Copyright © General Electric Company. All rights reserved.</li>
           </ul>
         </div>
       </div>
     </footer>
-  </template>
-</dom-module>
-<script>
-  class PxSassDocFooter extends Polymer.Element {
-    static get is() { return 'px-sass-doc-footer'; }
+`;
   }
 
-  customElements.define('px-sass-doc-footer', PxSassDocFooter);
-</script>
+  static get is() { return 'px-sass-doc-footer'; }
+}
+
+customElements.define('px-sass-doc-footer', PxSassDocFooter);

@@ -1,4 +1,4 @@
-<!--
+/*
 Copyright (c) 2018, General Electric
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-
-<link rel="import" href="../polymer/polymer-element.html"/>
-<link rel="import" href="../polymer/lib/elements/dom-if.html"/>
-<link rel="import" href="../polymer/lib/elements/dom-repeat.html"/>
-<link rel="import" href="../polymer/lib/utils/flattened-nodes-observer.html"/>
-<link rel="import" href="../marked-element/marked-element.html"/>
-<link rel="import" href="../prism-element/prism-highlighter.html"/>
-<link rel="import" href="../prism-element/prism-theme-default.html"/>
-<link rel="import" href="prism-extended-theme.html"/>
-<link rel="import" href="../iron-ajax/iron-ajax.html"/>
-<link rel="import" href="../iron-collapse/iron-collapse.html"/>
-<link rel="import" href="../px-clipboard/px-clipboard.html"/>
-<link rel="import" href="../px-icon-set/px-icon-set-utility.html"/>
-<link rel="import" href="../px-icon-set/px-icon.html"/>
-<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
-<link rel="import" href="css/px-demo-styles.html"/>
-
-<!--
+*/
+/**
 Element providing documentation for a requested Predix UI Sass component (design library).
 
 ##### Usage
@@ -45,10 +28,32 @@ Element providing documentation for a requested Predix UI Sass component (design
 
 @element px-sass-doc-viewer
 @blurb Element providing documentation for a requested Predix UI Sass component (design library).
--->
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-<dom-module id="px-sass-doc-viewer">
-  <template>
+import '@polymer/polymer/lib/elements/dom-if.js';
+import '@polymer/polymer/lib/elements/dom-repeat.js';
+import { FlattenedNodesObserver } from '@polymer/polymer/lib/utils/flattened-nodes-observer.js';
+import '@polymer/marked-element/marked-element.js';
+import '@polymer/prism-element/prism-highlighter.js';
+import '@polymer/prism-element/prism-theme-default.js';
+import './prism-extended-theme.js';
+import '@polymer/iron-ajax/iron-ajax.js';
+import '@polymer/iron-collapse/iron-collapse.js';
+import 'px-clipboard/px-clipboard.js';
+import 'px-icon-set/px-icon-set-utility.js';
+import 'px-icon-set/px-icon.js';
+import './css/px-sass-doc-viewer-styles.js';
+import './css/px-demo-styles.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+class PxSassDocViewer extends PolymerElement {
+  static get template() {
+    return html`
     <style include="prism-theme-default"></style>
     <style include="px-sass-doc-viewer-styles"></style>
     <style include="px-demo-styles"></style>
@@ -63,15 +68,11 @@ Element providing documentation for a requested Predix UI Sass component (design
     </style>
 
     <prism-highlighter></prism-highlighter>
-    <iron-ajax
-        auto
-        url="[[_getSassdocPath(importPath, sassdocPath, libraryName)]]"
-        handle-as="json"
-        last-response="{{_sassdocJson}}">
+    <iron-ajax auto="" url="[[_getSassdocPath(importPath, sassdocPath, libraryName)]]" handle-as="json" last-response="{{_sassdocJson}}">
     </iron-ajax>
 
     <div class="demo-background--api">
-      <div class="flex flex--col demo-layout--center u-pt++ u-pb++" >
+      <div class="flex flex--col demo-layout--center u-pt++ u-pb++">
         <div style="display:none" id="incomingMarkdown">
           <!-- Previously: <content select="[data-slot=intro]" ...> -->
           <slot name="intro"></slot>
@@ -128,7 +129,7 @@ Element providing documentation for a requested Predix UI Sass component (design
                   <figure class="code u-mr-">
                     <code id="install">
                       <template is="dom-repeat" items="{{inuitFlags}}">
-                        [[item]] : true;<br/>
+                        [[item]] : true;<br>
                       </template>
                     </code>
                   </figure>
@@ -141,20 +142,20 @@ Element providing documentation for a requested Predix UI Sass component (design
                   <template is="dom-repeat" items="{{_sassdocInuitFlags}}">
                     <li class="list-ui__item">
                       <span class="actionable">
-                        <px-icon class$="arrow--small clickable [[_getFlagArrowClassName(item, _openedFlags)]]" icon="px-utl:chevron" data-toggle="{{item.context.name}}" on-tap="_toggleFlag"></px-icon>
-                        <span on-tap="_toggleFlag" data-toggle="{{item.context.name}}" class="clickable">${{item.context.name}}</span>
+                        <px-icon class\$="arrow--small clickable [[_getFlagArrowClassName(item, _openedFlags)]]" icon="px-utl:chevron" data-toggle="{{item.context.name}}" on-tap="_toggleFlag"></px-icon>
+                        <span on-tap="_toggleFlag" data-toggle="{{item.context.name}}" class="clickable">\${{item.context.name}}</span>
                       </span>
-                      <iron-collapse id="{{item.context.name}}-container" no-animation opened="[[_isFlagOpened(item, _openedFlags)]]">
+                      <iron-collapse id="{{item.context.name}}-container" no-animation="" opened="[[_isFlagOpened(item, _openedFlags)]]">
                         <div class="sass-variable-details">
                           <p class="u-mt">{{item.description}}</p>
                           <p>
                             <small class="caps muted weight--light">Type: {{item.type}}</small>
-                            <br /><small class="caps muted weight--light">Default Value: {{item.context.value}}</small>
+                            <br><small class="caps muted weight--light">Default Value: {{item.context.value}}</small>
                           </p>
                           <px-clipboard copy-from="#{{item.context.name}}-code">
                             <figure class="code u-mr-">
                               <code id="{{item.context.name}}-code">
-                                ${{item.context.name}} : true;<br />
+                                \${{item.context.name}} : true;<br>
                                 {{_importCode}}
                               </code>
                             </figure>
@@ -207,19 +208,19 @@ Element providing documentation for a requested Predix UI Sass component (design
                  statement in your project's Sass file. To change the style in your application's CSS, use the CSS variables instead.
                  Note that if you have set both a CSS and a Sass variable for the same attribute, the CSS variable will take precedence over the Sass variable. </p>
               <table class="table">
-                <tr>
+                <tbody><tr>
                   <th>Sass Variable</th>
                   <th>CSS Variable</th>
                   <th>Description</th>
                 </tr>
                 <template is="dom-repeat" items="{{_sassdocStyleVariables}}">
                   <tr>
-                    <td>$[[item.context.name]]</td>
+                    <td>\$[[item.context.name]]</td>
                     <td>{{item.todo}}</td>
                     <td>{{item.description}}</td>
                   </tr>
                 </template>
-              </table>
+              </tbody></table>
             </template>
           </section>
           <!-- END 4. CUSTOMIZE MODULE -->
@@ -229,12 +230,12 @@ Element providing documentation for a requested Predix UI Sass component (design
             <div class="delta u-mt++ u-mb">Dependencies</div>
             <template is="dom-if" if="[[_has(dependencies)]]">
               <p>This module depends on the following modules (automatically included with Bower install):
-                <ul class="list-bare">
+                </p><ul class="list-bare">
                   <template is="dom-repeat" items="{{dependencies}}">
                     <li><a class="actionable" href="{{item}}" target="_blank">{{item}}</a></li>
                   </template>
                 </ul>
-              </p>
+              <p></p>
             </template>
             <template is="dom-if" if="[[!_has(dependencies)]]">
               <p>This module doesn't have any dependencies.</p>
@@ -245,251 +246,248 @@ Element providing documentation for a requested Predix UI Sass component (design
         </div>
       </div>
     </div>
-  </template>
-</dom-module>
+`;
+  }
 
-<script>
-  class PxSassDocViewer extends Polymer.Element {
-    static get is() { return 'px-sass-doc-viewer'; }
+  static get is() { return 'px-sass-doc-viewer'; }
 
-    static get properties() {
-      return {
-        /**
-         * Name of the documented Sass module.
-         */
-        libraryName: {
-          type: String,
-          value: ''
-        },
+  static get properties() {
+    return {
+      /**
+       * Name of the documented Sass module.
+       */
+      libraryName: {
+        type: String,
+        value: ''
+      },
 
-        /**
-         * Inuit flags exposed by the Sass module. Optional — passing in
-         * a Sassdoc JSON file will generate the inuit flags automatically.
-         * Format as array of strings with the name of each flag.
-         */
-        inuitFlags: {
-          type: Array,
-          value: () => []
-        },
+      /**
+       * Inuit flags exposed by the Sass module. Optional — passing in
+       * a Sassdoc JSON file will generate the inuit flags automatically.
+       * Format as array of strings with the name of each flag.
+       */
+      inuitFlags: {
+        type: Array,
+        value: () => []
+      },
 
-        /**
-         * ITCSS layer that this component belongs in.
-         * Examples: generic, objects, trumps
-         */
-        layer: {
-          type: String,
-          value: ''
-        },
+      /**
+       * ITCSS layer that this component belongs in.
+       * Examples: generic, objects, trumps
+       */
+      layer: {
+        type: String,
+        value: ''
+      },
 
-        /**
-         * Base name of the component in the file path.
-         * Example: _objects.[baseName].scss
-         */
-        baseName: {
-          type: String,
-          value: ''
-        },
+      /**
+       * Base name of the component in the file path.
+       * Example: _objects.[baseName].scss
+       */
+      baseName: {
+        type: String,
+        value: ''
+      },
 
-        /**
-         * Sass modules needed to use the one being documented. Format as array
-         * of strings. Each entry should be the URL a dependant Sass module's
-         * Github repo.
-         *
-         * Example:
-         * ```
-         * [https://github.com/PredixDev/px-colors-design"]
-         * ```
-         */
-        dependencies: {
-          type: Array,
-          value: () => []
-        },
+      /**
+       * Sass modules needed to use the one being documented. Format as array
+       * of strings. Each entry should be the URL a dependant Sass module's
+       * Github repo.
+       *
+       * Example:
+       * ```
+       * [https://github.com/PredixDev/px-colors-design"]
+       * ```
+       */
+      dependencies: {
+        type: Array,
+        value: () => []
+      },
 
-        /**
-         * A string of markdown-styled text passed in through the intro slot.
-         * Automatically retrieved when the slot is distributed.
-         */
-        _introMarkdown: {
-          type: String,
-          value: ''
-        },
+      /**
+       * A string of markdown-styled text passed in through the intro slot.
+       * Automatically retrieved when the slot is distributed.
+       */
+      _introMarkdown: {
+        type: String,
+        value: ''
+      },
 
-        /**
-         * A string of markdown-styled text passed in through the usage slot.
-         * Automatically retrieved when the slot is distributed.
-         */
-        _usageMarkdown: {
-          type: String,
-          value: ''
-        },
+      /**
+       * A string of markdown-styled text passed in through the usage slot.
+       * Automatically retrieved when the slot is distributed.
+       */
+      _usageMarkdown: {
+        type: String,
+        value: ''
+      },
 
-        /**
-         * Computed string with the import statement for the Sass component.
-         */
-        _importCode: {
-          type: String,
-          value: '',
-          computed: '_computeImportCode(libraryName, layer, baseName)'
-        },
+      /**
+       * Computed string with the import statement for the Sass component.
+       */
+      _importCode: {
+        type: String,
+        value: '',
+        computed: '_computeImportCode(libraryName, layer, baseName)'
+      },
 
-        /**
-         * Path to a generated Sassdoc JSON file.
-         */
-        sassdocPath: {
-          type: String,
-          value: ''
-        },
+      /**
+       * Path to a generated Sassdoc JSON file.
+       */
+      sassdocPath: {
+        type: String,
+        value: ''
+      },
 
-        /**
-         * Raw Sassdoc JSON, automatically loaded by iron-ajax from `sassdocPath`.
-         */
-        _sassdocJson: {
-          type: Array,
-          value: () => []
-        },
+      /**
+       * Raw Sassdoc JSON, automatically loaded by iron-ajax from `sassdocPath`.
+       */
+      _sassdocJson: {
+        type: Array,
+        value: () => []
+      },
 
-        /**
-         * Style variables computed from the raw Sassdoc JSON.
-         */
-        _sassdocStyleVariables: {
-          type: Array,
-          value: () => [],
-          computed: '_computeSassdocStyleVariables(_sassdocJson)'
-        },
+      /**
+       * Style variables computed from the raw Sassdoc JSON.
+       */
+      _sassdocStyleVariables: {
+        type: Array,
+        value: () => [],
+        computed: '_computeSassdocStyleVariables(_sassdocJson)'
+      },
 
-        /**
-         * Inuit flags computed from the raw Sassdoc JSON.
-         */
-        _sassdocInuitFlags: {
-          type: Array,
-          value: () => [],
-          computed: '_computeSassdocInuitFlags(_sassdocJson)'
-        },
+      /**
+       * Inuit flags computed from the raw Sassdoc JSON.
+       */
+      _sassdocInuitFlags: {
+        type: Array,
+        value: () => [],
+        computed: '_computeSassdocInuitFlags(_sassdocJson)'
+      },
 
-        /**
-         * Set to true to hide the "Import in your Sass" instructions
-         */
-        hideImportSass: {
-          type: Boolean,
-          value: false
-        },
+      /**
+       * Set to true to hide the "Import in your Sass" instructions
+       */
+      hideImportSass: {
+        type: Boolean,
+        value: false
+      },
 
-        /**
-         * Array of opened inuit flags. When the user taps on a flag name
-         * it will be added to this list, triggering the flag's accordion
-         * to open and arrow to rotate downward.
-         */
-        _openedFlags: {
-          type: Array,
-          value: () => []
-        }
-      };
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-      this._observer = new Polymer.FlattenedNodesObserver(this.$.incomingMarkdown, (info) => {
-        this._processNewNodes(info.addedNodes);
-      });
-    }
-
-    disconnectedCallback() {
-      super.disconnectedCallback();
-      this._observer.disconnect();
-    }
-
-    _processNewNodes(nodes) {
-      let elements = nodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
-      elements.forEach(el => {
-        if (el.slot && el.slot === 'intro') {
-          this._introMarkdown = el.innerHTML;
-        }
-        if (el.slot && el.slot === 'usage') {
-          let usageMarkup = el.innerHTML
-            // Remove any instance of `class="style-scope *-demo"`
-            .replace(/class\=\"style\-scope .*\-demo\"/g,'')
-            // Strip `style-scope` and  `*-demo` from other `class` attributes
-            .replace(/class\=\"(.*) style-scope .*\-demo\"/g,'class="$1"')
-            // Strip the inserted class attribute and lightDOM content from the px-actionable-design demo
-            .replace(/ class\=\"style-scope px-actionable-design-demo x-scope px-icon-1\"/g,'')
-            .replace(/[\s]*<iron-icon.*[\s]*<\/iron-icon>[\s]*/g,'');
-          this._usageMarkdown = el.innerHTML;
-        }
-      });
-    }
-
-    /**
-     * Checks if `o` has length. `o` could be an Array, string, or any value
-     * with a length property.
-     */
-    _has(o) {
-      return o.length && o.length > 0;
-    }
-
-    /**
-     * Checks to see if any inuit flags are defined (passed in through a property
-     * or pulled from Sassdoc).
-     */
-    _hasAnyFlags(userDefinedFlags, sasdocDefinedFlags) {
-      return (Array.isArray(userDefinedFlags) && userDefinedFlags.length) ||
-        (Array.isArray(sasdocDefinedFlags) && sasdocDefinedFlags.length);
-    }
-
-    _computeSassdocInuitFlags(sassdoc) {
-      if (Array.isArray(sassdoc)) {
-        return sassdoc.filter(item =>
-          item.group && item.group.length && item.group[0].indexOf('variables:flag') > -1
-        );
+      /**
+       * Array of opened inuit flags. When the user taps on a flag name
+       * it will be added to this list, triggering the flag's accordion
+       * to open and arrow to rotate downward.
+       */
+      _openedFlags: {
+        type: Array,
+        value: () => []
       }
-    }
+    };
+  }
 
-    _computeSassdocStyleVariables(sassdoc) {
-      if (Array.isArray(sassdoc)) {
-        return sassdoc.filter(item =>
-          item.group && item.group.length && item.group[0].indexOf('variables:style') > -1
-        );
+  connectedCallback() {
+    super.connectedCallback();
+    this._observer = new FlattenedNodesObserver(this.$.incomingMarkdown, (info) => {
+      this._processNewNodes(info.addedNodes);
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._observer.disconnect();
+  }
+
+  _processNewNodes(nodes) {
+    let elements = nodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
+    elements.forEach(el => {
+      if (el.slot && el.slot === 'intro') {
+        this._introMarkdown = el.innerHTML;
       }
-    }
-
-    _computeImportCode(library, layer, base) {
-      if (typeof library === 'string' && typeof layer === 'string' && typeof base === 'string') {
-        return `@import "${library}/_${layer}.${base}.scss";`
+      if (el.slot && el.slot === 'usage') {
+        let usageMarkup = el.innerHTML
+          // Remove any instance of `class="style-scope *-demo"`
+          .replace(/class\=\"style\-scope .*\-demo\"/g,'')
+          // Strip `style-scope` and  `*-demo` from other `class` attributes
+          .replace(/class\=\"(.*) style-scope .*\-demo\"/g,'class="$1"')
+          // Strip the inserted class attribute and lightDOM content from the px-actionable-design demo
+          .replace(/ class\=\"style-scope px-actionable-design-demo x-scope px-icon-1\"/g,'')
+          .replace(/[\s]*<iron-icon.*[\s]*<\/iron-icon>[\s]*/g,'');
+        this._usageMarkdown = el.innerHTML;
       }
-    }
+    });
+  }
 
-    _toScssMarkdown(code) {
-      if (typeof code !== 'string') return;
-      return '```scss\n' + code + '\n```';
-    }
+  /**
+   * Checks if `o` has length. `o` could be an Array, string, or any value
+   * with a length property.
+   */
+  _has(o) {
+    return o.length && o.length > 0;
+  }
 
-    _getInstallCodeMarkdown(libraryName) {
-      return '```bash\n' + `bower install ${libraryName} --save-dev` + '\n```';
-    }
+  /**
+   * Checks to see if any inuit flags are defined (passed in through a property
+   * or pulled from Sassdoc).
+   */
+  _hasAnyFlags(userDefinedFlags, sasdocDefinedFlags) {
+    return (Array.isArray(userDefinedFlags) && userDefinedFlags.length) ||
+      (Array.isArray(sasdocDefinedFlags) && sasdocDefinedFlags.length);
+  }
 
-    _getSassdocPath(importPath, sassdocPath, libraryName) {
-      if (!importPath || !sassdocPath || !libraryName) return;
-      let base = this.importPath.substr(0, this.importPath.indexOf('px-sass-doc'));
-      return base + this.libraryName + '/' + sassdocPath;
-    }
-
-    _toggleFlag(evt) {
-      let flag = evt.model.item;
-      if (this._openedFlags.indexOf(flag) === -1) {
-        this._openedFlags = this._openedFlags.concat([flag]);
-      } else {
-        this._openedFlags = this._openedFlags.filter(f => f !== flag);
-      }
-    }
-
-    _isFlagOpened(flag, openedFlags) {
-      if (!flag || !openedFlags) return false;
-      return openedFlags.indexOf(flag) > -1;
-    }
-
-    _getFlagArrowClassName(flag, openedFlags) {
-      return this._isFlagOpened(flag, openedFlags) ? '' : 'arrow--inactive';
+  _computeSassdocInuitFlags(sassdoc) {
+    if (Array.isArray(sassdoc)) {
+      return sassdoc.filter(item =>
+        item.group && item.group.length && item.group[0].indexOf('variables:flag') > -1
+      );
     }
   }
 
-  customElements.define('px-sass-doc-viewer', PxSassDocViewer);
-</script>
+  _computeSassdocStyleVariables(sassdoc) {
+    if (Array.isArray(sassdoc)) {
+      return sassdoc.filter(item =>
+        item.group && item.group.length && item.group[0].indexOf('variables:style') > -1
+      );
+    }
+  }
+
+  _computeImportCode(library, layer, base) {
+    if (typeof library === 'string' && typeof layer === 'string' && typeof base === 'string') {
+      return `@import "${library}/_${layer}.${base}.scss";`
+    }
+  }
+
+  _toScssMarkdown(code) {
+    if (typeof code !== 'string') return;
+    return '```scss\n' + code + '\n```';
+  }
+
+  _getInstallCodeMarkdown(libraryName) {
+    return '```bash\n' + `bower install ${libraryName} --save-dev` + '\n```';
+  }
+
+  _getSassdocPath(importPath, sassdocPath, libraryName) {
+    if (!importPath || !sassdocPath || !libraryName) return;
+    let base = this.importPath.substr(0, this.importPath.indexOf('px-sass-doc'));
+    return base + this.libraryName + '/' + sassdocPath;
+  }
+
+  _toggleFlag(evt) {
+    let flag = evt.model.item;
+    if (this._openedFlags.indexOf(flag) === -1) {
+      this._openedFlags = this._openedFlags.concat([flag]);
+    } else {
+      this._openedFlags = this._openedFlags.filter(f => f !== flag);
+    }
+  }
+
+  _isFlagOpened(flag, openedFlags) {
+    if (!flag || !openedFlags) return false;
+    return openedFlags.indexOf(flag) > -1;
+  }
+
+  _getFlagArrowClassName(flag, openedFlags) {
+    return this._isFlagOpened(flag, openedFlags) ? '' : 'arrow--inactive';
+  }
+}
+
+customElements.define('px-sass-doc-viewer', PxSassDocViewer);

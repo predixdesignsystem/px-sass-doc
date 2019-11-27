@@ -1,4 +1,4 @@
-<!--
+/*
 Copyright (c) 2018, General Electric
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,15 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-
-<link rel="import" href="../polymer/polymer-element.html"/>
-<link rel="import" href="../px-icon-set/px-icon-set-navigation.html"/>
-<link rel="import" href="../px-icon-set/px-icon.html"/>
-<link rel="import" href="css/px-sass-doc-viewer-styles.html"/>
-<link rel="import" href="css/px-demo-styles.html"/>
-
-<!--
+*/
+/**
 Element providing the introductory header information for Sass modules. Is used inside px-sass-doc container element.
 
 ##### Usage
@@ -34,10 +27,22 @@ Element providing the introductory header information for Sass modules. Is used 
 @blurb Element providing the introductory header information for px-sass-doc elements.
 @homepage index.html
 @demo index.html
--->
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-<dom-module id="px-sass-doc-header">
-  <template>
+import 'px-icon-set/px-icon-set-navigation.js';
+import 'px-icon-set/px-icon.js';
+import './css/px-sass-doc-viewer-styles.js';
+import './css/px-demo-styles.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+class PxSassDocHeader extends PolymerElement {
+  static get template() {
+    return html`
     <style include="px-sass-doc-viewer-styles"></style>
     <style include="px-demo-styles"></style>
 
@@ -51,27 +56,25 @@ Element providing the introductory header information for Sass modules. Is used 
           [[moduleDescription]]
         </p>
         <div class="flex">
-          <img class="u-mr--" src$="https://img.shields.io/github/tag/predixdev/[[moduleName]].svg?style=flat-square&label=bower" alt="Bower" onerror="this.style.display='none'" />
-          <img class="u-mr--" src$="https://img.shields.io/github/issues-raw/PredixDev/[[moduleName]].svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+          <img class="u-mr--" src\$="https://img.shields.io/github/tag/predixdev/[[moduleName]].svg?style=flat-square&amp;label=bower" alt="Bower" onerror="this.style.display='none'">
+          <img class="u-mr--" src\$="https://img.shields.io/github/issues-raw/PredixDev/[[moduleName]].svg?style=flat-square" alt="Issues" onerror="this.style.display='none'">
         </div>
       </div>
     </section>
-  </template>
-</dom-module>
-<script>
-  class PxSassDocHeader extends Polymer.Element {
-    static get is() { return 'px-sass-doc-header'; }
-
-    static get properties() {
-      return {
-        /** Name of the Sass module. */
-        moduleName: String,
-
-        /** Description of the Sass module. */
-        moduleDescription: String
-      };
-    }
+`;
   }
 
-  customElements.define('px-sass-doc-header', PxSassDocHeader);
-</script>
+  static get is() { return 'px-sass-doc-header'; }
+
+  static get properties() {
+    return {
+      /** Name of the Sass module. */
+      moduleName: String,
+
+      /** Description of the Sass module. */
+      moduleDescription: String
+    };
+  }
+}
+
+customElements.define('px-sass-doc-header', PxSassDocHeader);

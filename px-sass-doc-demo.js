@@ -1,0 +1,303 @@
+/*
+Copyright (c) 2018, General Electric
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+/**
+Element wrapping the demo code inside px-sass-doc.
+
+Pass content into its light DOM by using data-slot="slotName" attributes.
+
+##### Usage
+
+      <px-sass-doc-demo selected-options="{{selectedOptions}}">
+      </px-sass-doc-demo>
+
+@element px-sass-doc-demo
+@blurb Element wrapping the demo code inside px-sass-doc.
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+
+import '@polymer/polymer/lib/elements/dom-if.js';
+import '@polymer/polymer/lib/elements/dom-repeat.js';
+import 'px-clipboard/px-clipboard.js';
+import '@polymer/marked-element/marked-element.js';
+import '@polymer/prism-element/prism-highlighter.js';
+import '@polymer/prism-element/prism-theme-default.js';
+import './prism-extended-theme.js';
+import 'px-dropdown/px-dropdown.js';
+import 'px-tabs/px-tabs.js';
+import './px-sass-doc-option.js';
+import './css/px-demo-styles.js';
+import './css/px-sass-doc-viewer-styles.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { FlattenedNodesObserver } from '@polymer/polymer/lib/utils/flattened-nodes-observer.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+class PxSassDocDemo extends PolymerElement {
+  static get template() {
+    return html`
+    <style include="prism-theme-default"></style>
+    <style include="px-sass-doc-viewer-styles"></style>
+    <style include="px-demo-styles"></style>
+    <style>
+      .sassdoc-demo-container {
+        background-color: var(--px-demo-interactive-background-color, #ebeff2);
+        padding: 2rem;
+      }
+      .sassdoc-demo-tabs {
+        margin-bottom: 1rem;
+      }
+
+      .sassdoc-demo-interactive {
+        display: flex;
+        width: 100%;
+      }
+      .sassdoc-demo-options {
+        background-color: var(--px-demo-properties-background-color, #fff);
+        border: 1px solid var(--px-demo-containers-border-color, #c5d1d8);
+        padding-left: 1.33rem;
+        padding-right: 1.33rem;
+        overflow-y: hidden;
+        margin-right: 1rem;
+        min-width: 250px;
+        max-width: 450px;
+      }
+      .sassdoc-demo-component {
+        background-color: var(--px-demo-properties-background-color, #fff);
+        border: 1px solid var(--px-demo-containers-border-color, #c5d1d8);
+        min-height: 26.66667rem;
+        flex: 1 1 auto;
+        padding: 1.33rem;
+        display: block;
+        overflow: hidden;
+      }
+    </style>
+    <prism-highlighter></prism-highlighter>
+
+    <div class="sassdoc-demo-container">
+      <template is="dom-if" if="[[_hasAny(tabs)]]">
+        <div class="sassdoc-demo-tabs">
+          <px-tabs class="sassdoc-demo-tabs" attr-for-selected="name" selected="{{selectedTab}}" bare="" no-bottom-border="">
+            <template is="dom-repeat" items="{{tabs}}">
+              <px-tab name\$="[[item]]">{{item}}</px-tab>
+            </template>
+          </px-tabs>
+        </div>
+      </template>
+
+      <div class="sassdoc-demo-interactive">
+        <div class\$="sassdoc-demo-options [[_getOptionsContainerClassName(_optionsElements)]]">
+          <p class="epsilon">Style Options</p>
+          <!-- Previously: <content select="px-sass-doc-option" ...> -->
+          <slot name="options" id="optionsSlot"></slot>
+        </div>
+
+        <div class="sassdoc-demo-component">
+          <!-- Previously: <content select="[data-slot=demoHTML]" ...> -->
+          <div>
+            <slot name="demo-html" id="demoHtmlSlot"></slot>
+          </div>
+
+          <h4>Sass Import:</h4>
+          <!-- <px-clipboard copy-from="#importCodeSource"></px-clipboard> -->
+          <section style="display:none;">
+            <!-- Previously: <content select="[data-slot=import]" ...> -->
+            <slot name="import" id="importSlot"></slot>
+          </section>
+          <marked-element markdown="[[_importSlotCode]]">
+            <div slot="markdown-html" class="markdown-html u-mr-" id="importCodeSource"></div>
+          </marked-element>
+
+          <h4>HTML Usage:</h4>
+          <!-- <px-clipboard copy-from="#demoHTMLSource"></px-clipboard> -->
+          <marked-element markdown="[[_demoHtmlSlotCode]]">
+            <div slot="markdown-html" class="markdown-html u-mr-" id="demoHTMLSource"></div>
+          </marked-element>
+        </div>
+      </div>
+    </div>
+`;
+  }
+
+  static get is() { return 'px-sass-doc-demo'; }
+
+  static get properties() {
+    return {
+      /**
+       * List of tab names. Each tab name will be a different state the user
+       * can select for the Sass module demo.
+       */
+      tabs: {
+        type: Array,
+        value: () => [],
+        observer: '_selectInitialTab'
+      },
+
+      /**
+       * Name of the selected tab.
+       */
+      selectedTab: {
+        type: String,
+        notify: true,
+        observer: '_tabChanged'
+      },
+
+      /**
+       * The Sass demo options that are selected by the user. Used by external
+       * components to update themselves based on what options are selected.
+       */
+      selectedOptions: {
+        type: Object,
+        notify: true,
+        value: () => ({})
+      },
+
+      /**
+       * Array of `<px-sass-doc-options>` elements distributed into this
+       * component's options slot.
+       */
+      _optionsElements: {
+        type: Array,
+        value: () => []
+      },
+
+      _demoHtmlSlotCode: String,
+      _importSlotCode: String
+    };
+  }
+
+  static get observers() {
+    return ['_updateOptionsValues(selectedOptions, _optionsElements)'];
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    this._demoHtmlSlotObserver = new FlattenedNodesObserver(this.$.demoHtmlSlot, info => {
+      this._updateDemoHtmlSlotCode();
+    });
+
+    this._importSlotObserver = new FlattenedNodesObserver(this.$.importSlot, info => {
+      this._updateImportSlotCode();
+    });
+
+    this._optionsSlotObserver = new FlattenedNodesObserver(this.$.optionsSlot, info => {
+      this._updateOptionsElements();
+    });
+
+    // Listen for developer notifications that the demo/import slot code has changed
+    this._codeUpdatedListener = () => {
+      this._updateDemoHtmlSlotCode();
+      this._updateImportSlotCode();
+    };
+    document.addEventListener('px-sass-doc-demo-updated', this._codeUpdatedListener, false);
+
+    // Listen for changes from options and handle them
+    this._optionSelectedListener = (evt) => {
+      let opts = this.selectedOptions || {};
+      let {option, selected} = evt.detail;
+      this.selectedOptions = Object.assign({}, this.selectedOptions, {
+        [option] : selected
+      });
+      this.dispatchEvent(new CustomEvent('px-sass-doc-options-updated', {
+        detail: {options: this.selectedOptions},
+        bubbles: true,
+        composed: true
+      }));
+    };
+    this.addEventListener('px-sass-doc-option-selected', this._optionSelectedListener, false);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._demoHtmlSlotObserver.disconnect();
+    this._importSlotObserver.disconnect();
+    this._optionsSlotObserver.disconnect();
+    document.removeEventListener('px-sass-doc-demo-updated', this._codeUpdatedListener);
+  }
+
+  _updateDemoHtmlSlotCode() {
+    let demoSlotElements = this.$.demoHtmlSlot.assignedNodes({flatten: true}).filter(n => n.nodeType === Node.ELEMENT_NODE);
+    let slotEl = demoSlotElements.find(el => el.slot && el.slot === 'demo-html');
+    if (slotEl) {
+      let markup = '```html\n' + slotEl.innerHTML.trim() + '\n```'
+      // Remove any instance of `class="style-scope *-demo"`
+      markup = markup.replace(/class\=\"style\-scope .*\-demo\"/g,'')
+      // Strip `style-scope` and  `*-demo` from other `class` attributes
+      markup = markup.replace(/class\=\"(.*) style-scope .*\-demo\"/g,'class="$1"')
+      // Strip the inserted class attribute and lightDOM content from the px-actionable-design & px-buttons-design demos
+      markup = markup.replace(/ class\=\"style-scope px-actionable-design-demo x-scope px-icon-1\"/g,'')
+      markup = markup.replace(/ class\=\"style-scope px-buttons-design-demo x-scope px-icon-1\"/g,'')
+      markup = markup.replace(/[\s]*<iron-icon.*[\s]*<\/iron-icon>[\s]*/g,'');
+      this._demoHtmlSlotCode = markup;
+    }
+  }
+
+  _updateImportSlotCode() {
+    let importSlotElements = this.$.importSlot.assignedNodes({flatten: true}).filter(n => n.nodeType === Node.ELEMENT_NODE);
+    let slotEl = importSlotElements.find(el => el.slot && el.slot === 'import');
+    if (slotEl && slotEl.innerHTML.trim() !== '') {
+      this._importSlotCode = '```scss\n' + slotEl.innerHTML.trim() + '\n```';
+    }
+  }
+
+  _updateOptionsElements() {
+    let optionsElements = this.$.optionsSlot.assignedNodes({flatten: true}).filter(n => n.nodeType === Node.ELEMENT_NODE);
+    this._optionsElements = Array.prototype.slice.call(optionsElements || []);
+  }
+
+  _selectInitialTab(tabs) {
+    if (Array.isArray(tabs) && tabs.length > 0) {
+      this.selectedTab = tabs[0];
+    }
+  }
+
+  /**
+   * When the tab changes, get the updated slotted code and highlight it again.
+   */
+  _tabChanged() {
+    afterNextRender(this, () => {
+      this._updateDemoHtmlSlotCode();
+      this._updateImportSlotCode();
+    });
+  }
+
+  /**
+   * Checks if the array `arr` has length.
+   */
+  _hasAny(arr) {
+    return Array.isArray(arr) && arr.length > 0;
+  }
+
+  _getOptionsContainerClassName(options) {
+    return this._hasAny(options) ? '' : 'hidden';
+  }
+
+  _updateOptionsValues(options, optionsElements) {
+    if (options && typeof options === 'object' && Object.keys(options).length && Array.isArray(optionsElements) && optionsElements.length) {
+      optionsElements.forEach(el => {
+        let {optionName} = el;
+        if (typeof options[optionName] !== 'undefined' && el.selectedChoice !== options[optionName]) {
+          el.selectedChoice = options[optionName];
+        }
+      });
+    }
+  }
+}
+
+customElements.define('px-sass-doc-demo', PxSassDocDemo);
